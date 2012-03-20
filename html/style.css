@@ -1,0 +1,36 @@
+div#main {
+  width: 300px;
+  padding: 3px;
+  border: 1px blue solid;
+}
+
+div#background {
+  width: 300px;
+  height: 400px;
+  background: url('images/back.png');
+  background-repeat: no-repeat;
+
+}
+
+div#background img {
+  width: 400px;
+  height: 600px;
+}
+
+div#headHolder {
+  float: right;
+  width: 100px;
+  height: 100px;
+}
+
+div#buttons table {
+  width: 100%;
+}
+
+div#buttons tr td {
+  text-align: center;
+}
+
+div#buttons input {
+  width: 100%;
+}

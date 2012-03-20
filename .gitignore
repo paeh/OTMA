@@ -1,0 +1,12 @@
+gen
+bin
+bin/*
+gen/*
+log
+.idea
+*.iml
+*.class
+*.log
+*.txt
+out/
+local.properties
