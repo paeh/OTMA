@@ -1,6 +1,7 @@
 gen
 bin
 bin/*
+obj/*
 gen/*
 log
 .idea
