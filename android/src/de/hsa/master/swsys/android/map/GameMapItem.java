@@ -66,4 +66,28 @@ public class GameMapItem {
     public Coordinate getCoordinate() {
         return coordinate;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GameMapItem that = (GameMapItem) o;
+
+        return !(coordinate != null ? !coordinate.equals(that.coordinate) : that.coordinate != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return coordinate != null ? coordinate.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "GameMapItem{" +
+                "coordinate=" + coordinate +
+                ", drawable=" + drawable +
+                '}';
+    }
 }

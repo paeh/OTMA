@@ -40,35 +40,35 @@ public class GameMap {
         GameMapItem map5x4 = createGameMapItemAndPutToMap(4, 5, R.drawable.map_5x4);
         GameMapItem map5x5 = createGameMapItemAndPutToMap(5, 5, R.drawable.map_5x5);
 
-        map1x1.setBoundaryItems(null, map1x2, map2x1, null);
-        map1x2.setBoundaryItems(null, map1x3, map2x2, map1x1);
+        map1x1.setBoundaryItems(null, null, map2x1, null);
+        map1x2.setBoundaryItems(null, map1x3, map2x2, null);
         map1x3.setBoundaryItems(null, map1x4, map2x3, map1x2);
-        map1x4.setBoundaryItems(null, map1x5, map2x4, map1x3);
-        map1x5.setBoundaryItems(null, null, map2x5, map1x4);
+        map1x4.setBoundaryItems(null, map1x5, null, map1x3);
+        map1x5.setBoundaryItems(null, null, null, map1x4);
 
         map2x1.setBoundaryItems(map1x1, map2x2, map3x1, null);
-        map2x2.setBoundaryItems(map1x2, map2x3, map3x2, map2x1);
-        map2x3.setBoundaryItems(map1x3, map2x4, map3x3, map2x2);
-        map2x4.setBoundaryItems(map1x4, map2x5, map3x4, map2x3);
-        map2x5.setBoundaryItems(map1x5, null, map3x5, map2x4);
+        map2x2.setBoundaryItems(map1x2, null, null, map2x1);
+        map2x3.setBoundaryItems(map1x3, null, map3x3, null);
+        map2x4.setBoundaryItems(null, map2x5, null, null);
+        map2x5.setBoundaryItems(null, null, map3x5, map2x4);
 
         map3x1.setBoundaryItems(map2x1, map3x2, map4x1, null);
-        map3x2.setBoundaryItems(map2x2, map3x3, map4x2, map3x1);
-        map3x3.setBoundaryItems(map2x3, map3x4, map4x3, map3x2);
-        map3x4.setBoundaryItems(map2x4, map3x5, map4x4, map3x3);
+        map3x2.setBoundaryItems(null, map3x3, map4x2, null);
+        map3x3.setBoundaryItems(map2x3, map3x4, null, map3x2);
+        map3x4.setBoundaryItems(null, map3x5, map4x4, null);
         map3x5.setBoundaryItems(map2x5, null, map4x5, map3x4);
 
         map4x1.setBoundaryItems(map3x1, map4x2, map5x1, null);
-        map4x2.setBoundaryItems(map3x2, map4x3, map5x2, map4x1);
-        map4x3.setBoundaryItems(map3x3, map4x4, map5x3, map4x2);
-        map4x4.setBoundaryItems(map3x4, map4x5, map5x4, map4x3);
+        map4x2.setBoundaryItems(map3x2, map4x3, null, map4x1);
+        map4x3.setBoundaryItems(null, null, map5x3, map4x2);
+        map4x4.setBoundaryItems(null, map4x5, map5x4, null);
         map4x5.setBoundaryItems(map3x5, null, map5x5, map4x4);
 
         map5x1.setBoundaryItems(map4x1, map5x2, null, null);
-        map5x2.setBoundaryItems(map4x2, map5x3, null, map5x1);
+        map5x2.setBoundaryItems(null, map5x3, null, map5x1);
         map5x3.setBoundaryItems(map4x3, map5x4, null, map5x2);
-        map5x4.setBoundaryItems(map4x4, map5x5, null, map5x3);
-        map5x5.setBoundaryItems(map4x5, null, null, map5x4);
+        map5x4.setBoundaryItems(map4x4, null, null, map5x3);
+        map5x5.setBoundaryItems(map4x5, null, null, null);
     }
     
     private GameMapItem createGameMapItemAndPutToMap(int x, int y, int drawable) {
@@ -77,5 +77,9 @@ public class GameMap {
         mapItems.put(coordinate, gameMapItem);
 
         return gameMapItem;
+    }
+    
+    public GameMapItem getMapItemFor(Coordinate coordinate) {
+        return mapItems.get(coordinate);
     }
 }
