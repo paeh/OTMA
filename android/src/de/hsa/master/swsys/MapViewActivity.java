@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import de.hsa.master.swsys.android.map.Coordinate;
 import de.hsa.master.swsys.android.map.GameMap;
 import de.hsa.master.swsys.android.map.GameMapItem;
+import de.hsa.master.swsys.android.map.MapDirection;
 import de.hsa.master.swsys.constants.BundleKeys;
 
 public class MapViewActivity extends Activity {
@@ -71,10 +73,10 @@ public class MapViewActivity extends Activity {
 
         layout.addView(background);
 
-        setButtonNavigationAction(mapItem.getWest(), R.id.westButton);
-        setButtonNavigationAction(mapItem.getEast(), R.id.eastButton);
-        setButtonNavigationAction(mapItem.getSouth(), R.id.southButton);
-        setButtonNavigationAction(mapItem.getNorth(), R.id.northButton);
+        setButtonNavigationAction(mapItem.getMapItemFor(MapDirection.WEST), R.id.westButton);
+        setButtonNavigationAction(mapItem.getMapItemFor(MapDirection.EAST), R.id.eastButton);
+        setButtonNavigationAction(mapItem.getMapItemFor(MapDirection.SOUTH), R.id.southButton);
+        setButtonNavigationAction(mapItem.getMapItemFor(MapDirection.NORTH), R.id.northButton);
 
         addDummyHeads(width, layout);
     }
