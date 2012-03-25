@@ -1,6 +1,6 @@
-package de.hsa.master.swsys.android.map;
+package de.hsa.otma.android.map;
 
-import de.hsa.master.swsys.R;
+import de.hsa.otma.android.R;
 
 import java.util.HashMap;
 import java.util.Map;

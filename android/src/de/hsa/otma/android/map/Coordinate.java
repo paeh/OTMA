@@ -1,4 +1,4 @@
-package de.hsa.master.swsys.android.map;
+package de.hsa.otma.android.map;
 
 import java.io.Serializable;
 
