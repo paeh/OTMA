@@ -1,38 +1,63 @@
 package de.hsa.otma.android.map;
 
+import java.io.Serializable;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
-public class GameMapItem {
+public class GameMapItem implements Serializable {
     
     private Coordinate coordinate;
 
-    private Map<MapDirection, GameMapItem> directions = new HashMap<MapDirection, GameMapItem>();
+    private transient Map<MapDirection, GameMapItem> directions = new HashMap<MapDirection, GameMapItem>();
 
-    private int drawable;
+    /**
+     * Redundant storage of available directions. Needed to make directions variable transient to avoid serialisation
+     * loops.
+     */
+    private Set<MapDirection> availableDirections = new HashSet<MapDirection>();
 
-    public GameMapItem(Coordinate coordinate, int drawable) {
+    private int drawableId;
+
+    public GameMapItem(Coordinate coordinate, int drawableId) {
         this.coordinate = coordinate;
-        this.drawable = drawable;
+        this.drawableId = drawableId;
     }
 
     public void setBoundaryItems(GameMapItem north, GameMapItem east, GameMapItem south, GameMapItem west) {
-        directions.put(MapDirection.NORTH, north);
-        directions.put(MapDirection.EAST, east);
-        directions.put(MapDirection.SOUTH, south);
-        directions.put(MapDirection.WEST, west);
+        setDirection(MapDirection.NORTH, north);
+        setDirection(MapDirection.EAST, east);
+        setDirection(MapDirection.SOUTH, south);
+        setDirection(MapDirection.WEST, west);
+
+        updateAvailableDirections();
+    }
+
+    private void setDirection(MapDirection direction, GameMapItem item) {
+        if (item != null)  {
+            directions.put(direction, item);
+        }
+    }
+
+    private void updateAvailableDirections() {
+        availableDirections = directions.keySet();
     }
 
     public GameMapItem getMapItemFor(MapDirection direction) {
         return directions.get(direction);
     }
 
-    public int getDrawable() {
-        return drawable;
+    public int getDrawableId() {
+        return drawableId;
     }
 
     public Coordinate getCoordinate() {
         return coordinate;
+    }
+
+    public Set<MapDirection> getAvailableDirections() {
+        return availableDirections;
     }
 
     @Override
@@ -55,7 +80,7 @@ public class GameMapItem {
     public String toString() {
         return "GameMapItem{" +
                 "coordinate=" + coordinate +
-                ", drawable=" + drawable +
+                ", drawableId=" + drawableId +
                 '}';
     }
 }

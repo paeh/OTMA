@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -12,45 +14,76 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import de.hsa.otma.android.constants.Actions;
 import de.hsa.otma.android.constants.BundleKeys;
-import de.hsa.otma.android.map.Coordinate;
-import de.hsa.otma.android.map.GameMap;
 import de.hsa.otma.android.map.GameMapItem;
 import de.hsa.otma.android.map.MapDirection;
+import de.hsa.otma.android.player.NPCPlayer;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 public class MapViewActivity extends Activity {
-    private static GameMap map = GameMap.INSTANCE;
 
+    private MapItemResultReceiver mapItemResultReceiver = new MapItemResultReceiver();
+    
     private class NavigationOnClickListener implements View.OnClickListener {
-        private Coordinate targetCoordinate;
 
-        private NavigationOnClickListener(Coordinate targetCoordinate) {
-            this.targetCoordinate = targetCoordinate;
+        private MapDirection direction;
+
+        private NavigationOnClickListener(MapDirection direction) {
+            this.direction = direction;
         }
 
         @Override
         public void onClick(View view) {
-            if (targetCoordinate == null) {
+            Intent intent = new Intent(Actions.MOVE_TO_DIRECTION);
+            intent.putExtra(BundleKeys.DIRECTION, direction.toString());
+            intent.putExtra(BundleKeys.RECEIVER, mapItemResultReceiver);
+            startService(intent);
+        }
+    }
+    
+    private class MapItemResultReceiver extends ResultReceiver {
+
+        public MapItemResultReceiver() {
+            super(new Handler());
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            if (resultData.get(BundleKeys.MAP_ITEM) == null) {
                 Toast.makeText(MapViewActivity.this, R.string.goto_mapitem_error, Toast.LENGTH_SHORT).show();
             } else {
-                gotoCoordinate(targetCoordinate);
+                GameMapItem mapItem = (GameMapItem) resultData.getSerializable(BundleKeys.MAP_ITEM);
+                ArrayList<NPCPlayer> otmaEmployees = (ArrayList<NPCPlayer>) resultData.getSerializable(BundleKeys.OTMA_EMPLOYEES);
+
+                createLayout(mapItem, otmaEmployees);
             }
         }
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         Intent callingIntent = getIntent();
 
-        Coordinate coordinate;
-        coordinate = (Coordinate) callingIntent.getSerializableExtra(BundleKeys.COORDINATE);
-        if (coordinate == null) {
-            coordinate = new Coordinate(1, 1);
+        GameMapItem mapItem = (GameMapItem) callingIntent.getSerializableExtra(BundleKeys.MAP_ITEM);
+        ArrayList<NPCPlayer> otmaEmployees = (ArrayList<NPCPlayer>) callingIntent.getSerializableExtra(BundleKeys.OTMA_EMPLOYEES);
+
+        if (mapItem == null) {
+            Intent initialIntent = new Intent(Actions.CURRENT_MAP_ITEM);
+            initialIntent.putExtra(BundleKeys.RECEIVER, mapItemResultReceiver);
+            startService(initialIntent);
+            return;
         }
 
-        GameMapItem mapItem = map.getMapItemFor(coordinate);
+        createLayout(mapItem, otmaEmployees);
+    }
 
+    private void createLayout(GameMapItem mapItem, ArrayList<NPCPlayer> otmaEmployees) {
         setContentView(R.layout.main);
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -59,49 +92,50 @@ public class MapViewActivity extends Activity {
         int width = size.x;
         int height = size.y;
 
-
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.layout);
+        layout.removeAllViews();
         layout.getLayoutParams().height = height - 150;
 
         ImageView background = new ImageView(this);
 
         Log.e(MapViewActivity.class.getName(), mapItem.toString());
-        Drawable drawable = getResources().getDrawable(mapItem.getDrawable());
+        Drawable drawable = getResources().getDrawable(mapItem.getDrawableId());
         background.setImageDrawable(drawable);
         background.setScaleType(ImageView.ScaleType.FIT_XY);
 
         layout.addView(background);
 
-        setButtonNavigationAction(mapItem.getMapItemFor(MapDirection.WEST), R.id.westButton);
-        setButtonNavigationAction(mapItem.getMapItemFor(MapDirection.EAST), R.id.eastButton);
-        setButtonNavigationAction(mapItem.getMapItemFor(MapDirection.SOUTH), R.id.southButton);
-        setButtonNavigationAction(mapItem.getMapItemFor(MapDirection.NORTH), R.id.northButton);
+        setButtonNavigationAction(MapDirection.WEST, R.id.westButton, mapItem.getAvailableDirections());
+        setButtonNavigationAction(MapDirection.EAST, R.id.eastButton, mapItem.getAvailableDirections());
+        setButtonNavigationAction(MapDirection.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
+        setButtonNavigationAction(MapDirection.NORTH, R.id.northButton, mapItem.getAvailableDirections());
 
-        addDummyHeads(width, layout);
+        addOtmaEmployees(width, layout, otmaEmployees);
     }
 
-    private void setButtonNavigationAction(GameMapItem targetMapItem, int buttonId) {
+    private void setButtonNavigationAction(MapDirection direction, int buttonId, Set<MapDirection> availableDirections) {
         Button button = (Button) findViewById(buttonId);
 
-        if (targetMapItem == null) {
+        if (! availableDirections.contains(direction)) {
             button.setEnabled(false);
         } else {
-            button.setOnClickListener(new NavigationOnClickListener(targetMapItem.getCoordinate()));
+            button.setOnClickListener(new NavigationOnClickListener(direction));
         }
     }
 
 
-    private void addDummyHeads(int width, RelativeLayout layout) {
-        Drawable headDrawable = getResources().getDrawable(R.drawable.head);
+    private void addOtmaEmployees(int width, RelativeLayout layout, ArrayList<NPCPlayer> otmaEmployees) {
+        int offsetX = 0;
+        int offsetY = 0;
+        for (NPCPlayer otmaEmployee : otmaEmployees) {
+            Drawable drawable = getResources().getDrawable(otmaEmployee.getDrawableId());
 
-        ImageView head1 = getHead(width, headDrawable, 0, 0);
-        layout.addView(head1);
+            ImageView employeeImageView = getHead(width, drawable, offsetX, offsetY);
+            layout.addView(employeeImageView);
 
-        ImageView head2 = getHead(width, headDrawable, -10, 10);
-        layout.addView(head2);
-
-        ImageView head3 = getHead(width, headDrawable, -20, 20);
-        layout.addView(head3);
+            offsetX -= 30;
+            offsetY += 30;
+        }
     }
 
     private ImageView getHead(int width, Drawable headDrawable, int additionalMarginLeft, int additionalMarginTop) {
@@ -112,12 +146,5 @@ public class MapViewActivity extends Activity {
         params.topMargin = 20 + additionalMarginTop;
         head.setLayoutParams(params);
         return head;
-    }
-
-    private void gotoCoordinate(Coordinate coordinate) {
-        Intent intent = new Intent(this, MapViewActivity.class);
-        intent.putExtra(BundleKeys.COORDINATE, coordinate);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
     }
 }
