@@ -52,10 +52,10 @@ public class GameMap {
         map2x4.setBoundaryItems(null, map2x5, null, null);
         map2x5.setBoundaryItems(null, null, map3x5, map2x4);
 
-        map3x1.setBoundaryItems(map2x1, map3x2, map4x1, null);
+        map3x1.setBoundaryItems(map2x1, null, map4x1, null);
         map3x2.setBoundaryItems(null, map3x3, map4x2, null);
         map3x3.setBoundaryItems(map2x3, map3x4, null, map3x2);
-        map3x4.setBoundaryItems(null, map3x5, map4x4, null);
+        map3x4.setBoundaryItems(null, map3x5, null, map3x3);
         map3x5.setBoundaryItems(map2x5, null, map4x5, map3x4);
 
         map4x1.setBoundaryItems(map3x1, map4x2, map5x1, null);
