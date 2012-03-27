@@ -10,5 +10,18 @@ function loadNavigationFunctions() {
             OTMA.View.updateButtons();
             OTMA.View.updateMapBackground();
         }
-    }
+    };
+
+    $(document).keydown(function(event) {
+       var keyCode = event.which;
+        if (keyCode == 37) {
+            OTMA.Navigation.movePlayerTo("west")
+        } else if (keyCode == 38) {
+            OTMA.Navigation.movePlayerTo("north")
+        } else if (keyCode == 39) {
+            OTMA.Navigation.movePlayerTo("east")
+        } else if (keyCode == 40) {
+            OTMA.Navigation.movePlayerTo("south")
+        }
+    });
 }

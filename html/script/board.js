@@ -23,9 +23,54 @@ function loadBoard() {
             north: northMapItem,
             south: southMapItem,
             east: eastMapItem,
-            west: westMapItem
+            west: westMapItem,
+            type: 'MAP'
         });
     };
+
+    OTMA.Board.setRoomToRandomDoor = function(doors, room) {
+        var randomNumber = Math.floor(Math.random() * doors.length);
+        var door = doors[randomNumber];
+
+        delete doors[randomNumber];
+
+        door['room'] = room;
+        room['door'] = door;
+
+        return door;
+    };
+
+    var doors = [{
+        coordinate: '1x2',
+        direction: 'north'
+    }, {
+        coordinate: '1x5',
+        direction: 'south'
+    }, {
+        coordinate: '2x1',
+        direction: 'west'
+    }, {
+        coordinate: '2x4',
+        direction: 'west'
+    }, {
+        coordinate: '3x2',
+        direction: 'north'
+    }, {
+        coordinate: '3x4',
+        direction: 'south'
+    }, {
+        coordinate: '4x1',
+        direction: 'west'
+    }, {
+        coordinate: '4x3',
+        direction: 'east'
+    }, {
+        coordinate: '5x2',
+        direction: 'north'
+    }, {
+        coordinate: '5x5',
+        direction: 'west'
+    }];
 
     OTMA.Board.createBoardElement("1x1.png", "1x1");
     OTMA.Board.createBoardElement("1x2.png", "1x2");
@@ -57,7 +102,6 @@ function loadBoard() {
     OTMA.Board.createBoardElement("5x4.png", "5x4");
     OTMA.Board.createBoardElement("5x5.png", "5x5");
 
-
     OTMA.Board.setNavigationBorders("1x1", undefined, undefined, "2x1", undefined);
     OTMA.Board.setNavigationBorders("1x2", undefined, "1x3", "2x2", undefined);
     OTMA.Board.setNavigationBorders("1x3", undefined, "1x4", "2x3", "1x2");
@@ -87,5 +131,10 @@ function loadBoard() {
     OTMA.Board.setNavigationBorders("5x3", "4x3", "5x4", undefined, "5x2");
     OTMA.Board.setNavigationBorders("5x4", "4x4", undefined, undefined, "5x3");
     OTMA.Board.setNavigationBorders("5x5", "4x5", undefined, undefined, undefined);
+
+    $.each(OTMA.xmlContent.events, function(index, event) {
+       var door = OTMA.Board.setRoomToRandomDoor(doors, event);
+        OTMA.Board.boardElements[door.coordinate][door.direction] = door;
+    });
 }
 
