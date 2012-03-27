@@ -24,7 +24,31 @@
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28"></StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.RowSpan="2"></Grid>
+        <Grid x:Name="ContentPanel" Grid.RowSpan="2">
+            <Button Height="72" HorizontalAlignment="Left" Margin="282,596,0,0" Name="upButton" VerticalAlignment="Top" Width="105" FontStyle="Normal" FontStretch="Normal" Click="upButton_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="/OTMA;component/Images/white_up.png" Stretch="Uniform" />
+                </Button.Background>
+            </Button>
+            <Button Height="72" HorizontalAlignment="Left" Margin="282,674,0,0" Name="downButton" VerticalAlignment="Top" Width="105" Click="downButton_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="/OTMA;component/Images/white_down.png" Stretch="Uniform" />
+                </Button.Background>
+            </Button>
+            <Button Height="72" HorizontalAlignment="Right" Margin="0,636,0,0" Name="rightButton" VerticalAlignment="Top" Width="87" Click="rightButton_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="/OTMA;component/Images/white_right.png" Stretch="Uniform" />
+                </Button.Background>
+            </Button>
+            <Button Height="72" HorizontalAlignment="Left" Margin="189,636,0,0" Name="leftButton" VerticalAlignment="Top" Width="87" Click="leftButton_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="/OTMA;component/Images/white_left.png" Stretch="Uniform" />
+                </Button.Background>
+            </Button>
+            <Button Content="NPC" Height="72" HorizontalAlignment="Left" Margin="12,636,0,0" Name="npcButton" VerticalAlignment="Top" Width="160" Click="npcButton_Click" />
+            <Image Height="556" HorizontalAlignment="Left" Margin="12,17,0,0" Name="mainImage" Stretch="Fill" VerticalAlignment="Top" Width="458" Source="/OTMA;component/Images/1x1.png" />
+            <Image Height="124" HorizontalAlignment="Left" Margin="334,43,0,0" Name="npcImage" Stretch="Fill" VerticalAlignment="Top" Width="136" />
+        </Grid>
     </Grid>
  
     <!--Sample code showing usage of ApplicationBar-->
