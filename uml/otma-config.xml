@@ -1,4 +1,7 @@
-<config>
+<?xml version="1.0" encoding="utf-8"?>
+<config xmlns="http://www.onthemove-academy.org/schema/config"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.onthemove-academy.org/schema/config otma-config.xsd">
 	<people>
 		<person name="huhu" title="dean">
 			<introduction>Hi ich bin der dean</introduction>
@@ -6,30 +9,25 @@
 		<person name="Hans Dampf" title="faculty member">
 			<introduction>text</introduction>
 		</person>
-		<person name="Florian Müller" title="organisation chair" />
+		<person name="Florian Mueller" title="organisation chair">
+		    <introduction>text</introduction>
+		</person>
 	</people>
 
-	<events max=15>
-		<conference title="Android Con" abrv="Short" >
+	<events>
+		<conference title="Android Con" abrv="Short">
 			<description>text</description>
 		</conference>
-		<conference title="Games Con" abrv="Short" />
+		<conference title="Games Con" abrv="Short">
+			<description>text</description>
+		</conference>
 		<workshop title="What ever" abrv="Short">
 			<description>text</description>
 		</workshop>
 	</events>
 	
 	<hints>
-		<hint title="Presentation skills">text</hint>
+		<hint title="Presentation skills"></hint>
 		<hint title="huh">text</hint>
 	</hints>
 </config>
-
-
-
-
-
-
-
-
-

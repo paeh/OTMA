@@ -1,0 +1,72 @@
+<xsd:schema xmlns="http://www.onthemove-academy.org/schema/config"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.onthemove-academy.org/schema/config"
+	elementFormDefault="qualified">
+	
+	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+
+	<xsd:element name="config">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="people" />
+				<xsd:element ref="events" />
+				<xsd:element ref="hints" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+
+	<xsd:element name="people">
+		<xsd:complexType>
+			<xsd:sequence maxOccurs="unbounded">
+				<xsd:element name="person" type="personType" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="personType">
+		<xsd:sequence>
+			<xsd:element name="introduction" type="xsd:string" />
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" />
+		<xsd:attribute name="title" type="xsd:string" />
+	</xsd:complexType>
+	
+	
+	<xsd:element name="events">
+		<xsd:complexType>
+			<xsd:sequence maxOccurs="15">
+				<xsd:choice>
+					<xsd:element name="conference" type="eventType" />
+					<xsd:element name="workshop" type="eventType" />
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:complexType name="eventType">
+		<xsd:sequence>
+			<xsd:element name="description" type="xsd:string" />
+		</xsd:sequence>
+		<xsd:attribute name="title" type="xsd:string" />
+		<xsd:attribute name="abrv" type="xsd:string" />
+	</xsd:complexType>
+	
+	
+	<xsd:element name="hints">
+		<xsd:complexType>
+			<xsd:sequence maxOccurs="6">
+				<xsd:element name="hint" type="hintType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="hintType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="title" type="xsd:string" />
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	
+</xsd:schema>

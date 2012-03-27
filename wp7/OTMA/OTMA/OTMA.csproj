@@ -61,10 +61,21 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="domain\BoardElement.cs" />
+    <Compile Include="domain\Coordinate.cs" />
+    <Compile Include="domain\Direction.cs" />
+    <Compile Include="domain\Door.cs" />
+    <Compile Include="domain\Hint.cs" />
+    <Compile Include="domain\Player.cs" />
+    <Compile Include="domain\Room.cs" />
+    <Compile Include="domain\VictoryRequirements.cs" />
+    <Compile Include="game\Board.cs" />
+    <Compile Include="game\GameEngine.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="workaround\HashSet.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -87,6 +98,39 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\black_down.png" />
+    <Resource Include="Images\black_left.png" />
+    <Resource Include="Images\black_right.png" />
+    <Resource Include="Images\black_up.png" />
+    <Resource Include="Images\white_down.png" />
+    <Resource Include="Images\white_left.png" />
+    <Resource Include="Images\white_right.png" />
+    <Resource Include="Images\white_up.png" />
+    <Resource Include="Images\1x1.png" />
+    <Resource Include="Images\1x2.png" />
+    <Resource Include="Images\1x3.png" />
+    <Resource Include="Images\1x4.png" />
+    <Resource Include="Images\1x5.png" />
+    <Resource Include="Images\2x1.png" />
+    <Resource Include="Images\2x2.png" />
+    <Resource Include="Images\2x3.png" />
+    <Resource Include="Images\2x4.png" />
+    <Resource Include="Images\2x5.png" />
+    <Resource Include="Images\3x1.png" />
+    <Resource Include="Images\3x2.png" />
+    <Resource Include="Images\3x3.png" />
+    <Resource Include="Images\3x4.png" />
+    <Resource Include="Images\3x5.png" />
+    <Resource Include="Images\4x1.png" />
+    <Resource Include="Images\4x2.png" />
+    <Resource Include="Images\4x3.png" />
+    <Resource Include="Images\4x4.png" />
+    <Resource Include="Images\4x5.png" />
+    <Resource Include="Images\5x1.png" />
+    <Resource Include="Images\5x2.png" />
+    <Resource Include="Images\5x3.png" />
+    <Resource Include="Images\5x4.png" />
+    <Resource Include="Images\5x5.png" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
