@@ -1,0 +1,14 @@
+window_sizes 1680 1026 393 1281 832 120
+diagrams
+  active  sequencediagram_ref 134667 // test
+    1024 665 100 4 0 0
+  classdiagram_ref 128011 // OTMA
+    1024 665 100 0 0 0
+end
+show_stereotypes
+selected classdiagram_ref 128011 // OTMA
+open
+  classview_ref 128011 // otma
+  classview_ref 134539 // switch_button
+end
+end

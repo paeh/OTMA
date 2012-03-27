@@ -5,8 +5,10 @@ function initialiseView() {
             function disableButtonIfNavigationIsUndefined(mapItem, property, buttonId) {
                 if (mapItem[property] == undefined) {
                     $(buttonId).attr('disabled', true);
+                    $(buttonId).attr('src', 'images/white_' + property + '.png');
                 } else {
                     $(buttonId).attr('disabled', false);
+                    $(buttonId).attr('src', 'images/black_' + property + '.png');
                 }
             }
 
