@@ -1,0 +1,86 @@
+format 74
+
+classinstance 128267 class_ref 135691 // GuiButton
+  name ""   xyz 29 38 2005 life_line_z 2000
+classinstance 128395 class_ref 135819 // GameEngine
+  name ""   xyz 241 34 2005 life_line_z 2000
+classinstance 128907 class_ref 135947 // PlayerService
+  name ""   xyz 391 34 2005 life_line_z 2000
+classinstance 129803 class_ref 136075 // NPCService
+  name ""   xyz 619 34 2000 life_line_z 2000
+classinstancecanvas 132235 classinstance_ref 128139 // 
+  xyz 736 33 2005 life_line_z 2000
+end
+durationcanvas 128523 classinstance_ref 128267 // :GuiButton
+  xyzwh 58 131 2010 11 228
+end
+durationcanvas 128651 classinstance_ref 128395 // :GameEngine
+  xyzwh 279 132 2010 11 217
+end
+durationcanvas 129035 classinstance_ref 128907 // :PlayerService
+  xyzwh 431 143 2010 11 44
+end
+durationcanvas 131083 classinstance_ref 129803 // :NPCService
+  xyzwh 654 184 2010 11 25
+end
+durationcanvas 131595 classinstance_ref 129803 // :NPCService
+  xyzwh 654 213 2010 11 45
+end
+durationcanvas 132363 classinstance_ref 132235 // :Board
+  xyzwh 755 269 2010 11 50
+end
+msg 128779 synchronous
+  from durationcanvas_ref 128523
+  to durationcanvas_ref 128651
+  yz 133 2015 explicitmsg "buttonClick(direction)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 83 119
+msg 129163 synchronous
+  from durationcanvas_ref 128651
+  to durationcanvas_ref 129035
+  yz 145 2015 explicitmsg "movePlayer(direction)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 297 129
+msg 129547 return
+  from durationcanvas_ref 129035
+  to durationcanvas_ref 128651
+  yz 170 2015 explicitmsg "new coordinate"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 312 159
+msg 131211 synchronous
+  from durationcanvas_ref 128651
+  to durationcanvas_ref 131083
+  yz 186 2015 explicitmsg "moveNPCs"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 487 175
+msg 131723 synchronous
+  from durationcanvas_ref 128651
+  to durationcanvas_ref 131595
+  yz 215 2015 explicitmsg "getNPCsForCoordinate(newCoordinate)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 390 205
+msg 131979 return
+  from durationcanvas_ref 131595
+  to durationcanvas_ref 128651
+  yz 240 2020 explicitmsg "npcsForCoordinate"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 442 230
+msg 132491 synchronous
+  from durationcanvas_ref 128651
+  to durationcanvas_ref 132363
+  yz 270 2015 explicitmsg "getBoardElementForCoordinate(newCoordinate)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 378 258
+msg 132875 return
+  from durationcanvas_ref 132363
+  to durationcanvas_ref 128651
+  yz 298 2015 explicitmsg "boardElement"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 450 288
+msg 133003 return
+  from durationcanvas_ref 128651
+  to durationcanvas_ref 128523
+  yz 323 2015 explicitmsg "background image, npcs, directions"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 72 314
+end
