@@ -9,6 +9,8 @@ function loadNavigationFunctions() {
             OTMA.Engine.player.coordinate = currentMapItem[directionProperty].coordinate;
             OTMA.View.updateButtons();
             OTMA.View.updateMapBackground();
+
+            $(document).trigger('playerMove');
         }
     };
 

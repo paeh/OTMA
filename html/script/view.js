@@ -31,6 +31,17 @@ function initialiseView() {
         }
     };
 
-    OTMA.View.updateButtons();
-    OTMA.View.updateMapBackground();
+    var update = function() {
+        OTMA.View.updateButtons();
+        OTMA.View.updateMapBackground();
+    };
+
+    $(document).bind('npcMove', function() {
+       update();
+    });
+
+    $(document).bind('playerMove', function() {
+        update();
+    });
+    update();
 }
