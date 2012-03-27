@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
+using System.Windows.Media.Imaging;
 
 namespace OTMA
 {
@@ -19,6 +20,13 @@ namespace OTMA
         public MainPage()
         {
             InitializeComponent();
+        }
+
+        private void npcButton_Click(object sender, RoutedEventArgs e)
+        {
+            var imageUri = new Uri("/OTMA;component/Images/2x3.png", UriKind.Relative);
+            mainImage.Source = new BitmapImage(imageUri);
+            mainImage.Visibility = System.Windows.Visibility.Visible;
         }
     }
 }
