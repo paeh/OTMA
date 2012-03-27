@@ -11,3 +11,4 @@ log
 *.txt
 out/
 local.properties
+*.lock
