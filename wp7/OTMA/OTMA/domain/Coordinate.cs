@@ -21,5 +21,23 @@ namespace OTMA.domain
             this.x = x;
             this.y = y;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Coordinate)
+            {
+                var otherCoordinate = obj as Coordinate;
+
+                if (this.x == otherCoordinate.x && this.y == otherCoordinate.y)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return x + y;
+        }
     }
 }

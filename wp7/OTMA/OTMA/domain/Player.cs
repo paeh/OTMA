@@ -15,18 +15,29 @@ namespace OTMA.domain
 {
     public class Player
     {
-        public String name { private set; get; }
-        public Coordinate coordinate { private set; get; }
+        public String name { protected set; get; }
+        public Coordinate coordinate { protected set; get; }
+
+        public void setCoordinate(Coordinate coordinate)
+        {
+            this.coordinate = coordinate;
+        }
     }
 
-    public class NpcPlayer
+    public class NpcPlayer: Player
     {
         public String picture { private set; get; }
         public HashSet<Hint> hints { private set; get; }
     }
 
-    public class HumanPlayer
+    public class HumanPlayer: Player
     {
+
+        public HumanPlayer(int x, int y)
+        {
+            base.coordinate = new Coordinate(x, y);
+        }
+
         public HashSet<Hint> foundHints { private set; get; }
         public HashSet<NpcPlayer> foundNpcs { private set; get; }
     }

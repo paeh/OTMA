@@ -11,14 +11,8 @@ using System.Windows.Shapes;
 
 namespace OTMA.domain
 {
-    public class Door: BoardElement
+    public enum Direction
     {
-        public Door(Coordinate coordinate, String picture)
-            : base(coordinate, picture)
-        {
-        }
-
-        public BoardElement backToBoard { private set; get; }
-        public Room room { private set; get; }
+        North, South, East, West
     }
 }

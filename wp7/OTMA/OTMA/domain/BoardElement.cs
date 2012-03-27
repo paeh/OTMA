@@ -8,27 +8,37 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Collections.Generic;
 
 namespace OTMA.domain
 {
 
     public class BoardElement
     {
-        public BoardElement north { private set; get; }
-        public BoardElement south { private set; get; }
-        public BoardElement west { private set; get; }
-        public BoardElement east { private set; get; }
+        public Dictionary<Direction, BoardElement> directions = new Dictionary<Direction, BoardElement>();
         public Coordinate coordinate { private set; get; }
         public String picture { private set; get; }
 
-        public BoardElement(BoardElement north, BoardElement south, BoardElement west, BoardElement east, Coordinate coordinate, String picture)
+        public BoardElement(Coordinate coordinate, String picture)
         {
-            this.north = north;
-            this.west = west;
-            this.south = south;
-            this.east = east;
             this.coordinate = coordinate;
             this.picture = picture;
+        }
+
+        public void setBoundaryItems(BoardElement north, BoardElement east, BoardElement south, BoardElement west)
+        {
+            this.directions.Add(Direction.North, north);
+            this.directions.Add(Direction.East, east);
+            this.directions.Add(Direction.South, south);
+            this.directions.Add(Direction.West, west);
+        }
+
+        public BoardElement getBoardItemForDirection(Direction direction)
+        {
+            if (directions.ContainsKey(direction))
+                return directions[direction];
+
+            return null;
         }
     }
 }

@@ -63,11 +63,19 @@
     </Compile>
     <Compile Include="domain\BoardElement.cs" />
     <Compile Include="domain\Coordinate.cs" />
+    <Compile Include="domain\Direction.cs" />
+    <Compile Include="domain\Door.cs" />
+    <Compile Include="domain\Hint.cs" />
+    <Compile Include="domain\Player.cs" />
+    <Compile Include="domain\Room.cs" />
+    <Compile Include="domain\VictoryRequirements.cs" />
     <Compile Include="game\Board.cs" />
+    <Compile Include="game\GameEngine.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="workaround\HashSet.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
