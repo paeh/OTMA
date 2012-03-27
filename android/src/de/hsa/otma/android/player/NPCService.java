@@ -47,7 +47,10 @@ public class NPCService {
         int directionIndex = random.nextInt(availableDirections.size());
         MapDirection targetDirection = availableDirections.get(directionIndex);
         GameMapItem targetMapItem = currentMapItem.getMapItemFor(targetDirection);
-        
-        npc.moveTo(targetMapItem.getCoordinate());
+
+        if (targetMapItem.getNpcPlayer() == null) {
+            targetMapItem.setNpcPlayer(npc);
+            npc.moveTo(targetMapItem.getCoordinate());
+        }
     }
 }
