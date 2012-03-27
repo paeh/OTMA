@@ -50,8 +50,17 @@ function loadBoard() {
         coordinate: '2x1',
         direction: 'west'
     }, {
+        coordinate: '2x2',
+        direction: 'east'
+    }, {
         coordinate: '2x4',
         direction: 'west'
+    }, {
+        coordinate: '2x5',
+        direction: 'north'
+    }, {
+        coordinate: '3x1',
+        direction: 'east'
     }, {
         coordinate: '3x2',
         direction: 'north'
@@ -59,11 +68,17 @@ function loadBoard() {
         coordinate: '3x4',
         direction: 'south'
     }, {
+        coordinate: '3x5',
+        direction: 'east'
+    }, {
         coordinate: '4x1',
         direction: 'west'
     }, {
         coordinate: '4x3',
         direction: 'east'
+    }, {
+        coordinate: '4x4',
+        direction: 'north'
     }, {
         coordinate: '5x2',
         direction: 'north'
