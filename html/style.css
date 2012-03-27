@@ -1,12 +1,12 @@
 div#main {
-    width: 300px;
+    width: 400px;
     padding: 3px;
     border: 1px blue solid;
 }
 
 div#background {
     z-index: 0;
-    width: 300px;
+    width: 400px;
     height: 400px;
 }
 
@@ -18,13 +18,13 @@ div#background img {
 }
 
 div#npcHolder {
-    float: left;
-    width: 100px;
+    float: right;
     height: 100px;
 }
 
 div#npcHolder img {
     z-index: 1;
+    margin: 10px;
     position: relative;
 }
 
@@ -38,6 +38,7 @@ table.navigationButtons tr td {
 }
 
 table.navigationButtons input {
+    height: 30px;
     width: 100%;
 }
 

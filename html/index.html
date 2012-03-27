@@ -17,10 +17,10 @@
 <div id='main'>
 
     <div id='npcHolder'>
-        <img id='npcImage' style='margin-left: 20px; margin-top: 5px' src='images/head.png' />
+        <img id='npcImage' src='images/head.png'  alt="npcImage"/>
     </div>
     <div id='background'>
-        <img id='backgroundImage' src='images/map/1x1.png'/>
+        <img id='backgroundImage' src='images/map/1x1.png' alt="backgroundImage"/>
     </div>
 
 
@@ -30,12 +30,12 @@
         </div>
         <table class="navigationButtons">
             <tr>
-                <td rowspan="2"><input id='west' type='submit' value='west' onclick='OTMA.Navigation.movePlayerTo("west")'/></td>
-                <td><input id='north' type='submit' value='north' onclick='OTMA.Navigation.movePlayerTo("north")' /></td>
-                <td rowspan="2"><input id='east' type='submit' value='east' onclick='OTMA.Navigation.movePlayerTo("east")'/></td>
+                <td rowspan="2"><input id='west' type='image' src='images/black_west.png' value='west' onclick='OTMA.Navigation.movePlayerTo("west")'/></td>
+                <td><input id='north' type='image' src='images/black_north.png' value='north' onclick='OTMA.Navigation.movePlayerTo("north")' /></td>
+                <td rowspan="2"><input id='east' type='image' src='images/black_east.png' value='east' onclick='OTMA.Navigation.movePlayerTo("east")'/></td>
             </tr>
             <tr>
-                <td><input id='south' type='submit' value='south' onclick='OTMA.Navigation.movePlayerTo("south")' /></td>
+                <td><input id='south' type='image' src='images/black_south.png' value='south' onclick='OTMA.Navigation.movePlayerTo("south")' /></td>
             </tr>
         </table>
     </div>
