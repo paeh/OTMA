@@ -31,7 +31,8 @@ OTMA.Board = {
     createBoardElement: function(picture, coordinate) {
         var element = {
             picture: picture,
-            coordinate: coordinate
+            coordinate: coordinate,
+            type: 'MAP'
         };
         OTMA.Board.boardElements[coordinate] = element;
         return element;
@@ -49,8 +50,7 @@ OTMA.Board = {
             north: northMapItem,
             south: southMapItem,
             east: eastMapItem,
-            west: westMapItem,
-            type: 'MAP'
+            west: westMapItem
         });
     },
     setRoomToRandomDoor: function(doors, room) {
@@ -61,7 +61,10 @@ OTMA.Board = {
 
             if (door) {
                 door['room'] = room;
+                door['type'] = 'DOOR';
+
                 room['door'] = door;
+                room['type'] = 'ROOM';
 
                 delete doors[randomNumber];
             }
