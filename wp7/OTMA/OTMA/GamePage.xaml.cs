@@ -37,6 +37,8 @@ namespace OTMA
         public void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
             xmlParser.parseAndGetNpcs();
+            xmlParser.parseAndGetEvents();
+            xmlParser.parseAndGetHints();
         }
 
         private void npcButton_Click(object sender, RoutedEventArgs e)

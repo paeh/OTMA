@@ -31,6 +31,7 @@ namespace OTMA.util
             client.OpenReadCompleted += (sender, e) =>
             {
                 this.document = XDocument.Load(e.Result);
+                e.Result.Close();
                 callback(null);
             };
 
@@ -70,7 +71,61 @@ namespace OTMA.util
                         }
                     }
                 }
-                result.Add(new NpcPlayer(name, role, new Hint(text))); 
+                result.Add(new NpcPlayer(name, role, new Hint(text, text))); 
+            }
+
+            return result;
+        }
+
+        public List<Event> parseAndGetEvents()
+        {
+            var result = new List<Event>();
+
+            result.AddRange(parseAndGetGenericEvent("conference"));
+            result.AddRange(parseAndGetGenericEvent("workshop"));
+
+            return result; 
+        }
+
+        private List<Event> parseAndGetGenericEvent(String eventType)
+        {
+            List<Event> result = new List<Event>();
+
+            foreach (XElement e in document.Descendants(@"{" + XML_NAMESPACE + "}"+eventType))
+            {
+                var title = e.Attribute("title").Value;
+                var shortTitle = e.Attribute("abrv").Value;
+                var desc = "";
+
+                foreach (XNode node in e.DescendantNodes())
+                {
+                    if (node is XElement)
+                    {
+                        var element = node as XElement;
+                        if (element.Name.ToString().Contains("description"))
+                        {
+                            desc = element.Value;
+                            //break;
+                        }
+                    }
+                }
+
+                result.Add(new Event(title, shortTitle, desc));
+            }
+
+            return result;
+        }
+
+        public List<Hint> parseAndGetHints()
+        {
+            List<Hint> result = new List<Hint>();
+
+            foreach (XElement e in document.Descendants(@"{" + XML_NAMESPACE + "}hint"))
+            {
+                var title = e.Attribute("title").Value;
+                var text = e.Value;
+
+                result.Add(new Hint(title, text));
             }
 
             return result;

@@ -66,6 +66,7 @@
     <Compile Include="domain\Coordinate.cs" />
     <Compile Include="domain\Direction.cs" />
     <Compile Include="domain\Door.cs" />
+    <Compile Include="domain\Event.cs" />
     <Compile Include="domain\Hint.cs" />
     <Compile Include="domain\Player.cs" />
     <Compile Include="domain\Room.cs" />
