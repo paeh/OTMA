@@ -11,15 +11,17 @@ using System.Windows.Shapes;
 
 namespace OTMA.domain
 {
-    public class Hint
+    public class Event
     {
-        public String text { private set; get; }
         public String title { private set; get; }
+        public String shortTitle { private set; get; }
+        public String description { private set; get; }
 
-        public Hint(String title, String text)
+        public Event(String title, String shortTitle, String description)
         {
-            this.text = text;
             this.title = title;
+            this.shortTitle = shortTitle;
+            this.description = description;
         }
     }
 }
