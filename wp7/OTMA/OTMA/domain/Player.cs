@@ -43,6 +43,11 @@ namespace OTMA.domain
             this.hints = new HashSet<Hint>();
             hints.Add(text);
         }
+
+        public void setImage(String image)
+        {
+            this.picture = image;
+        }
     }
 
     public class HumanPlayer: Player
