@@ -22,12 +22,27 @@ namespace OTMA.domain
         {
             this.coordinate = coordinate;
         }
+
+        public void setName(String name)
+        {
+            this.name = name;
+        }
     }
 
     public class NpcPlayer: Player
     {
+        public String role { private set; get; }
         public String picture { private set; get; }
         public HashSet<Hint> hints { private set; get; }
+
+        public NpcPlayer(String name, String role, Hint text)
+            : base()
+        {
+            this.name = name;
+            this.role = role;
+            this.hints = new HashSet<Hint>();
+            hints.Add(text);
+        }
     }
 
     public class HumanPlayer: Player
