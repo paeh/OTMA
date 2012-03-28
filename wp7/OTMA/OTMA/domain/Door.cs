@@ -20,5 +20,21 @@ namespace OTMA.domain
 
         public BoardElement backToBoard { private set; get; }
         public Room room { private set; get; }
+        public Event roomEvent { private set; get; }
+
+        public void setRoom(Room room)
+        {
+            this.room = room;
+        }
+
+        public void setBackToBoard(BoardElement board)
+        {
+            this.backToBoard = board;
+        }
+
+        public void setRoomEvent(Event roomEvent)
+        {
+            this.roomEvent = roomEvent;
+        }
     }
 }
