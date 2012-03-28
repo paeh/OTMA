@@ -1,9 +1,13 @@
 OTMA.NPC = {
     people: [],
     availableAvatarImages: ['head.png'],
-    avatarImageCounter: 0,
+    avatarImageCounter: -1,
     stepCounter: 0,
 
+    reset: function() {
+        OTMA.NPC.stepCounter = 0;
+        OTMA.NPC.avatarImageCounter = -1;
+    },
     findRandomNonOccupiedBoardElement: function() {
         do {
             var boardItem = OTMA.Board.getRandomBoardElement();
@@ -35,7 +39,7 @@ OTMA.NPC = {
         var currentBoardElement = OTMA.Board.boardElements[npc.coordinate];
         var availableBoardElements = OTMA.Board.getBoardElementsInAvailableDirections(currentBoardElement);
         do {
-            var randomNumber = Math.floor(Math.random() * availableBoardElements.length);
+            var randomNumber = OTMA.util.getRandomInteger(availableBoardElements.length);
             var boardElement = availableBoardElements[randomNumber];
 
             if (! OTMA.NPC.getNPCForBoardElement(boardElement)) {

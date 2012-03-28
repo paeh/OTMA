@@ -1,16 +1,16 @@
 OTMA.xmlContent = {
     people: [],
     events: [],
-    hints: []
-};
+    hints: [],
 
-function loadXML(filename, callback) {
-    var baseUrl = document.URL.replace("index.html", "");
-    $(document).load(baseUrl + filename, function(result) {
-        parseXMLFile(result);
-    });
+    reset: function() {
+        OTMA.xmlContent.people = [];
+        OTMA.xmlContent.events = [];
+        OTMA.xmlContent.hints = [];
+    },
+    parseXMLFile: function(fileContent, callback) {
+        OTMA.xmlContent.reset();
 
-    var parseXMLFile = function(fileContent) {
         var persons = $(fileContent).find('person');
         $.each(persons, function(index, personXML) {
             var introduction = $(personXML).find('introduction').text();
@@ -50,6 +50,13 @@ function loadXML(filename, callback) {
             })
         });
 
-        callback();
+        if (callback) callback();
     }
+};
+
+function loadXML(filename, callback) {
+    var baseUrl = document.URL.replace("index.html", "");
+    $(document).load(baseUrl + filename, function(result) {
+        OTMA.xmlContent.parseXMLFile(result, callback);
+    });
 }

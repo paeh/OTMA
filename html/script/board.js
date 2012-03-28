@@ -1,8 +1,12 @@
 OTMA.Board = {
     boardElements: {},
+
+    reset:function() {
+        OTMA.Board.boardElements = {}
+    },
     getRandomBoardElement: function() {
         var coordinates = OTMA.Board.getCoordinatesArray();
-        var randomNumber = Math.floor(Math.random() * coordinates.length);
+        var randomNumber = OTMA.util.getRandomInteger(coordinates.length);
 
         return OTMA.Board.boardElements[coordinates[randomNumber]];
     },
@@ -25,10 +29,12 @@ OTMA.Board = {
         return directions;
     },
     createBoardElement: function(picture, coordinate) {
-        OTMA.Board.boardElements[coordinate] = {
+        var element = {
             picture: picture,
             coordinate: coordinate
         };
+        OTMA.Board.boardElements[coordinate] = element;
+        return element;
     },
     setNavigationBorders: function(coordinate, north, east, south, west) {
         var boardItem = OTMA.Board.boardElements[coordinate];
@@ -50,7 +56,7 @@ OTMA.Board = {
     setRoomToRandomDoor: function(doors, room) {
 
         do {
-            var randomNumber = Math.floor(Math.random() * doors.length);
+            var randomNumber = OTMA.util.getRandomInteger(doors.length);
             var door = doors[randomNumber];
 
             if (door) {
