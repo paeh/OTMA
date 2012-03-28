@@ -9,7 +9,6 @@ namespace OTMA.util
         public void parse()
         {
             var document = XDocument.Load(new FileStream(@"C:\Users\paeh\Desktop\otma-config.xml", FileMode.Open));
-
             
             var data = from item in document.Descendants("person")
                        select new
