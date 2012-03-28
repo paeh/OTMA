@@ -69,14 +69,28 @@ namespace OTMA
 
                 handleButtons(newPosition);
                 handleNpcs(newPosition);
-                handleDoors(newPosition);
+                
+                handleDoorIfPossible(newPosition);
             }
         }
 
-        private void handleDoors(BoardElement newPosition)
+        private void handleDoorIfPossible(BoardElement newPosition)
         {
             if (newPosition is Door && (newPosition as Door).roomEvent != null)
                 doorLabel.Text = (newPosition as Door).roomEvent.shortTitle;
+            else
+                doorLabel.Text = "";
+        }
+
+        private void handleRoomIfPossible(BoardElement newPosition)
+        {
+            var room = (newPosition as Room);
+
+            if (newPosition is Room && room.roomEvent != null)
+            {
+                eventNameLabel.Text = room.roomEvent.title;
+                eventHintLabel.Text = room.getRandomContent();
+            }
             else
                 doorLabel.Text = "";
         }

@@ -44,6 +44,8 @@
             <Image Height="556" HorizontalAlignment="Left" Margin="12,17,0,0" Name="mainImage" Stretch="Fill" VerticalAlignment="Top" Width="458" Source="/OTMA;component/Images/1x1.png" />
             <Image Height="124" HorizontalAlignment="Left" Margin="334,43,0,0" Name="npcImage" Stretch="Fill" VerticalAlignment="Top" Width="136" />
             <TextBlock Height="51" HorizontalAlignment="Left" Margin="166,170,0,0" Name="doorLabel" Text="" VerticalAlignment="Top" Width="153" TextAlignment="Center" />
+            <TextBlock Height="47" HorizontalAlignment="Left" Margin="103,117,0,0" Name="eventNameLabel" Text="" VerticalAlignment="Top" Width="277" TextAlignment="Center" />
+            <TextBlock Height="253" HorizontalAlignment="Left" Margin="103,187,0,0" Name="eventHintLabel" Text="" VerticalAlignment="Top" Width="277" />
         </Grid>
     </Grid>
  

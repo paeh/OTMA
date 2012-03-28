@@ -76,6 +76,7 @@
     </Compile>
     <Compile Include="game\Board.cs" />
     <Compile Include="game\GameEngine.cs" />
+    <Compile Include="game\GameState.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

@@ -12,10 +12,39 @@ using System.Collections.Generic;
 
 namespace OTMA.domain
 {
-    public class Room
+    public class Room: BoardElement
     {
-        public Door door { private set; get; }
+        private static Random rand = new Random(DateTime.Now.Millisecond);
+
         public List<Hint> hints { private set; get; }
         public List<String> stories { private set; get; }
+        public Event roomEvent { private set; get; }
+
+        public Room(Coordinate coordinate, String picture)
+            : base(coordinate, picture)
+        { }
+
+        public void setStories(List<String> stories)
+        {
+            this.stories = stories;
+        }
+
+        public void setHints(List<Hint> hints)
+        {
+            this.hints = hints;
+        }
+
+        public void setEvent(Event roomEvent)
+        {
+            this.roomEvent = roomEvent;
+        }
+
+        public String getRandomContent()
+        {
+            if (rand.Next(1, 2) == 1)
+                return hints[rand.Next(0, hints.Count - 1)].text;
+            else
+                return stories[rand.Next(0, stories.Count - 1)];
+        }
     }
 }

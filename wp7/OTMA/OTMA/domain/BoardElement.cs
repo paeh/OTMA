@@ -41,7 +41,7 @@ namespace OTMA.domain
             return null;
         }
 
-        public List<Direction> getAvailableDirections()
+        public virtual List<Direction> getAvailableDirections()
         {
             List<Direction> result = new List<Direction>();
 

@@ -23,7 +23,7 @@ namespace OTMA.game
         private Board board = Board.instance;
         private Player human = null;
         private int stepCounter = 0;
-        private Boolean door = false;
+        private GameState state = GameState.OnBoard;
 
         private List<NpcPlayer> npcs = null;
         private List<Hint> hints = null;
@@ -62,6 +62,11 @@ namespace OTMA.game
             {
                 var randomNumber = rand.Next(0, doors.Count -1);
                 doors[randomNumber].setRoomEvent(roomEvent);
+                var room = doors[randomNumber].getRoom();
+                
+                room.setHints(hints);
+                room.setStories(new List<String>() { "e=mc²", "dummy1", "dummy2", "your only limit is your own imagination" });
+                room.setEvent(roomEvent);
                 doors.RemoveAt(randomNumber);
             }
         }
@@ -82,16 +87,33 @@ namespace OTMA.game
         {
             BoardElement item = null;
             BoardElement newPosition = null;
-            if (door && direction != Direction.North)
+
+            if (state == GameState.AtDoor)
             {
                 item = getCurrentDoorItem();
-                newPosition = (item as Door).directions[Direction.South];
-                door = false;
+
+                // leave door
+                if (direction != Direction.North)
+                {
+                    newPosition = (item as Door).directions[Direction.South];
+                    state = GameState.OnBoard;
+                }
+                // enter room if there is a event
+                else if((item as Door).roomEvent != null)
+                {
+                    newPosition = (item as Door).directions[Direction.North];
+                    state = GameState.InRoom;
+                }
             }
-            else if (door && direction == Direction.North)
+            else if (state == GameState.InRoom && direction == Direction.South)
             {
-                //enter the door
-                //TODO state machine for room, boardelement, door
+                item = getCurrentRoomItem();
+
+                // leave room
+                newPosition = item.directions[Direction.South];
+                state = GameState.AtDoor;
+
+                return newPosition;
             }
             else
             {
@@ -101,10 +123,11 @@ namespace OTMA.game
 
             if (newPosition != null)
             {
-                if (newPosition is Door)
-                    door = true;
-
                 human.setCoordinate(newPosition.coordinate);
+
+                if (newPosition is Door)
+                    state = GameState.AtDoor;
+                
                 stepCounter++;
                 if (stepCounter % 5 == 0)
                 {
@@ -134,6 +157,11 @@ namespace OTMA.game
         private BoardElement getCurrentDoorItem()
         {
             return board.getDoorForCoordinates(human.coordinate);
+        }
+
+        private BoardElement getCurrentRoomItem()
+        {
+            return board.getRoomForCoordinates(human.coordinate);
         }
 
     }
