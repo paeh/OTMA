@@ -50,7 +50,13 @@ namespace OTMA.workaround
 
             public IEnumerator<T> GetEnumerator()
             {
-                throw new NotImplementedException();
+                var result = new List<T>();
+                foreach(T item in underLaying.Keys)
+                {
+                    result.Add(item);
+                }
+
+                return result.GetEnumerator();
             }
 
             IEnumerator IEnumerable.GetEnumerator()
