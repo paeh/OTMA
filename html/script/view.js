@@ -60,6 +60,9 @@ OTMA.View = {
             setBackground('images/room.png');
         } else if (OTMA.Engine.Player.viewingDoor) {
             doShowDoorDescription = true;
+
+            var abbreviation = mapItem[OTMA.Engine.Player.viewingDoor].room.abbreviation;
+            $('#doorDescriptionHolder div.doorDescription').html(abbreviation);
             setBackground('images/door.png');
         } else {
             setBackground('images/map/' + mapItem.picture);
