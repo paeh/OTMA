@@ -1,1 +1,2 @@
 OTMA = {};
+$.cssProps['size'] = 'size';
