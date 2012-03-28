@@ -24,6 +24,14 @@
     <div id='npcHolder'>
         <img id='npcImage' src='images/blank.png'  alt="npcImage"/>
     </div>
+    <div id='conversationHolder'>
+        <div id='conversation'>
+            <div class='conversationTitle'></div>
+            <div class='conversationSubTitle'></div>
+            <div class='conversationText'></div>
+            <div><input type='submit' value='Close' onclick="OTMA.View.hideNPCConversation()"></div>
+        </div>
+    </div>
     <div id='background'>
         <img id='backgroundImage' src='images/map/1x1.png' alt="backgroundImage"/>
     </div>
@@ -31,7 +39,7 @@
 
     <div id='navigation'>
         <div id='npcButton'>
-            <input type='submit' value='NPC' />
+            <input type='submit' value='NPC' onclick="OTMA.View.toggleNPCConversation()"/>
         </div>
         <table class="navigationButtons">
             <tr>

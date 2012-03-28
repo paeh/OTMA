@@ -35,6 +35,35 @@ OTMA.View = {
 
         var picture = 'images/map/' + mapItem.picture;
         $('#backgroundImage').attr('src', picture);
+    },
+
+    toggleNPCConversation: function() {
+        if ($('#conversation').css('visibility') == 'hidden') {
+            OTMA.View.showNPCConversation();
+        } else {
+            OTMA.View.hideNPCConversation();
+        }
+    },
+
+    showNPCConversation: function() {
+        var currentBoardElement = OTMA.Engine.getCurrentBoardElement();
+        var npc = OTMA.NPC.getNPCForBoardElement(currentBoardElement);
+
+        if (! npc) return;
+
+        $('#conversation div.conversationTitle').html(npc.name);
+        $('#conversation div.conversationSubTitle').html(npc.title);
+        $('#conversation div.conversationText').html(npc.introduction);
+
+        $('#conversation').css({
+            visibility: 'visible'
+        });
+    },
+
+    hideNPCConversation: function() {
+        $('#conversation').css({
+            visibility: 'hidden'
+        });
     }
 };
 
