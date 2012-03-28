@@ -1,10 +1,10 @@
-function loadXML(filename, callback) {
-    OTMA.xmlContent = {
-        people: [],
-        events: [],
-        hints: []
-    };
+OTMA.xmlContent = {
+    people: [],
+    events: [],
+    hints: []
+};
 
+function loadXML(filename, callback) {
     var baseUrl = document.URL.replace("index.html", "");
     $(document).load(baseUrl + filename, function(result) {
         parseXMLFile(result);
