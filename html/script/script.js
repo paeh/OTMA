@@ -1,7 +1,11 @@
 $(document).ready(function() {
-    OTMA = {};
-    loadBoard();
-    loadNavigationFunctions();
-    initialiseEngine();
-    initialiseView();
+
+    loadXML("otma-config.xml", function() {
+        initialiseBoard();
+        initialiseNPC();
+        loadNavigationFunctions();
+        initialiseEngine();
+        initialiseView();
+    });
+
 });

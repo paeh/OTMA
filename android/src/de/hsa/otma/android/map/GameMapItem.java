@@ -1,5 +1,7 @@
 package de.hsa.otma.android.map;
 
+import de.hsa.otma.android.player.NPCPlayer;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,6 +11,8 @@ import java.util.Set;
 public class GameMapItem implements Serializable {
     
     private Coordinate coordinate;
+
+    private NPCPlayer npcPlayer;
 
     private transient Map<MapDirection, GameMapItem> directions = new HashMap<MapDirection, GameMapItem>();
 
@@ -82,5 +86,13 @@ public class GameMapItem implements Serializable {
                 "coordinate=" + coordinate +
                 ", drawableId=" + drawableId +
                 '}';
+    }
+
+    public NPCPlayer getNpcPlayer() {
+        return npcPlayer;
+    }
+
+    public void setNpcPlayer(NPCPlayer npcPlayer) {
+        this.npcPlayer = npcPlayer;
     }
 }
