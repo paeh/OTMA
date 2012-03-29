@@ -33,7 +33,7 @@ OTMA.View = {
         var currentBoardElement = OTMA.Engine.getCurrentBoardElement();
         var npc = OTMA.NPC.getNPCForBoardElement(currentBoardElement);
         if (npc && ! OTMA.Engine.Player.viewingDoor && ! OTMA.Engine.Player.viewingRoom) {
-            $('#npcImage').attr('src', 'images/' + npc.picture);
+            $('#npcImage').attr('src', 'images/avatars/' + npc.picture);
         } else {
             $('#npcImage').attr('src', 'images/blank.png');
         }
