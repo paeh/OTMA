@@ -97,8 +97,10 @@ div#roomHolder div.roomTitle {
 }
 
 div#roomHolder div.roomHint {
-    width: 80%;
-    margin: 270px auto 0;
+    position: absolute;
+    bottom: 20px;
+    left: 7%;
+    right: 7%;
     padding: 5px;
     border: 3px silver solid;
     border-radius: 5px;
