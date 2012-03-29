@@ -20,22 +20,22 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel">
-            <Button Height="72" HorizontalAlignment="Left" Margin="282,596,0,0" Name="upButton" VerticalAlignment="Top" Width="105" FontStyle="Normal" FontStretch="Normal" Click="upButton_Click" IsEnabled="False">
+            <Button Height="72" HorizontalAlignment="Left" Margin="293,596,0,0" Name="upButton" VerticalAlignment="Top" Width="87" FontStyle="Normal" FontStretch="Normal" Click="upButton_Click" IsEnabled="False">
                 <Button.Background>
                     <ImageBrush ImageSource="/OTMA;component/Images/white_up.png" Stretch="Uniform" />
                 </Button.Background>
             </Button>
-            <Button Height="72" HorizontalAlignment="Left" Margin="282,674,0,0" Name="downButton" VerticalAlignment="Top" Width="105" Click="downButton_Click">
+            <Button Height="72" HorizontalAlignment="Left" Margin="293,674,0,0" Name="downButton" VerticalAlignment="Top" Width="87" Click="downButton_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="/OTMA;component/Images/white_down.png" Stretch="Uniform" />
                 </Button.Background>
             </Button>
-            <Button Height="72" HorizontalAlignment="Right" Margin="0,636,0,0" Name="rightButton" VerticalAlignment="Top" Width="87" Click="rightButton_Click" IsEnabled="False">
+            <Button Height="72" HorizontalAlignment="Right" Margin="0,635,4,0" Name="rightButton" VerticalAlignment="Top" Width="87" Click="rightButton_Click" IsEnabled="False">
                 <Button.Background>
                     <ImageBrush ImageSource="/OTMA;component/Images/white_right.png" Stretch="Uniform" />
                 </Button.Background>
             </Button>
-            <Button Height="72" HorizontalAlignment="Left" Margin="189,636,0,0" Name="leftButton" VerticalAlignment="Top" Width="87" Click="leftButton_Click" IsEnabled="False">
+            <Button Height="72" HorizontalAlignment="Left" Margin="200,636,0,0" Name="leftButton" VerticalAlignment="Top" Width="87" Click="leftButton_Click" IsEnabled="False">
                 <Button.Background>
                     <ImageBrush ImageSource="/OTMA;component/Images/white_left.png" Stretch="Uniform" />
                 </Button.Background>
@@ -43,9 +43,9 @@
             <Button Content="NPC" Height="72" HorizontalAlignment="Left" Margin="12,636,0,0" Name="npcButton" VerticalAlignment="Top" Width="160" Click="npcButton_Click" />
             <Image Height="556" HorizontalAlignment="Left" Margin="12,17,0,0" Name="mainImage" Stretch="Fill" VerticalAlignment="Top" Width="458" Source="/OTMA;component/Images/1x1.png" />
             <Image Height="124" HorizontalAlignment="Left" Margin="334,43,0,0" Name="npcImage" Stretch="Fill" VerticalAlignment="Top" Width="136" />
-            <TextBlock Height="51" HorizontalAlignment="Left" Margin="166,170,0,0" Name="doorLabel" Text="" VerticalAlignment="Top" Width="153" TextAlignment="Center" />
-            <TextBlock Height="47" HorizontalAlignment="Left" Margin="103,117,0,0" Name="eventNameLabel" Text="" VerticalAlignment="Top" Width="277" TextAlignment="Center" />
-            <TextBlock Height="253" HorizontalAlignment="Left" Margin="103,187,0,0" Name="eventHintLabel" Text="" VerticalAlignment="Top" Width="277" />
+            <TextBlock Height="51" HorizontalAlignment="Left" Margin="166,170,0,0" Name="doorLabel" Text="" VerticalAlignment="Top" Width="153" TextAlignment="Center" TextWrapping="Wrap" />
+            <TextBlock Height="47" HorizontalAlignment="Left" Margin="103,117,0,0" Name="eventNameLabel" Text="" VerticalAlignment="Top" Width="277" TextAlignment="Center" TextWrapping="Wrap" />
+            <TextBlock Height="253" HorizontalAlignment="Left" Margin="103,187,0,0" Name="eventHintLabel" Text="" VerticalAlignment="Top" Width="277" TextAlignment="Center" TextTrimming="None" TextWrapping="Wrap" />
         </Grid>
     </Grid>
  

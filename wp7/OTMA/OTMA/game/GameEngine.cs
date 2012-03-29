@@ -47,6 +47,7 @@ namespace OTMA.game
             {
                 switch (npc.role)
                 {
+                //TODO avatars
                     default:
                         npc.setImage("/OTMA;component/Images/player_avatar.png");
                         break;
@@ -60,7 +61,7 @@ namespace OTMA.game
 
             foreach (Event roomEvent in events)
             {
-                var randomNumber = rand.Next(0, doors.Count -1);
+                var randomNumber = rand.Next(0, doors.Count);
                 doors[randomNumber].setRoomEvent(roomEvent);
                 var room = doors[randomNumber].getRoom();
                 
@@ -144,22 +145,22 @@ namespace OTMA.game
 
             foreach (NpcPlayer npc in npcs)
             {
-                var randomNumber = rand.Next(0, boardElements.Count - 1);
+                var randomNumber = rand.Next(0, boardElements.Count);
                 npc.setCoordinate(boardElements[randomNumber].coordinate);
             }
         }
 
-        private BoardElement getCurrentBoardItem()
+        public BoardElement getCurrentBoardItem()
         {
             return board.getBoardElementForCoordinates(human.coordinate);
         }
 
-        private BoardElement getCurrentDoorItem()
+        public Door getCurrentDoorItem()
         {
             return board.getDoorForCoordinates(human.coordinate);
         }
 
-        private BoardElement getCurrentRoomItem()
+        public Room getCurrentRoomItem()
         {
             return board.getRoomForCoordinates(human.coordinate);
         }

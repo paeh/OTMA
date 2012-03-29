@@ -14,6 +14,7 @@ using OTMA.game;
 using OTMA.util;
 using OTMA.domain;
 using System.Windows.Media.Imaging;
+using System.Threading;
 
 namespace OTMA
 {
@@ -21,8 +22,9 @@ namespace OTMA
     {
         private GameEngine gameEngine = GameEngine.instance;
         private Dictionary<Direction, Button> moveButtons = new Dictionary<Direction, Button>();
+        private Timer contentTimer = null;
+        private static readonly int CONTENT_TIMEOUT_IN_SECONDS = 5;
 
-        // Constructor
         public GamePage()
         {
             InitializeComponent();
@@ -30,6 +32,7 @@ namespace OTMA
             moveButtons.Add(Direction.East, rightButton);
             moveButtons.Add(Direction.West, leftButton);
             moveButtons.Add(Direction.South, downButton);
+            this.contentTimer = new Timer(this.timeControlledRandomContent);
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -40,13 +43,14 @@ namespace OTMA
 
         public void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-
         }
+
+        #region "user interactions" 
 
         private void npcButton_Click(object sender, RoutedEventArgs e)
         {
             var npc = gameEngine.getNpcForCurrentPosition();
-            if(npc != null)
+            if (npc != null)
             {
                 var text = "";
                 foreach (Hint hint in npc.hints)
@@ -57,6 +61,28 @@ namespace OTMA
                 MessageBox.Show(text, npc.name, MessageBoxButton.OK);
             }
         }
+
+        private void upButton_Click(object sender, RoutedEventArgs e)
+        {
+            move(Direction.North);
+        }
+
+        private void downButton_Click(object sender, RoutedEventArgs e)
+        {
+            move(Direction.South);
+        }
+
+        private void leftButton_Click(object sender, RoutedEventArgs e)
+        {
+            move(Direction.West);
+        }
+
+        private void rightButton_Click(object sender, RoutedEventArgs e)
+        {
+            move(Direction.East);
+        }
+
+        #endregion
 
         private void move(Direction direction)
         {
@@ -70,44 +96,90 @@ namespace OTMA
                 handleButtons(newPosition);
                 handleNpcs(newPosition);
                 
-                handleDoorIfPossible(newPosition);
+                doDoorRelatedActionsIfNecessary(newPosition);
+                doRoomRelatedActionsIfNecessary(newPosition);
             }
         }
 
-        private void handleDoorIfPossible(BoardElement newPosition)
+        private void doDoorRelatedActionsIfNecessary(BoardElement newPosition)
         {
-            if (newPosition is Door && (newPosition as Door).roomEvent != null)
+            if (isDoor(newPosition) && hasEvent(newPosition))
                 doorLabel.Text = (newPosition as Door).roomEvent.shortTitle;
             else
                 doorLabel.Text = "";
         }
 
-        private void handleRoomIfPossible(BoardElement newPosition)
+        private void doRoomRelatedActionsIfNecessary(BoardElement newPosition)
         {
-            var room = (newPosition as Room);
-
-            if (newPosition is Room && room.roomEvent != null)
+            if (isRoom(newPosition) && hasEvent(newPosition))
             {
+                var room = (newPosition as Room);
                 eventNameLabel.Text = room.roomEvent.title;
                 eventHintLabel.Text = room.getRandomContent();
+                contentTimer.Change(CONTENT_TIMEOUT_IN_SECONDS * 1000, CONTENT_TIMEOUT_IN_SECONDS * 1000);
             }
             else
-                doorLabel.Text = "";
+            {
+                eventNameLabel.Text = "";
+                eventHintLabel.Text = "";
+                contentTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            }
         }
 
         private void handleNpcs(BoardElement newPosition)
         {
-            var npc = gameEngine.getNpcForCurrentPosition();
-            if (npc != null)
+            if (!isDoor(newPosition) && !isRoom(newPosition))
             {
-                var imageUri = new Uri(npc.picture, UriKind.Relative);
-                npcImage.Source = new BitmapImage(imageUri);
+                var npc = gameEngine.getNpcForCurrentPosition();
+                if (npc != null)
+                {
+                    var imageUri = new Uri(npc.picture, UriKind.Relative);
+                    npcImage.Source = new BitmapImage(imageUri);
+                }
+                else
+                {
+                    npcImage.Source = null;
+                }
             }
             else
             {
                 npcImage.Source = null;
             }
+        }
 
+        private Boolean isDoor(BoardElement element)
+        {
+            if (element is Door)
+                return true;
+
+            return false;
+        }
+
+        private Boolean isRoom(BoardElement element)
+        {
+            if (element is Room)
+                return true;
+
+            return false;
+        }
+
+        private Boolean hasEvent(BoardElement element)
+        {
+            if (isDoor(element) && (element as Door).roomEvent != null)
+                return true;
+
+            if (isRoom(element) && (element as Room).roomEvent != null)
+                return true;
+
+            return false;
+                
+        }
+
+        private void timeControlledRandomContent(object state)
+        {
+            var room = gameEngine.getCurrentRoomItem();
+            var content = room.getRandomContent();
+            this.Dispatcher.BeginInvoke(() => { eventHintLabel.Text = content; });
         }
 
         private void handleButtons(BoardElement newPosition)
@@ -131,26 +203,6 @@ namespace OTMA
             downButton.IsEnabled = false;
             leftButton.IsEnabled = false;
             rightButton.IsEnabled = false;
-        }
-
-        private void upButton_Click(object sender, RoutedEventArgs e)
-        {
-            move(Direction.North);
-        }
-
-        private void downButton_Click(object sender, RoutedEventArgs e)
-        {
-            move(Direction.South);
-        }
-
-        private void leftButton_Click(object sender, RoutedEventArgs e)
-        {
-            move(Direction.West);
-        }
-
-        private void rightButton_Click(object sender, RoutedEventArgs e)
-        {
-            move(Direction.East);
         }
     }
 }

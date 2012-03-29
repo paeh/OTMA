@@ -41,10 +41,10 @@ namespace OTMA.domain
 
         public String getRandomContent()
         {
-            if (rand.Next(1, 2) == 1)
-                return hints[rand.Next(0, hints.Count - 1)].text;
+            if (rand.Next(1, 3) == 1)
+                return hints[rand.Next(0, hints.Count)].text;
             else
-                return stories[rand.Next(0, stories.Count - 1)];
+                return stories[rand.Next(0, stories.Count)];
         }
     }
 }

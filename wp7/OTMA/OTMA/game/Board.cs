@@ -200,7 +200,7 @@ namespace OTMA.game
             return null;            
         }
 
-        public BoardElement getRoomForCoordinates(Coordinate coordinate)
+        public Room getRoomForCoordinates(Coordinate coordinate)
         {
             if (rooms.ContainsKey(coordinate))
             {
@@ -210,7 +210,7 @@ namespace OTMA.game
             return null;
         }
 
-        public BoardElement getDoorForCoordinates(Coordinate coordinate)
+        public Door getDoorForCoordinates(Coordinate coordinate)
         {
             if (doors.ContainsKey(coordinate))
             {
