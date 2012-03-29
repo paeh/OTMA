@@ -40,5 +40,18 @@ namespace OTMA.domain
 
             return null;
         }
+
+        public virtual List<Direction> getAvailableDirections()
+        {
+            List<Direction> result = new List<Direction>();
+
+            foreach (Direction key in directions.Keys)
+            {
+                if (directions[key] != null)
+                    result.Add(key);
+            }
+
+            return result;
+        }
     }
 }

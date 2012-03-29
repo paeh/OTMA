@@ -1,0 +1,2 @@
+OTMA = {};
+jQuery.cssProps.size = '';

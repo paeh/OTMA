@@ -14,10 +14,12 @@ namespace OTMA.domain
     public class Hint
     {
         public String text { private set; get; }
+        public String title { private set; get; }
 
-        public Hint(String text)
+        public Hint(String title, String text)
         {
             this.text = text;
+            this.title = title;
         }
     }
 }

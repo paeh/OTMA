@@ -2,6 +2,9 @@
 
 <head>
     <script src='script/jquery-1.7.2.js' type='text/javascript'></script>
+
+    <script src='script/env.js' type='text/javascript'></script>
+    <script src='script/util.js' type='text/javascript'></script>
     <script src='script/board.js' type='text/javascript'></script>
     <script src='script/navigation.js' type='text/javascript'></script>
     <script src='script/engine.js' type='text/javascript'></script>
@@ -19,7 +22,20 @@
 <div id='main'>
 
     <div id='npcHolder'>
-        <img id='npcImage' src='images/head.png'  alt="npcImage"/>
+        <img id='npcImage' src='images/blank.png'  alt="npcImage"/>
+    </div>
+    <div id='conversationHolder'>
+        <div id='conversation'>
+            <div class='conversationTitle'></div>
+            <div class='conversationSubTitle'></div>
+            <div class='conversationText'></div>
+            <div><input type='submit' value='Close' onclick="OTMA.View.hideNPCConversation()"></div>
+        </div>
+    </div>
+    <div id='doorDescriptionHolder'>
+        <div class='doorDescription'>
+            someText
+        </div>
     </div>
     <div id='background'>
         <img id='backgroundImage' src='images/map/1x1.png' alt="backgroundImage"/>
@@ -28,7 +44,7 @@
 
     <div id='navigation'>
         <div id='npcButton'>
-            <input type='submit' value='NPC' />
+            <input type='submit' value='NPC' onclick="OTMA.View.toggleNPCConversation()"/>
         </div>
         <table class="navigationButtons">
             <tr>

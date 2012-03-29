@@ -1,7 +1,7 @@
 $(document).ready(function() {
-    OTMA = {};
     loadXML("otma-config.xml", function() {
-        loadBoard();
+        initialiseBoard();
+        initialiseNPC();
         loadNavigationFunctions();
         initialiseEngine();
         initialiseView();

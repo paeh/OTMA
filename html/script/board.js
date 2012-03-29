@@ -1,16 +1,43 @@
-function loadBoard() {
-    OTMA.Board = {
-        boardElements: {}
-    };
+OTMA.Board = {
+    boardElements: {},
 
-    OTMA.Board.createBoardElement = function(picture, coordinate) {
-        OTMA.Board.boardElements[coordinate] = {
+    reset:function() {
+        OTMA.Board.boardElements = {}
+    },
+    getRandomBoardElement: function() {
+        var coordinates = OTMA.Board.getCoordinatesArray();
+        var randomNumber = OTMA.util.getRandomInteger(coordinates.length);
+
+        return OTMA.Board.boardElements[coordinates[randomNumber]];
+    },
+    getCoordinatesArray: function() {
+        var coordinates = [];
+        for (var coordinate in OTMA.Board.boardElements) {
+            if (OTMA.Board.boardElements.hasOwnProperty(coordinate)) {
+                coordinates.push(coordinate);
+            }
+        }
+        return coordinates;
+    },
+    getBoardElementsInAvailableDirections: function(boardElement) {
+        var directions = [];
+        if (boardElement.south) directions.push(boardElement.south);
+        if (boardElement.north) directions.push(boardElement.north);
+        if (boardElement.east) directions.push(boardElement.east);
+        if (boardElement.west) directions.push(boardElement.west);
+
+        return directions;
+    },
+    createBoardElement: function(picture, coordinate) {
+        var element = {
             picture: picture,
-            coordinate: coordinate
+            coordinate: coordinate,
+            type: 'MAP'
         };
-    };
-
-    OTMA.Board.setNavigationBorders = function(coordinate, north, east, south, west) {
+        OTMA.Board.boardElements[coordinate] = element;
+        return element;
+    },
+    setNavigationBorders: function(coordinate, north, east, south, west) {
         var boardItem = OTMA.Board.boardElements[coordinate];
         if (! boardItem) return;
 
@@ -23,23 +50,38 @@ function loadBoard() {
             north: northMapItem,
             south: southMapItem,
             east: eastMapItem,
-            west: westMapItem,
-            type: 'MAP'
+            west: westMapItem
         });
-    };
+    },
+    setRoomToRandomDoor: function(doors, room) {
 
-    OTMA.Board.setRoomToRandomDoor = function(doors, room) {
-        var randomNumber = Math.floor(Math.random() * doors.length);
-        var door = doors[randomNumber];
+        do {
+            var randomNumber = OTMA.util.getRandomInteger(doors.length);
+            var door = doors[randomNumber];
 
-        delete doors[randomNumber];
+            if (door) {
+                door['room'] = room;
+                door['type'] = 'DOOR';
 
-        door['room'] = room;
-        room['door'] = door;
+                room['door'] = door;
+                room['type'] = 'ROOM';
+
+                delete doors[randomNumber];
+            }
+
+        } while(! door);
 
         return door;
-    };
+    },
+    setRandomDoorsToXMLEvents: function(availableDoors) {
+        $.each(OTMA.xmlContent.events, function(index, event) {
+            var door = OTMA.Board.setRoomToRandomDoor(availableDoors, event);
+            OTMA.Board.boardElements[door.coordinate][door.direction] = door;
+        });
+    }
+};
 
+function initialiseBoard() {
     var doors = [{
         coordinate: '1x2',
         direction: 'north'
@@ -147,9 +189,6 @@ function loadBoard() {
     OTMA.Board.setNavigationBorders("5x4", "4x4", undefined, undefined, "5x3");
     OTMA.Board.setNavigationBorders("5x5", "4x5", undefined, undefined, undefined);
 
-    $.each(OTMA.xmlContent.events, function(index, event) {
-       var door = OTMA.Board.setRoomToRandomDoor(doors, event);
-        OTMA.Board.boardElements[door.coordinate][door.direction] = door;
-    });
+    OTMA.Board.setRandomDoorsToXMLEvents(doors);
 }
 
