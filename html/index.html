@@ -15,34 +15,37 @@
     <script src='script/script.js' type='text/javascript'></script>
 
     <link type='text/css' rel='stylesheet' href='style.css' />
+    <link type='text/css' rel='stylesheet' href='handheld.css' media="only screen and (max-device-width: 1000px)" />
 </head>
 
 <body>
 
 <div id='main'>
 
-    <div id='npcHolder'>
-        <img id='npcImage' src='images/blank.png'  alt="npcImage"/>
-    </div>
-    <div id='conversationHolder' class='holder'>
-        <div id='conversation'>
-            <div class='conversationTitle'></div>
-            <div class='conversationSubTitle'></div>
-            <div class='conversationText'></div>
-            <div><input type='submit' value='Close' onclick="OTMA.View.hideNPCConversation()"></div>
+    <div id='content'>
+        <div id='npcHolder'>
+            <img id='npcImage' src='images/blank.png'  alt="npcImage"/>
         </div>
-    </div>
-    <div id='doorDescriptionHolder' class='holder'>
-        <div class='doorDescription'>
-            someText
+        <div id='conversationHolder' class='holder'>
+            <div id='conversation'>
+                <div class='conversationTitle'></div>
+                <div class='conversationSubTitle'></div>
+                <div class='conversationText'></div>
+                <div><input type='submit' value='Close' onclick="OTMA.View.hideNPCConversation()"></div>
+            </div>
         </div>
-    </div>
-    <div id='roomHolder' class='holder'>
-        <div class='roomTitle'>title</div>
-        <div class='roomHint'><div class="title"></div><div class="text"></div></div>
-    </div>
-    <div id='background'>
-        <img id='backgroundImage' src='images/map/1x1.png' alt="backgroundImage"/>
+        <div id='doorDescriptionHolder' class='holder'>
+            <div class='doorDescription'>
+                someText
+            </div>
+        </div>
+        <div id='roomHolder' class='holder'>
+            <div class='roomTitle'>title</div>
+            <div class='roomHint'><div class="title"></div><div class="text"></div></div>
+        </div>
+        <div id='background'>
+            <img id='backgroundImage' src='images/map/1x1.png' alt="backgroundImage"/>
+        </div>
     </div>
 
 
