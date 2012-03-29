@@ -21,7 +21,7 @@ namespace OTMA.game
         private XmlParser xmlParser = XmlParser.instance;
 
         private Board board = Board.instance;
-        private Player human = null;
+        private HumanPlayer human = null;
         private int stepCounter = 0;
         private GameState state = GameState.OnBoard;
 
@@ -47,6 +47,7 @@ namespace OTMA.game
             {
                 switch (npc.role)
                 {
+                //TODO avatars
                     default:
                         npc.setImage("/OTMA;component/Images/player_avatar.png");
                         break;
@@ -60,14 +61,33 @@ namespace OTMA.game
 
             foreach (Event roomEvent in events)
             {
-                var randomNumber = rand.Next(0, doors.Count -1);
+                var randomNumber = rand.Next(0, doors.Count);
                 doors[randomNumber].setRoomEvent(roomEvent);
                 var room = doors[randomNumber].getRoom();
                 
                 room.setHints(hints);
-                room.setStories(new List<String>() { "e=mc²", "dummy1", "dummy2", "your only limit is your own imagination" });
+                room.setStories(new List<Story>() { new Story("", "e=mc²"), new Story("", "dummy1"), new Story("", "dummy2"), new Story("", "your only limit is your own imagination") });
                 room.setEvent(roomEvent);
                 doors.RemoveAt(randomNumber);
+            }
+        }
+
+        public NpcPlayer getAndLogNpcForCurrentPostition()
+        {
+            var currentNpc = getNpcForCurrentPosition();
+            if(npcs != null && !human.foundNpcs.Contains(currentNpc))
+            {
+                human.foundNpcs.Add(currentNpc);
+            }
+
+            return currentNpc;
+        }
+
+        public void logHint(Hint hint)
+        {
+            if (hint != null && !human.foundHints.Contains(hint))
+            {
+                human.foundHints.Add(hint);
             }
         }
 
@@ -77,7 +97,6 @@ namespace OTMA.game
             {
                 if(npc.coordinate.Equals(human.coordinate))
                     return npc;
-
             }
 
             return null;
@@ -144,24 +163,29 @@ namespace OTMA.game
 
             foreach (NpcPlayer npc in npcs)
             {
-                var randomNumber = rand.Next(0, boardElements.Count - 1);
+                var randomNumber = rand.Next(0, boardElements.Count);
                 npc.setCoordinate(boardElements[randomNumber].coordinate);
             }
         }
 
-        private BoardElement getCurrentBoardItem()
+        public BoardElement getCurrentBoardItem()
         {
             return board.getBoardElementForCoordinates(human.coordinate);
         }
 
-        private BoardElement getCurrentDoorItem()
+        public Door getCurrentDoorItem()
         {
             return board.getDoorForCoordinates(human.coordinate);
         }
 
-        private BoardElement getCurrentRoomItem()
+        public Room getCurrentRoomItem()
         {
             return board.getRoomForCoordinates(human.coordinate);
+        }
+
+        public Boolean allRequirementsFulfied()
+        {
+            return human.foundHints.Count == VictoryRequirements.FOUND_HINT_AMOUNT && human.foundNpcs.Count == VictoryRequirements.FOUND_NPC_AMOUNT;
         }
 
     }

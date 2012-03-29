@@ -17,14 +17,14 @@ namespace OTMA.domain
         private static Random rand = new Random(DateTime.Now.Millisecond);
 
         public List<Hint> hints { private set; get; }
-        public List<String> stories { private set; get; }
+        public List<Story> stories { private set; get; }
         public Event roomEvent { private set; get; }
 
         public Room(Coordinate coordinate, String picture)
             : base(coordinate, picture)
         { }
 
-        public void setStories(List<String> stories)
+        public void setStories(List<Story> stories)
         {
             this.stories = stories;
         }
@@ -39,12 +39,12 @@ namespace OTMA.domain
             this.roomEvent = roomEvent;
         }
 
-        public String getRandomContent()
+        public Hint getRandomContent()
         {
-            if (rand.Next(1, 2) == 1)
-                return hints[rand.Next(0, hints.Count - 1)].text;
+            if (rand.Next(1, 3) == 1)
+                return hints[rand.Next(0, hints.Count)];
             else
-                return stories[rand.Next(0, stories.Count - 1)];
+                return stories[rand.Next(0, stories.Count)];
         }
     }
 }

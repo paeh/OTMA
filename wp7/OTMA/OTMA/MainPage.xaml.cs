@@ -19,7 +19,6 @@ namespace OTMA
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        // Constructor
         public MainPage()
         {
             InitializeComponent();
@@ -27,7 +26,8 @@ namespace OTMA
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            XmlParser.asyncInit("http://hs-augsburg.de/~lieback/pub/otma-config.xml", xmlLoadingDone);
+            var url = "http://hs-augsburg.de/~lieback/pub/otma-config.xml?junk=" + DateTime.Now.ToString();
+            XmlParser.asyncInit(url, xmlLoadingDone);
         }
 
         private void xmlLoadingDone(IAsyncResult result)

@@ -22,4 +22,12 @@ namespace OTMA.domain
             this.title = title;
         }
     }
+
+    public class Story: Hint
+    {
+        public Story(String title, String text)
+            : base(title, text)
+        { }
+
+    }
 }
