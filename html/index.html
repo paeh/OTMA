@@ -24,7 +24,7 @@
     <div id='npcHolder'>
         <img id='npcImage' src='images/blank.png'  alt="npcImage"/>
     </div>
-    <div id='conversationHolder'>
+    <div id='conversationHolder' class='holder'>
         <div id='conversation'>
             <div class='conversationTitle'></div>
             <div class='conversationSubTitle'></div>
@@ -32,10 +32,14 @@
             <div><input type='submit' value='Close' onclick="OTMA.View.hideNPCConversation()"></div>
         </div>
     </div>
-    <div id='doorDescriptionHolder'>
+    <div id='doorDescriptionHolder' class='holder'>
         <div class='doorDescription'>
             someText
         </div>
+    </div>
+    <div id='roomHolder' class='holder'>
+        <div class='roomTitle'>title</div>
+        <div class='roomHint'><div class="title"></div><div class="text"></div></div>
     </div>
     <div id='background'>
         <img id='backgroundImage' src='images/map/1x1.png' alt="backgroundImage"/>

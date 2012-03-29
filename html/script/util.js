@@ -14,6 +14,12 @@ Object.prototype.size = function () {
 OTMA.util = {
     getRandomInteger: function(maximum) {
         return Math.floor(Math.random() * maximum);
+    },
+    setCSSVisibilityOnElement: function(selector, doShow) {
+        var attr = 'hidden';
+        if (doShow) attr = 'visible';
+        $(selector).css({
+            visibility: attr
+        });
     }
 };
-

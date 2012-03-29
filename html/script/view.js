@@ -43,24 +43,19 @@ OTMA.View = {
         var player = OTMA.Engine.Player;
         var mapItem = OTMA.Board.boardElements[player.coordinate];
 
-        var showDoorDescription = function(doShow) {
-            var attr = 'hidden';
-            if (doShow) attr = 'visible';
-            $('#doorDescriptionHolder').css({
-                visibility: attr
-            });
-        };
-
         var setBackground = function(picture) {
             $('#backgroundImage').attr('src', picture);
         };
 
         var doShowDoorDescription = false;
+        var doShowRoomHolder = false;
+
         if (OTMA.Engine.Player.viewingRoom) {
             setBackground('images/room.png');
+            doShowRoomHolder = true;
+            OTMA.View.showRoomHint();
         } else if (OTMA.Engine.Player.viewingDoor) {
             doShowDoorDescription = true;
-
             var abbreviation = mapItem[OTMA.Engine.Player.viewingDoor].room.abbreviation;
             $('#doorDescriptionHolder div.doorDescription').html(abbreviation);
             setBackground('images/door.png');
@@ -68,7 +63,11 @@ OTMA.View = {
             setBackground('images/map/' + mapItem.picture);
         }
 
-        showDoorDescription(doShowDoorDescription);
+        OTMA.util.setCSSVisibilityOnElement('#doorDescriptionHolder', doShowDoorDescription);
+        OTMA.util.setCSSVisibilityOnElement('#roomHolder', doShowRoomHolder);
+        if (! doShowRoomHolder) {
+            OTMA.util.setCSSVisibilityOnElement('#roomHolder div.roomHint', doShowRoomHolder);
+        }
     },
 
     toggleNPCConversation: function() {
@@ -97,6 +96,23 @@ OTMA.View = {
     hideNPCConversation: function() {
         $('#conversation').css({
             visibility: 'hidden'
+        });
+    },
+
+    showRoomHint: function() {
+        $('#roomHolder div.roomHint').delay(3000).queue(function(next) {
+            if (OTMA.Engine.Player.viewingRoom) {
+                var hint = OTMA.Engine.getRandomRoomHint();
+
+                $('#roomHolder div.roomHint div.title').html(hint.title);
+                $('#roomHolder div.roomHint div.text').html(hint.text);
+
+                OTMA.util.setCSSVisibilityOnElement('#roomHolder div.roomHint', true);
+
+                OTMA.View.showRoomHint();
+            }
+
+            next();
         });
     }
 };

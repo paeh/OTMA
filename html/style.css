@@ -1,11 +1,11 @@
 body {
-    font-family:Verdana,serif;
+    font-family:Verdana,sans-serif;
 }
 
 div#main {
     width: 400px;
     padding: 3px;
-    border: 1px blue solid;
+    border: 1px silver solid;
 }
 
 div#background {
@@ -21,6 +21,7 @@ div#background img {
     height: 100%;
 }
 
+
 div#npcHolder {
     float: right;
     height: 100px;
@@ -32,13 +33,17 @@ div#npcHolder img {
     position: relative;
 }
 
-div#conversationHolder {
-    z-index: 2;
-    margin-top: -100px;
+
+div.holder {
     float: left;
     position: relative;
     width: 100%;
     height: 400px;
+}
+
+div#conversationHolder {
+    z-index: 2;
+    margin-top: -100px;
     visibility: visible;
 }
 
@@ -54,9 +59,6 @@ div#conversation {
 div#doorDescriptionHolder {
     z-index: 2;
     margin-top: -400px;
-    width: 100%;
-    float: left;
-    position: relative;
     visibility: hidden;
 }
 
@@ -69,6 +71,43 @@ div#doorDescriptionHolder div.doorDescription {
     padding: 5px;
     font-weight: bold;
     border-radius: 5px;
+}
+
+div#roomHolder {
+    margin-top: -400px;
+    z-index: 2;
+    visibility: hidden;
+}
+
+div#roomHolder div.roomTitle {
+    padding: 5px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 30px;
+    text-shadow: 2px 2px 2px #abc;
+
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.27) 59%, rgba(0,0,0,0) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.65)), color-stop(59%,rgba(0,0,0,0.27)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.27) 59%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.27) 59%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.27) 59%,rgba(0,0,0,0) 100%); /* IE10+ */
+    background: linear-gradient(top,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.27) 59%,rgba(0,0,0,0) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+}
+
+div#roomHolder div.roomHint {
+    width: 80%;
+    margin: 270px auto 0;
+    padding: 5px;
+    border: 3px silver solid;
+    border-radius: 5px;
+    background: rgba(188, 188, 188, 0.6);
+    visibility: hidden;
+}
+
+div#roomHolder div.roomHint div.title {
+    font-weight: bold;
 }
 
 div#conversation div {
