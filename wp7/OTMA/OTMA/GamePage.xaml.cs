@@ -45,11 +45,11 @@ namespace OTMA
         {
         }
 
-        #region "user interactions" 
+        #region "user interactions"
 
         private void npcButton_Click(object sender, RoutedEventArgs e)
         {
-            var npc = gameEngine.getNpcForCurrentPosition();
+            var npc = gameEngine.getAndLogNpcForCurrentPostition();
             if (npc != null)
             {
                 var text = "";
@@ -95,7 +95,7 @@ namespace OTMA
 
                 handleButtons(newPosition);
                 handleNpcs(newPosition);
-                
+
                 doDoorRelatedActionsIfNecessary(newPosition);
                 doRoomRelatedActionsIfNecessary(newPosition);
             }
@@ -115,7 +115,7 @@ namespace OTMA
             {
                 var room = (newPosition as Room);
                 eventNameLabel.Text = room.roomEvent.title;
-                eventHintLabel.Text = room.getRandomContent();
+                eventHintLabel.Text = getRandomRoomContent(room);
                 contentTimer.Change(CONTENT_TIMEOUT_IN_SECONDS * 1000, CONTENT_TIMEOUT_IN_SECONDS * 1000);
             }
             else
@@ -124,6 +124,23 @@ namespace OTMA
                 eventHintLabel.Text = "";
                 contentTimer.Change(Timeout.Infinite, Timeout.Infinite);
             }
+        }
+
+        private String getRandomRoomContent(Room room)
+        {
+            var content = room.getRandomContent();
+
+            if (content != null)
+            {
+                if (!(content is Story))
+                {
+                    gameEngine.logHint(content);
+                }
+
+                return content.text;
+            }
+
+            return "";
         }
 
         private void handleNpcs(BoardElement newPosition)
@@ -135,16 +152,12 @@ namespace OTMA
                 {
                     var imageUri = new Uri(npc.picture, UriKind.Relative);
                     npcImage.Source = new BitmapImage(imageUri);
-                }
-                else
-                {
-                    npcImage.Source = null;
+                    return;
                 }
             }
-            else
-            {
-                npcImage.Source = null;
-            }
+
+            npcImage.Source = null;
+
         }
 
         private Boolean isDoor(BoardElement element)
@@ -172,13 +185,12 @@ namespace OTMA
                 return true;
 
             return false;
-                
+
         }
 
         private void timeControlledRandomContent(object state)
         {
-            var room = gameEngine.getCurrentRoomItem();
-            var content = room.getRandomContent();
+            var content = getRandomRoomContent(gameEngine.getCurrentRoomItem());
             this.Dispatcher.BeginInvoke(() => { eventHintLabel.Text = content; });
         }
 
