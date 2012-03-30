@@ -4,6 +4,6 @@ OTMA.Constants = {
     NPC_ROUND_SPEED: 2,
     DEFAULT_STATE: 'MAP',
 
-    WIN_NPC_COUNT: 0,
-    WIN_HINT_COUNT: 0
+    WIN_NPC_COUNT: 2,
+    WIN_HINT_COUNT: 2
 };
