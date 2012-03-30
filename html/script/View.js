@@ -3,14 +3,14 @@ OTMA.View = {
 
         MAP: {
             updateButtons: function() {
-                var player = OTMA.Engine.Player;
+                var player = OTMA.PlayerService.Player;
                 var mapItem = OTMA.Board.boardElements[player.coordinate];
                 OTMA.View.disableButtonsBasedOnDirections(mapItem);
             },
             updateNPCView: function() {
-                var currentBoardElement = OTMA.Engine.getCurrentBoardElement();
-                var npc = OTMA.NPC.getNPCForBoardElement(currentBoardElement);
-                if (npc && ! OTMA.Engine.Player.viewingDoor && ! OTMA.Engine.Player.viewingRoom) {
+                var currentBoardElement = OTMA.GameEngine.getCurrentBoardElement();
+                var npc = OTMA.NPCService.getNPCForBoardElement(currentBoardElement);
+                if (npc && OTMA.GameEngine.state == 'MAP') {
                     $('#npcImage').attr('src', 'images/avatars/' + npc.picture);
                 } else {
                     $('#npcImage').attr('src', 'images/blank.png');
@@ -18,17 +18,6 @@ OTMA.View = {
             },
             updateBackground: function(currentMapItem) {
                 OTMA.View.setBackground('images/map/' + currentMapItem.picture);
-            },
-            movePlayerTo: function(directionProperty, currentMapItem) {
-                var directionMapItem = currentMapItem[directionProperty];
-                if (! directionMapItem) return;
-
-                OTMA.Engine.Player.coordinate = directionMapItem.coordinate;
-
-                if (directionMapItem.type == 'DOOR') {
-                    OTMA.Engine.Player.viewingDoor = directionProperty;
-                    OTMA.Engine.setState('DOOR');
-                }
             }
         },
 
@@ -38,22 +27,13 @@ OTMA.View = {
                 OTMA.View.disableButtonsBasedOnDirections(mapItem);
             },
             updateBackground: function(currentMapItem) {
-                var abbreviation = currentMapItem[OTMA.Engine.Player.viewingDoor].room.abbreviation;
+                var abbreviation = currentMapItem[OTMA.PlayerService.Player.viewingDoor].room.abbreviation;
                 $('#doorDescriptionHolder div.doorDescription').html(abbreviation);
                 OTMA.View.setBackground('images/door.png');
                 OTMA.util.setCSSVisibilityOnElement('#doorDescriptionHolder', true);
             },
             updateNPCView: function() {
                 $('#npcImage').attr('src', 'images/blank.png');
-            },
-            movePlayerTo: function(directionProperty) {
-                if (directionProperty == 'north') {
-                    OTMA.Engine.setState('ROOM');
-                    OTMA.Engine.Player.viewingRoom = true;
-                } else if (directionProperty == 'south') {
-                    OTMA.Engine.setState('MAP');
-                    OTMA.Engine.Player.viewingDoor = undefined;
-                }
             }
         },
 
@@ -63,7 +43,7 @@ OTMA.View = {
                 OTMA.View.disableButtonsBasedOnDirections(mapItem);
             },
             updateBackground: function(currentMapItem) {
-                var door = currentMapItem[OTMA.Engine.Player.viewingDoor];
+                var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
 
                 OTMA.View.setBackground('images/room.png');
                 OTMA.View.currentState.showRoomHint();
@@ -72,11 +52,11 @@ OTMA.View = {
                 $('#roomHolder div.roomTitle').html(door.room.title);
             },
             showRoomHint: function() {
-                if (OTMA.Engine.state != 'ROOM') {
+                if (OTMA.GameEngine.state != 'ROOM') {
                     return;
                 }
 
-                var hint = OTMA.Engine.getRandomRoomHint();
+                var hint = OTMA.GameEngine.getRandomRoomHint();
 
                 $('#roomHolder div.roomHint div.title').html(hint.title);
                 $('#roomHolder div.roomHint div.text').html(hint.text);
@@ -88,17 +68,13 @@ OTMA.View = {
             },
             updateNPCView: function() {
                 $('#npcImage').attr('src', 'images/blank.png');
-            },
-            movePlayerTo: function(direction) {
-                if (direction != 'south') return;
-                OTMA.Engine.setState('DOOR');
             }
         }
     },
     currentState: {},
 
     update: function() {
-        var player = OTMA.Engine.Player;
+        var player = OTMA.PlayerService.Player;
         var mapItem = OTMA.Board.boardElements[player.coordinate];
 
         $.each($('div.holder'), function(index, element) {
@@ -112,14 +88,6 @@ OTMA.View = {
         if (OTMA.View.currentState.update) {
             OTMA.View.currentState.update();
         }
-    },
-
-    movePlayerTo: function(directionProperty) {
-        var currentCoordinate = OTMA.Engine.Player.coordinate;
-        var currentMapItem = OTMA.Board.boardElements[currentCoordinate];
-
-        OTMA.View.currentState.movePlayerTo(directionProperty, currentMapItem);
-        $(document).trigger('playerMove');
     },
 
     disableButtonIfNavigationIsUndefined: function(mapItem, property, buttonId) {
@@ -156,8 +124,8 @@ OTMA.View = {
     },
 
     showNPCConversation: function() {
-        var currentBoardElement = OTMA.Engine.getCurrentBoardElement();
-        var npc = OTMA.NPC.getNPCForBoardElement(currentBoardElement);
+        var currentBoardElement = OTMA.GameEngine.getCurrentBoardElement();
+        var npc = OTMA.NPCService.getNPCForBoardElement(currentBoardElement);
 
         if (! npc) return;
 
@@ -166,6 +134,8 @@ OTMA.View = {
         $('#conversation div.conversationText').html(npc.introduction);
 
         OTMA.util.setCSSVisibilityOnElement('#conversationHolder', true);
+
+        $(document).trigger('npcFound', npc);
     },
 
     hideNPCConversation: function() {
@@ -176,7 +146,7 @@ OTMA.View = {
 
 function initialiseView() {
 
-    OTMA.View.currentState = OTMA.View.states.MAP;
+    OTMA.View.currentState = OTMA.View.states[OTMA.Constants.DEFAULT_STATE];
 
     $(document).bind('stateChange', function(event, newState) {
         OTMA.View.currentState = OTMA.View.states[newState];
@@ -196,7 +166,14 @@ function initialiseView() {
             40: 'south'
         };
         if (keyMap[keyCode]) {
-            OTMA.View.movePlayerTo(keyMap[keyCode]);
+            OTMA.GameEngine.movePlayer(keyMap[keyCode]);
         }
     });
+
+    $(document).bind('meetsWinCondition', function() {
+        if (! OTMA.View.hasShowWinInstruction) {
+            OTMA.util.setCSSVisibilityOnElement('#winInstructionHolder', true);
+            OTMA.View.hasShowWinInstruction = true;
+        }
+    })
 }

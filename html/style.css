@@ -52,11 +52,11 @@ div.holder {
     position: absolute;
     width: 100%;
     height: 100%;
+    visibility: hidden;
 }
 
 div#conversationHolder {
     z-index: 4;
-    visibility: visible;
 }
 
 div#conversation {
@@ -89,6 +89,23 @@ div#doorDescriptionHolder div.doorDescription {
 div#roomHolder {
     z-index: 2;
     visibility: hidden;
+}
+
+div#winInstructionHolder {
+    z-index: 10;
+}
+
+div#winInstructionHolder div {
+    position: absolute;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    top: 10%;
+    left: 5%;
+    right: 5%;
+    border-radius: 5px;
+    border: 3px red solid;
+    background: rgba(255, 0, 0, 0.6);
 }
 
 div#roomHolder div.roomTitle {

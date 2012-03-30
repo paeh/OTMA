@@ -37,7 +37,8 @@ $(document).ready(function() {
     loadXML("otma-config.xml", function() {
         initialiseBoard();
         initialiseNPC();
-        initialiseEngine();
+        initialiseGameEngine();
+        initialisePlayerService();
         initialiseView();
     });
 

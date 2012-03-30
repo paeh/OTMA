@@ -1,0 +1,9 @@
+OTMA.Constants = {
+    HINT_TIME: 10000,
+
+    NPC_ROUND_SPEED: 2,
+    DEFAULT_STATE: 'MAP',
+
+    WIN_NPC_COUNT: 0,
+    WIN_HINT_COUNT: 0
+};
