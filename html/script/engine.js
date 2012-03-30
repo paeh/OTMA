@@ -1,4 +1,8 @@
+/**
+ * OTMA.Engine.state is one of [RECEPTION, MAP, DOOR, ROOM]
+ */
 OTMA.Engine = {
+    state: 'MAP',
     hints: [],
     Player: {
         coordinate: '1x1',
@@ -20,6 +24,11 @@ OTMA.Engine = {
         }
 
         return hint;
+    },
+
+    setState: function(newState) {
+        OTMA.Engine.state = newState;
+        $(document).trigger('stateChange', newState);
     }
 };
 

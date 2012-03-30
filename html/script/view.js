@@ -1,73 +1,150 @@
 OTMA.View = {
-    updateButtons: function() {
-        function disableButtonIfNavigationIsUndefined(mapItem, property, buttonId) {
-            if (mapItem[property] == undefined) {
-                $(buttonId).attr('disabled', true);
-                $(buttonId).attr('src', 'images/grey_' + property + '.png');
-            } else {
-                $(buttonId).attr('disabled', false);
-                $(buttonId).attr('src', 'images/black_' + property + '.png');
+    states: {
+
+        MAP: {
+            updateButtons: function() {
+                var player = OTMA.Engine.Player;
+                var mapItem = OTMA.Board.boardElements[player.coordinate];
+                OTMA.View.disableButtonsBasedOnDirections(mapItem);
+            },
+            updateNPCView: function() {
+                var currentBoardElement = OTMA.Engine.getCurrentBoardElement();
+                var npc = OTMA.NPC.getNPCForBoardElement(currentBoardElement);
+                if (npc && ! OTMA.Engine.Player.viewingDoor && ! OTMA.Engine.Player.viewingRoom) {
+                    $('#npcImage').attr('src', 'images/avatars/' + npc.picture);
+                } else {
+                    $('#npcImage').attr('src', 'images/blank.png');
+                }
+            },
+            updateBackground: function(currentMapItem) {
+                OTMA.View.setBackground('images/map/' + currentMapItem.picture);
+            },
+            movePlayerTo: function(directionProperty, currentMapItem) {
+                var directionMapItem = currentMapItem[directionProperty];
+                if (! directionMapItem) return;
+
+                OTMA.Engine.Player.coordinate = directionMapItem.coordinate;
+
+                if (directionMapItem.type == 'DOOR') {
+                    OTMA.Engine.Player.viewingDoor = directionProperty;
+                    OTMA.Engine.setState('DOOR');
+                }
+            }
+        },
+
+        DOOR: {
+            updateButtons: function() {
+                var mapItem = { south: 'south', north: 'north' };
+                OTMA.View.disableButtonsBasedOnDirections(mapItem);
+            },
+            updateBackground: function(currentMapItem) {
+                var abbreviation = currentMapItem[OTMA.Engine.Player.viewingDoor].room.abbreviation;
+                $('#doorDescriptionHolder div.doorDescription').html(abbreviation);
+                OTMA.View.setBackground('images/door.png');
+                OTMA.util.setCSSVisibilityOnElement('#doorDescriptionHolder', true);
+            },
+            updateNPCView: function() {
+                $('#npcImage').attr('src', 'images/blank.png');
+            },
+            movePlayerTo: function(directionProperty) {
+                if (directionProperty == 'north') {
+                    OTMA.Engine.setState('ROOM');
+                    OTMA.Engine.Player.viewingRoom = true;
+                } else if (directionProperty == 'south') {
+                    OTMA.Engine.setState('MAP');
+                    OTMA.Engine.Player.viewingDoor = undefined;
+                }
+            }
+        },
+
+        ROOM: {
+            updateButtons: function() {
+                var mapItem = { south: 'south' };
+                OTMA.View.disableButtonsBasedOnDirections(mapItem);
+            },
+            updateBackground: function(currentMapItem) {
+                var door = currentMapItem[OTMA.Engine.Player.viewingDoor];
+
+                OTMA.View.setBackground('images/room.png');
+                OTMA.View.currentState.showRoomHint();
+                OTMA.util.setCSSVisibilityOnElement('#roomHolder', true);
+
+                $('#roomHolder div.roomTitle').html(door.room.title);
+            },
+            showRoomHint: function() {
+                if (OTMA.Engine.state != 'ROOM') {
+                    return;
+                }
+
+                var hint = OTMA.Engine.getRandomRoomHint();
+
+                $('#roomHolder div.roomHint div.title').html(hint.title);
+                $('#roomHolder div.roomHint div.text').html(hint.text);
+
+                $('#roomHolder div.roomHint').delay(OTMA.Constants.HINT_TIME).queue(function(next) {
+                    OTMA.View.states.ROOM.showRoomHint();
+                    next();
+                });
+            },
+            updateNPCView: function() {
+                $('#npcImage').attr('src', 'images/blank.png');
+            },
+            movePlayerTo: function(direction) {
+                if (direction != 'south') return;
+                OTMA.Engine.setState('DOOR');
             }
         }
-
-        function disableButtonsBasedOnDirections(mapItem) {
-            disableButtonIfNavigationIsUndefined(mapItem, 'north', '#north');
-            disableButtonIfNavigationIsUndefined(mapItem, 'south', '#south');
-            disableButtonIfNavigationIsUndefined(mapItem, 'west', '#west');
-            disableButtonIfNavigationIsUndefined(mapItem, 'east', '#east');
-        }
-
-        var player = OTMA.Engine.Player;
-        var mapItem;
-        if (OTMA.Engine.Player.viewingRoom) {
-            mapItem = { south: 'south' };
-        } else if (OTMA.Engine.Player.viewingDoor) {
-            mapItem = { south: 'south', north: 'north' };
-        } else {
-            mapItem = OTMA.Board.boardElements[player.coordinate];
-        }
-        disableButtonsBasedOnDirections(mapItem);
     },
+    currentState: {},
 
-    updateNPCView: function() {
-        var currentBoardElement = OTMA.Engine.getCurrentBoardElement();
-        var npc = OTMA.NPC.getNPCForBoardElement(currentBoardElement);
-        if (npc && ! OTMA.Engine.Player.viewingDoor && ! OTMA.Engine.Player.viewingRoom) {
-            $('#npcImage').attr('src', 'images/avatars/' + npc.picture);
-        } else {
-            $('#npcImage').attr('src', 'images/blank.png');
-        }
-    },
-
-    updateMapBackground: function() {
+    update: function() {
         var player = OTMA.Engine.Player;
         var mapItem = OTMA.Board.boardElements[player.coordinate];
 
-        var setBackground = function(picture) {
-            $('#backgroundImage').attr('src', picture);
-        };
+        $.each($('div.holder'), function(index, element) {
+            OTMA.util.setCSSVisibilityOnElement('#' + element.id, false);
+        });
 
-        var doShowDoorDescription = false;
-        var doShowRoomHolder = false;
+        OTMA.View.currentState.updateNPCView();
+        OTMA.View.currentState.updateButtons();
+        OTMA.View.currentState.updateBackground(mapItem);
 
-        if (OTMA.Engine.Player.viewingRoom) {
-            setBackground('images/room.png');
-            doShowRoomHolder = true;
-            OTMA.View.showRoomHint();
-        } else if (OTMA.Engine.Player.viewingDoor) {
-            doShowDoorDescription = true;
-            var abbreviation = mapItem[OTMA.Engine.Player.viewingDoor].room.abbreviation;
-            $('#doorDescriptionHolder div.doorDescription').html(abbreviation);
-            setBackground('images/door.png');
+        if (OTMA.View.currentState.update) {
+            OTMA.View.currentState.update();
+        }
+    },
+
+    movePlayerTo: function(directionProperty) {
+        var currentCoordinate = OTMA.Engine.Player.coordinate;
+        var currentMapItem = OTMA.Board.boardElements[currentCoordinate];
+
+        OTMA.View.currentState.movePlayerTo(directionProperty, currentMapItem);
+        $(document).trigger('playerMove');
+    },
+
+    disableButtonIfNavigationIsUndefined: function(mapItem, property, buttonId) {
+        if (mapItem[property] == undefined) {
+            $(buttonId).attr('disabled', true);
+            $(buttonId).attr('src', 'images/grey_' + property + '.png');
         } else {
-            setBackground('images/map/' + mapItem.picture);
+            $(buttonId).attr('disabled', false);
+            $(buttonId).attr('src', 'images/black_' + property + '.png');
         }
+    },
 
-        OTMA.util.setCSSVisibilityOnElement('#doorDescriptionHolder', doShowDoorDescription);
-        OTMA.util.setCSSVisibilityOnElement('#roomHolder', doShowRoomHolder);
-        if (! doShowRoomHolder) {
-            OTMA.util.setCSSVisibilityOnElement('#roomHolder div.roomHint', doShowRoomHolder);
-        }
+    disableButtonsBasedOnDirections: function(mapItem) {
+        OTMA.View.disableButtonIfNavigationIsUndefined(mapItem, 'north', '#north');
+        OTMA.View.disableButtonIfNavigationIsUndefined(mapItem, 'south', '#south');
+        OTMA.View.disableButtonIfNavigationIsUndefined(mapItem, 'west', '#west');
+        OTMA.View.disableButtonIfNavigationIsUndefined(mapItem, 'east', '#east');
+    },
+
+    updateButtons: function() {
+        OTMA.View.currentState.updateButtons();
+    },
+
+    setBackground: function(picture) {
+        $('#backgroundImage').attr('src', picture);
     },
 
     toggleNPCConversation: function() {
@@ -88,47 +165,38 @@ OTMA.View = {
         $('#conversation div.conversationSubTitle').html(npc.title);
         $('#conversation div.conversationText').html(npc.introduction);
 
-        $('#conversation').css({
-            visibility: 'visible'
-        });
+        OTMA.util.setCSSVisibilityOnElement('#conversationHolder', true);
     },
 
     hideNPCConversation: function() {
-        $('#conversation').css({
-            visibility: 'hidden'
-        });
-    },
-
-    showRoomHint: function() {
-        if (! OTMA.Engine.Player.viewingRoom) {
-            return;
-        }
-
-        var hint = OTMA.Engine.getRandomRoomHint();
-
-        $('#roomHolder div.roomHint div.title').html(hint.title);
-        $('#roomHolder div.roomHint div.text').html(hint.text);
-
-        OTMA.util.setCSSVisibilityOnElement('#roomHolder div.roomHint', true);
-
-
-        $('#roomHolder div.roomHint').delay(OTMA.Constants.HINT_TIME).queue(function(next) {
-            OTMA.View.showRoomHint();
-            next();
-        });
+        OTMA.util.setCSSVisibilityOnElement('#conversationHolder', false);
     }
 };
 
+
 function initialiseView() {
-    var update = function() {
-        OTMA.View.updateButtons();
-        OTMA.View.updateMapBackground();
-        OTMA.View.updateNPCView();
-        OTMA.View.hideNPCConversation();
-    };
+
+    OTMA.View.currentState = OTMA.View.states.MAP;
+
+    $(document).bind('stateChange', function(event, newState) {
+        OTMA.View.currentState = OTMA.View.states[newState];
+    });
 
     $(document).bind('npcMove', function() {
-        update();
+        OTMA.View.update();
     });
-    update();
+    OTMA.View.update();
+
+    $(document).keydown(function(event) {
+        var keyCode = event.which;
+        var keyMap = {
+            37: 'west',
+            38: 'north',
+            39: 'east',
+            40: 'south'
+        };
+        if (keyMap[keyCode]) {
+            OTMA.View.movePlayerTo(keyMap[keyCode]);
+        }
+    });
 }

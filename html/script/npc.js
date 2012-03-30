@@ -29,7 +29,7 @@ OTMA.NPC = {
     },
     moveAllNPCs: function() {
         OTMA.NPC.stepCounter++;
-        if (OTMA.NPC.stepCounter % 2 != 0) return;
+        if (OTMA.NPC.stepCounter % OTMA.Constants.NPC_ROUND_SPEED != 0) return;
 
         $.each(OTMA.NPC.people, function(index, npc) {
             OTMA.NPC.moveNPC(npc);
@@ -62,7 +62,6 @@ function initialiseNPC() {
     $.each(people, function(index, npc) {
         var boardElement = OTMA.NPC.findRandomNonOccupiedBoardElement();
         npc.coordinate = boardElement.coordinate;
-        npc.coordinate =  '1x1';
         npc.picture = OTMA.NPC.getNextAvatarPicture();
         OTMA.NPC.people.push(npc);
     });

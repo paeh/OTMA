@@ -15,7 +15,6 @@ div#main {
 }
 
 div#content {
-    /*height: 400px;*/
     position: relative;
 }
 
@@ -61,12 +60,14 @@ div#conversationHolder {
 }
 
 div#conversation {
-    margin: 20px;
+    position: absolute;
+    top:5%;
+    left: 5%;
+    right: 5%;
     border: 2px silver solid;
     border-radius: 10px;
     padding: 10px;
     background-color: silver;
-    visibility: hidden;
 }
 
 div#doorDescriptionHolder {
@@ -117,8 +118,7 @@ div#roomHolder div.roomHint {
     border: 3px silver solid;
     border-radius: 5px;
     background: rgba(188, 188, 188, 0.6);
-    /*visibility: hidden;*/
-    max-height: 80%;
+    max-height: 70%;
     overflow: auto;
 }
 

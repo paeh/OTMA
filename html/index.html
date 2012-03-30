@@ -4,9 +4,9 @@
     <script src='script/jquery-1.7.2.js' type='text/javascript'></script>
 
     <script src='script/env.js' type='text/javascript'></script>
+    <script src='script/constants.js' type='text/javascript'></script>
     <script src='script/util.js' type='text/javascript'></script>
     <script src='script/board.js' type='text/javascript'></script>
-    <script src='script/navigation.js' type='text/javascript'></script>
     <script src='script/engine.js' type='text/javascript'></script>
     <script src='script/view.js' type='text/javascript'></script>
     <script src='script/loadxml.js' type='text/javascript'></script>
@@ -16,7 +16,7 @@
 
     <link type='text/css' rel='stylesheet' href='style.css' />
     <link type='text/css' rel='stylesheet' href='handheld.css' media="only screen and (max-device-width: 1000px)" />
-    <meta name="viewport" content="width=100%; initial-scale=1; maximum-scale=1; minimum-scale=1; user-scalable=no;" />
+    <meta name="viewport" content="width=100%; initial-scale=1; maximum-scale=1; minimum-scale=1; user-scalable=no" />
 </head>
 
 <body>
@@ -59,12 +59,12 @@
         </div>
         <table class="navigationButtons">
             <tr>
-                <td rowspan="2"><input id='west' type='image' src='images/black_west.png' value='west' onclick='OTMA.Navigation.movePlayerTo("west")'/></td>
-                <td><input id='north' type='image' src='images/black_north.png' value='north' onclick='OTMA.Navigation.movePlayerTo("north")' /></td>
-                <td rowspan="2"><input id='east' type='image' src='images/black_east.png' value='east' onclick='OTMA.Navigation.movePlayerTo("east")'/></td>
+                <td rowspan="2"><input id='west' type='image' src='images/black_west.png' value='west' onclick='OTMA.View.movePlayerTo("west")'/></td>
+                <td><input id='north' type='image' src='images/black_north.png' value='north' onclick='OTMA.View.movePlayerTo("north")' /></td>
+                <td rowspan="2"><input id='east' type='image' src='images/black_east.png' value='east' onclick='OTMA.View.movePlayerTo("east")'/></td>
             </tr>
             <tr>
-                <td><input id='south' type='image' src='images/black_south.png' value='south' onclick='OTMA.Navigation.movePlayerTo("south")' /></td>
+                <td><input id='south' type='image' src='images/black_south.png' value='south' onclick='OTMA.View.movePlayerTo("south")' /></td>
             </tr>
         </table>
     </div>
