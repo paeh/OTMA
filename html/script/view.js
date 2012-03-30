@@ -100,18 +100,20 @@ OTMA.View = {
     },
 
     showRoomHint: function() {
-        $('#roomHolder div.roomHint').delay(3000).queue(function(next) {
-            if (OTMA.Engine.Player.viewingRoom) {
-                var hint = OTMA.Engine.getRandomRoomHint();
+        if (! OTMA.Engine.Player.viewingRoom) {
+            return;
+        }
 
-                $('#roomHolder div.roomHint div.title').html(hint.title);
-                $('#roomHolder div.roomHint div.text').html(hint.text);
+        var hint = OTMA.Engine.getRandomRoomHint();
 
-                OTMA.util.setCSSVisibilityOnElement('#roomHolder div.roomHint', true);
+        $('#roomHolder div.roomHint div.title').html(hint.title);
+        $('#roomHolder div.roomHint div.text').html(hint.text);
 
-                OTMA.View.showRoomHint();
-            }
+        OTMA.util.setCSSVisibilityOnElement('#roomHolder div.roomHint', true);
 
+
+        $('#roomHolder div.roomHint').delay(OTMA.Constants.HINT_TIME).queue(function(next) {
+            OTMA.View.showRoomHint();
             next();
         });
     }
