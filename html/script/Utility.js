@@ -21,5 +21,10 @@ OTMA.util = {
         $(selector).css({
             visibility: attr
         });
+    },
+    addToArrayIfNotContained: function(array, item) {
+        if ($.inArray(item, array) == -1) {
+            array.push(item);
+        }
     }
 };

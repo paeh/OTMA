@@ -1,7 +1,7 @@
-/**
- * OTMA.Engine.state is one of [RECEPTION, MAP, DOOR, ROOM]
- */
 OTMA.GameEngine = {
+    /**
+     * State is one of [RECEPTION, MAP, DOOR, ROOM]
+     */
     state: 'MAP',
     hints: [],
 

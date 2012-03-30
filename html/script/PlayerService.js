@@ -56,16 +56,10 @@ function initialisePlayerService() {
 
 
     $(document).bind('npcFound', function(event, npc) {
-        var foundNPC = OTMA.PlayerService.Player.foundNPC;
-        if ($.inArray(npc, foundNPC) == -1) {
-            foundNPC.push(npc);
-        }
+        OTMA.util.addToArrayIfNotContained(OTMA.PlayerService.Player.foundNPC, npc);
     });
 
     $(document).bind('hintFound', function(event, hint) {
-        var foundHints = OTMA.PlayerService.Player.foundHints;
-        if ($.inArray(foundHints, hint) == -1) {
-            foundHints.push(hint);
-        }
+        OTMA.util.addToArrayIfNotContained(OTMA.PlayerService.Player.foundHints, hint);
     })
 }
