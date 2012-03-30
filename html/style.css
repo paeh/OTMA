@@ -1,15 +1,17 @@
 body {
     font-family:Verdana,sans-serif;
-    font-size: 100%;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 div#main {
     position: relative;
-    /*width: 400px;*/
-    /*height: 480px;*/
-    /*border: 1px silver solid;*/
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 480px;
+    overflow: hidden;
 }
 
 div#content {
@@ -95,6 +97,7 @@ div#roomHolder div.roomTitle {
     font-weight: bold;
     font-size: 30px;
     text-shadow: 2px 2px 2px #abc;
+    max-height: 15%;
 
     background: -moz-linear-gradient(top,  rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.27) 59%, rgba(0,0,0,0) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.65)), color-stop(59%,rgba(0,0,0,0.27)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
@@ -114,11 +117,17 @@ div#roomHolder div.roomHint {
     border: 3px silver solid;
     border-radius: 5px;
     background: rgba(188, 188, 188, 0.6);
-    visibility: hidden;
+    /*visibility: hidden;*/
+    max-height: 80%;
+    overflow: auto;
 }
 
 div#roomHolder div.roomHint div.title {
     font-weight: bold;
+}
+
+div#roomHolder div.roomHint div.text {
+    padding: 3px;
 }
 
 div#conversation div {
@@ -148,6 +157,7 @@ table.navigationButtons {
 
 table.navigationButtons tr td {
     text-align: center;
+    width: 33%;
 }
 
 table.navigationButtons input {

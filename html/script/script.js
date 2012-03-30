@@ -1,18 +1,17 @@
 $(document).ready(function() {
-    var height = window.innerHeight;
-    var width = window.innerWidth;
 
-
+    var windowHeight = window.innerHeight;
+    var windowWidth = window.innerWidth;
 
     var mainDimension;
     var zoomFactor;
-    if (height < width) {
-        mainDimension = height;
-        zoomFactor = 1200 / mainDimension;
+    if (windowHeight < windowWidth) {
+        mainDimension = windowHeight;
+        zoomFactor = mainDimension / 480;
         mainDimension -= (150 * zoomFactor);
     } else {
-        mainDimension = width;
-        zoomFactor = 2800 / mainDimension;
+        mainDimension = windowWidth;
+        zoomFactor = mainDimension / 400;
     }
 
     mainDimension = mainDimension / zoomFactor;
@@ -34,8 +33,6 @@ $(document).ready(function() {
         top: mainHeightPx,
         width: mainWidthPx
     });
-
-    // assume to be mobile
 
     loadXML("otma-config.xml", function() {
         initialiseBoard();
