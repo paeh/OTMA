@@ -3,20 +3,105 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    background: #000;
 }
 
 div#main {
     position: relative;
     top: 0;
     left: 0;
-    width: 400px;
-    height: 480px;
     overflow: hidden;
 }
 
-div#content {
+div.mainSide {
+    width: 600px;
+    height: 400px;
+}
+
+div.mainSide div.content {
+    left: 200px;
+}
+
+div.mainBottom {
+    width: 400px;
+    height: 550px;
+}
+
+div.content {
     position: relative;
 }
+
+
+
+
+div.navigationSide {
+    height: 480px;
+    width: 200px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+div.navigationSide table {
+    position: absolute;
+    padding-left: 20px;
+    top: 30%;
+}
+
+div.navigationSide div.npcButton {
+    position: relative;
+    top: 10%;
+    text-align: center;
+}
+
+div.navigationSide div.npcButton input {
+    margin: 20%;
+    width: 60%;
+}
+
+div.navigationBottom {
+    height: 150px;
+    position: absolute;
+    left: 5%;;
+    right: 10%;
+}
+
+
+div.navigationBottom table {
+    position: absolute;
+    padding-left: 20px;
+    top: 0;
+}
+
+div.navigationBottom div.npcButton {
+    position: relative;
+    width: 100px;
+    top: 10%;
+    text-align: center;
+}
+
+div.navigationBottom div.npcButton input {
+    margin: 20%;
+    width: 60%;
+}
+
+div.navigationBottom table.navigationButtons {
+    width: 50%;
+    margin-left: 40%;
+}
+
+div#navigation table tr td {
+    text-align: center;
+    width: 33%;
+}
+
+div.navigationBottom table tr td input {
+    width: 100%;
+}
+
+
+
+
 
 div#background {
     position: absolute;
@@ -160,34 +245,4 @@ div#conversation div.conversationSubTitle {
     margin-bottom: 10px;
 }
 
-div#navigation {
-    height: 100px;
-    position: absolute;
-    left: 10%;
-    right: 10%;
-}
 
-table.navigationButtons {
-    width: 50%;
-    margin-left: 40%;
-}
-
-table.navigationButtons tr td {
-    text-align: center;
-    width: 33%;
-}
-
-table.navigationButtons input {
-    height: 50%;
-    width: 100%;
-}
-
-div#npcButton {
-    float: left;
-    width: 30%;
-    text-align: center;
-}
-
-div#npcButton input {
-    margin: 20%;
-}

@@ -18,13 +18,15 @@
     <link type='text/css' rel='stylesheet' href='style.css' />
     <link type='text/css' rel='stylesheet' href='handheld.css' media="only screen and (max-device-width: 1000px)" />
     <meta name="viewport" content="width=100%; initial-scale=1; maximum-scale=1; minimum-scale=1; user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 </head>
 
 <body>
 
 <div id='main'>
 
-    <div id='content'>
+    <div class='content'>
         <div id='npcHolder'>
             <img id='npcImage' src='images/blank.png'  alt="npcImage"/>
         </div>
@@ -59,7 +61,7 @@
 
 
     <div id='navigation'>
-        <div id='npcButton'>
+        <div id='npcButton' class='npcButton'>
             <input type='submit' value='NPC' onclick="OTMA.View.toggleNPCConversation()"/>
         </div>
         <table class="navigationButtons">

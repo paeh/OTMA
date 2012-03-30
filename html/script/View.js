@@ -96,7 +96,7 @@ OTMA.View = {
             $(buttonId).attr('src', 'images/grey_' + property + '.png');
         } else {
             $(buttonId).attr('disabled', false);
-            $(buttonId).attr('src', 'images/black_' + property + '.png');
+            $(buttonId).attr('src', 'images/white_' + property + '.png');
         }
     },
 
