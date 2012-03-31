@@ -37,10 +37,12 @@ OTMA.GameEngine = {
 };
 
 function initialiseGameEngine() {
-    OTMA.GameEngine.hints = OTMA.xmlContent.hints;
-    $(document).bind('playerMove', function() {
+    var winListener = function() {
         if (OTMA.GameEngine.checkWinConditions()) {
             $(document).trigger('meetsWinCondition');
+            $(document).unbind('playerMove', winListener);
         }
-    })
+    };
+    OTMA.GameEngine.hints = OTMA.xmlContent.hints;
+    $(document).bind('playerMove', winListener )
 }

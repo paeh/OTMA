@@ -2,9 +2,8 @@ OTMA.View = {
     states: {
 
         MAP: {
-            updateButtons: function() {
+            updateButtons: function(mapItem) {
                 var player = OTMA.PlayerService.Player;
-                var mapItem = OTMA.Board.boardElements[player.coordinate];
                 OTMA.View.disableButtonsBasedOnDirections(mapItem);
             },
             updateNPCView: function() {
@@ -38,18 +37,28 @@ OTMA.View = {
         },
 
         ROOM: {
-            updateButtons: function() {
+            updateButtons: function(currentMapItem) {
+                var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
+                var room = door.room;
+
                 var mapItem = { south: 'south' };
+                if (room.type == 'WIN_ROOM') {
+                   mapItem = {};
+                }
                 OTMA.View.disableButtonsBasedOnDirections(mapItem);
             },
             updateBackground: function(currentMapItem) {
                 var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
 
-                OTMA.View.setBackground('images/room.png');
-                OTMA.View.currentState.showRoomHint();
-                OTMA.util.setCSSVisibilityOnElement('#roomHolder', true);
+                if (door.room.type == 'WIN_ROOM') {
+                    OTMA.View.setBackground('images/champion.png');
+                } else {
+                    OTMA.View.setBackground('images/room.png');
+                    OTMA.View.currentState.showRoomHint();
+                    OTMA.util.setCSSVisibilityOnElement('#roomHolder', true);
 
-                $('#roomHolder div.roomTitle').html(door.room.title);
+                    $('#roomHolder div.roomTitle').html(door.room.title);
+                }
             },
             showRoomHint: function() {
                 if (OTMA.GameEngine.state != 'ROOM') {
@@ -95,7 +104,7 @@ OTMA.View = {
         });
 
         OTMA.View.currentState.updateNPCView();
-        OTMA.View.currentState.updateButtons();
+        OTMA.View.currentState.updateButtons(mapItem);
         OTMA.View.currentState.updateBackground(mapItem);
 
         if (OTMA.View.currentState.update) {
@@ -185,9 +194,6 @@ function initialiseView() {
     });
 
     $(document).bind('meetsWinCondition', function() {
-        if (! OTMA.View.hasShowWinInstruction) {
-            OTMA.util.setCSSVisibilityOnElement('#winInstructionHolder', true);
-            OTMA.View.hasShowWinInstruction = true;
-        }
-    })
+        OTMA.util.setCSSVisibilityOnElement('#winInstructionHolder', true);
+    });
 }

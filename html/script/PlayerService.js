@@ -33,6 +33,11 @@ OTMA.PlayerService = {
         },
         ROOM: {
             movePlayer: function(direction) {
+                var door = OTMA.GameEngine.getCurrentBoardElement()[OTMA.PlayerService.Player.viewingDoor];
+                var room = door.room;
+
+                if (room.type == 'WIN_ROOM') return;
+
                 if (direction != 'south') return;
                 OTMA.GameEngine.setState('DOOR');
             }
@@ -40,6 +45,8 @@ OTMA.PlayerService = {
     },
 
     movePlayer: function(directionProperty) {
+        if (! OTMA.PlayerService.currentState) return;
+
         var currentCoordinate = OTMA.PlayerService.Player.coordinate;
         var currentMapItem = OTMA.Board.boardElements[currentCoordinate];
 
