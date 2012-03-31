@@ -50,6 +50,11 @@
                 <div class="text"></div>
             </div>
         </div>
+        <div id='receptionHolder' class='holder'>
+            <div class='receptionBox'>
+                <input type='submit' value='enter' onclick="OTMA.GameEngine.setState('MAP');"/>
+            </div>
+        </div>
 
         <div id='winInstructionHolder' class='holder'>
             <div class='winInstruction'>You have found all required hints and NPCs. Now go and find the exit door!</div>
@@ -66,12 +71,12 @@
         </div>
         <table class="navigationButtons">
             <tr>
-                <td rowspan="2"><input id='west' type='image' src='images/black_west.png' value='west' onclick='OTMA.GameEngine.movePlayer("west")'/></td>
-                <td><input id='north' type='image' src='images/black_north.png' value='north' onclick='OTMA.GameEngine.movePlayer("north")' /></td>
-                <td rowspan="2"><input id='east' type='image' src='images/black_east.png' value='east' onclick='OTMA.GameEngine.movePlayer("east")'/></td>
+                <td rowspan="2"><input id='west' type='image' value='west' onclick='OTMA.GameEngine.movePlayer("west")'/></td>
+                <td><input id='north' type='image' value='north' onclick='OTMA.GameEngine.movePlayer("north")' /></td>
+                <td rowspan="2"><input id='east' type='image' value='east' onclick='OTMA.GameEngine.movePlayer("east")'/></td>
             </tr>
             <tr>
-                <td><input id='south' type='image' src='images/black_south.png' value='south' onclick='OTMA.GameEngine.movePlayer("south")' /></td>
+                <td><input id='south' type='image' value='south' onclick='OTMA.GameEngine.movePlayer("south")' /></td>
             </tr>
         </table>
     </div>

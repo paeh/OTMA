@@ -69,6 +69,19 @@ OTMA.View = {
             updateNPCView: function() {
                 $('#npcImage').attr('src', 'images/blank.png');
             }
+        },
+        RECEPTION: {
+            updateButtons: function() {
+                // disable all buttons!
+                OTMA.View.disableButtonsBasedOnDirections({});
+            },
+            updateBackground: function(currentMapItem) {
+                OTMA.View.setBackground('images/reception.png');
+                OTMA.util.setCSSVisibilityOnElement('#receptionHolder', true);
+            },
+            updateNPCView: function() {
+                $('#npcImage').attr('src', 'images/blank.png');
+            }
         }
     },
     currentState: {},
@@ -150,6 +163,7 @@ function initialiseView() {
 
     $(document).bind('stateChange', function(event, newState) {
         OTMA.View.currentState = OTMA.View.states[newState];
+        OTMA.View.update();
     });
 
     $(document).bind('npcMove', function() {
