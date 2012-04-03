@@ -56,6 +56,8 @@ namespace OTMA.domain
         public HumanPlayer(int x, int y)
         {
             base.coordinate = new Coordinate(x, y);
+            foundHints = new HashSet<Hint>();
+            foundNpcs = new HashSet<NpcPlayer>();
         }
 
         public HashSet<Hint> foundHints { private set; get; }

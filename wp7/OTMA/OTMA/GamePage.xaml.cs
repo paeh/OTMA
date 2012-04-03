@@ -99,6 +99,14 @@ namespace OTMA
                 doDoorRelatedActionsIfNecessary(newPosition);
                 doRoomRelatedActionsIfNecessary(newPosition);
             }
+            else
+            {
+                var currentDoor = gameEngine.getCurrentDoorItem();
+                if (currentDoor != null && currentDoor is ExitDoor && !gameEngine.allRequirementsSatisfied())
+                {
+                    MessageBox.Show("You must find all hints and talk to all NPCs to exit!", "Can't exit", MessageBoxButton.OK);
+                }
+            }
         }
 
         private void doDoorRelatedActionsIfNecessary(BoardElement newPosition)
@@ -115,6 +123,7 @@ namespace OTMA
             {
                 var room = (newPosition as Room);
                 eventNameLabel.Text = room.roomEvent.title;
+                eventDesciption.Text = room.roomEvent.description;
                 eventHintLabel.Text = getRandomRoomContent(room);
                 contentTimer.Change(CONTENT_TIMEOUT_IN_SECONDS * 1000, CONTENT_TIMEOUT_IN_SECONDS * 1000);
             }
@@ -122,6 +131,7 @@ namespace OTMA
             {
                 eventNameLabel.Text = "";
                 eventHintLabel.Text = "";
+                eventDesciption.Text = "";
                 contentTimer.Change(Timeout.Infinite, Timeout.Infinite);
             }
         }
