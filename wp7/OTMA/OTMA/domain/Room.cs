@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace OTMA.domain
 {
@@ -42,9 +43,23 @@ namespace OTMA.domain
         public Hint getRandomContent()
         {
             if (rand.Next(1, 3) == 1)
+            {
+                System.Diagnostics.Debug.WriteLine("blubb:" + hints);
                 return hints[rand.Next(0, hints.Count)];
+            }
             else
+            {
+                System.Diagnostics.Debug.WriteLine("blubb2:" + stories);
                 return stories[rand.Next(0, stories.Count)];
+            }
+        }
+    }
+
+    public class ExitRoom : Room
+    {
+        public ExitRoom(Coordinate coordinate, String picture)
+            : base(coordinate, picture)
+        {
         }
     }
 }

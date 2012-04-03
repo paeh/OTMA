@@ -29,7 +29,11 @@ namespace OTMA.game
         public List<Door> getAllAvailableDoors()
         {
             var result = new List<Door>();
-            result.AddRange(doors.Values);
+            foreach (Door door in doors.Values)
+            {
+                if (!(door is ExitDoor))
+                    result.Add(door);
+            }
 
             return result;
         }
@@ -37,7 +41,11 @@ namespace OTMA.game
         public List<BoardElement> getAllAvailableBoardElements()
         {
             var result = new List<BoardElement>();
-            result.AddRange(board.Values);
+            foreach (Room room in rooms.Values)
+            {
+                if (!(room is ExitRoom))
+                    result.Add(room);
+            }
 
             return result;
         }
@@ -79,7 +87,10 @@ namespace OTMA.game
             var door3x1 = createAndAddDoor(3, 1, "/OTMA;component/Images/door.png");
             var door3x2 = createAndAddDoor(3, 2, "/OTMA;component/Images/door.png");
             var door3x4 = createAndAddDoor(3, 4, "/OTMA;component/Images/door.png");
-            var door3x5 = createAndAddDoor(3, 5, "/OTMA;component/Images/door.png");
+            //var door3x5 = createAndAddDoor(3, 5, "/OTMA;component/Images/door.png");
+
+            var exitDoor = createExitDoor(map3x5);
+
             var door4x1 = createAndAddDoor(4, 1, "/OTMA;component/Images/door.png");            
             var door4x3 = createAndAddDoor(4, 3, "/OTMA;component/Images/door.png");
             var door4x4 = createAndAddDoor(4, 4, "/OTMA;component/Images/door.png");
@@ -95,7 +106,7 @@ namespace OTMA.game
             var room3x1 = createAndAddRoom(3, 1, "");
             var room3x2 = createAndAddRoom(3, 2, "");
             var room3x4 = createAndAddRoom(3, 4, "");
-            var room3x5 = createAndAddRoom(3, 5, "");
+            //var room3x5 = createAndAddRoom(3, 5, "");
             var room4x1 = createAndAddRoom(4, 1, "");
             var room4x3 = createAndAddRoom(4, 3, "");
             var room4x4 = createAndAddRoom(4, 4, "");
@@ -111,7 +122,7 @@ namespace OTMA.game
             door3x1.setBoundaryItems(room3x1, null, map3x1, null);
             door3x2.setBoundaryItems(room3x2, null, map3x2, null);
             door3x4.setBoundaryItems(room3x4, null, map3x4, null);
-            door3x5.setBoundaryItems(room3x5, null, map3x5, null);
+            //door3x5.setBoundaryItems(room3x5, null, map3x5, null);
             door4x1.setBoundaryItems(room4x1, null, map4x1, null);
             door4x3.setBoundaryItems(room4x3, null, map4x3, null);
             door4x4.setBoundaryItems(room4x4, null, map4x4, null);
@@ -127,7 +138,7 @@ namespace OTMA.game
             room3x1.setBoundaryItems(null, null, door3x1, null);
             room3x2.setBoundaryItems(null, null, door3x2, null);
             room3x4.setBoundaryItems(null, null, door3x4, null);
-            room3x5.setBoundaryItems(null, null, door3x5, null);
+            //room3x5.setBoundaryItems(null, null, door3x5, null);
             room4x1.setBoundaryItems(null, null, door4x1, null);
             room4x3.setBoundaryItems(null, null, door4x3, null);
             room4x4.setBoundaryItems(null, null, door4x4, null);
@@ -149,7 +160,8 @@ namespace OTMA.game
             map3x2.setBoundaryItems(door3x2, map3x3, map4x2, null);
             map3x3.setBoundaryItems(map2x3, map3x4, null, map3x2);
             map3x4.setBoundaryItems(null, map3x5, door3x4, map3x3);
-            map3x5.setBoundaryItems(map2x5, door3x5, map4x5, map3x4);
+            //map3x5.setBoundaryItems(map2x5, door3x5, map4x5, map3x4);
+            map3x5.setBoundaryItems(map2x5, exitDoor, map4x5, map3x4);
             map4x1.setBoundaryItems(map3x1, map4x2, map5x1, door4x1);
             map4x2.setBoundaryItems(map3x2, map4x3, null, map4x1);
             map4x3.setBoundaryItems(null, door4x3, map5x3, map4x2);
@@ -161,6 +173,25 @@ namespace OTMA.game
             map5x4.setBoundaryItems(map4x4, null, null, map5x3);
             map5x5.setBoundaryItems(map4x5, null, null, door5x5);             
 
+        }
+
+        private ExitDoor createExitDoor(BoardElement map3x5)
+        {
+            var coordinate = new Coordinate(3, 5);
+            var exitDoor = new ExitDoor(coordinate, "/OTMA;component/Images/door.png");
+            var exitEvent = new Event("Finish", "Finish", "img");
+            var exitRoom = new Room(coordinate, "img");
+
+            exitDoor.setRoomEvent(exitEvent);
+            exitDoor.setBoundaryItems(exitRoom, null, map3x5, null);
+            doors.Add(coordinate, exitDoor);
+
+            exitRoom.setHints(new List<Hint>() { new Hint("Final title1", "bla1"), new Hint("Final title2", "bla2"), new Hint("Final title3", "bla3") });
+            exitRoom.setStories(new List<Story>() { new Story("Final title4", "bla4"), new Story("Final title5", "bla5"), new Story("Final title6", "bla6") });
+            exitRoom.setEvent(exitEvent);
+            rooms.Add(coordinate, exitRoom);
+
+            return exitDoor;
         }
 
         private Door createAndAddDoor(int x, int y, String img)

@@ -47,7 +47,7 @@ namespace OTMA.game
             {
                 switch (npc.role)
                 {
-                //TODO avatars
+                    //TODO avatars
                     default:
                         npc.setImage("/OTMA;component/Images/player_avatar.png");
                         break;
@@ -64,7 +64,7 @@ namespace OTMA.game
                 var randomNumber = rand.Next(0, doors.Count);
                 doors[randomNumber].setRoomEvent(roomEvent);
                 var room = doors[randomNumber].getRoom();
-                
+
                 room.setHints(hints);
                 room.setStories(new List<Story>() { new Story("", "e=mc²"), new Story("", "dummy1"), new Story("", "dummy2"), new Story("", "your only limit is your own imagination") });
                 room.setEvent(roomEvent);
@@ -75,7 +75,7 @@ namespace OTMA.game
         public NpcPlayer getAndLogNpcForCurrentPostition()
         {
             var currentNpc = getNpcForCurrentPosition();
-            if(npcs != null && !human.foundNpcs.Contains(currentNpc))
+            if (currentNpc != null && !human.foundNpcs.Contains(currentNpc))
             {
                 human.foundNpcs.Add(currentNpc);
             }
@@ -95,7 +95,7 @@ namespace OTMA.game
         {
             foreach (NpcPlayer npc in npcs)
             {
-                if(npc.coordinate.Equals(human.coordinate))
+                if (npc.coordinate.Equals(human.coordinate) && state == GameState.OnBoard)
                     return npc;
             }
 
@@ -104,53 +104,79 @@ namespace OTMA.game
 
         public BoardElement movePlayer(Direction direction)
         {
-            BoardElement item = null;
+            BoardElement currentPosition = null;
             BoardElement newPosition = null;
 
             if (state == GameState.AtDoor)
             {
-                item = getCurrentDoorItem();
+                currentPosition = getCurrentDoorItem();
 
                 // leave door
                 if (direction != Direction.North)
                 {
-                    newPosition = (item as Door).directions[Direction.South];
+                    newPosition = (currentPosition as Door).directions[Direction.South];
                     state = GameState.OnBoard;
                 }
                 // enter room if there is a event
-                else if((item as Door).roomEvent != null)
+                else if ((currentPosition as Door).roomEvent != null)
                 {
-                    newPosition = (item as Door).directions[Direction.North];
+                    newPosition = (currentPosition as Door).directions[Direction.North];
                     state = GameState.InRoom;
+                }
+            }
+            else if (state == GameState.AtExitDoor)
+            {
+                currentPosition = getCurrentDoorItem();
+
+                if (direction != Direction.North)
+                {
+                    newPosition = (currentPosition as ExitDoor).directions[Direction.South];
+                    state = GameState.OnBoard;
+                }
+                else
+                {
+                    if (this.allRequirementsSatisfied())
+                    {
+                        newPosition = (currentPosition as ExitDoor).directions[Direction.North];
+                        state = GameState.Done;
+                    }
                 }
             }
             else if (state == GameState.InRoom && direction == Direction.South)
             {
-                item = getCurrentRoomItem();
+                currentPosition = getCurrentRoomItem();
 
                 // leave room
-                newPosition = item.directions[Direction.South];
+                newPosition = currentPosition.directions[Direction.South];
                 state = GameState.AtDoor;
 
                 return newPosition;
             }
             else
             {
-                item = getCurrentBoardItem();
-                newPosition = item.getBoardItemForDirection(direction);
+                currentPosition = getCurrentBoardItem();
+                newPosition = currentPosition.getBoardItemForDirection(direction);
             }
 
             if (newPosition != null)
             {
-                human.setCoordinate(newPosition.coordinate);
-
-                if (newPosition is Door)
-                    state = GameState.AtDoor;
-                
-                stepCounter++;
-                if (stepCounter % 5 == 0)
+                if (newPosition is ExitDoor)
                 {
-                    shuffleNpcs();
+                    human.setCoordinate(newPosition.coordinate);
+                    state = GameState.AtExitDoor;
+                }
+                else
+                {
+                    human.setCoordinate(newPosition.coordinate);
+
+                    if (newPosition is Door)
+                        state = GameState.AtDoor;
+
+                    stepCounter++;
+                    if (stepCounter % 5 == 0)
+                    {
+                        shuffleNpcs();
+                    }
                 }
             }
 
@@ -183,9 +209,9 @@ namespace OTMA.game
             return board.getRoomForCoordinates(human.coordinate);
         }
 
-        public Boolean allRequirementsFulfied()
+        public Boolean allRequirementsSatisfied()
         {
-            return human.foundHints.Count == VictoryRequirements.FOUND_HINT_AMOUNT && human.foundNpcs.Count == VictoryRequirements.FOUND_NPC_AMOUNT;
+            return human.foundHints.Count >= VictoryRequirements.FOUND_HINT_AMOUNT && human.foundNpcs.Count >= VictoryRequirements.FOUND_NPC_AMOUNT;
         }
 
     }

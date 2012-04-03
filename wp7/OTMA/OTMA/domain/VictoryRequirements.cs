@@ -13,7 +13,7 @@ namespace OTMA.domain
 {
     public class VictoryRequirements
     {
-        public static int FOUND_NPC_AMOUNT = 6;
-        public static int FOUND_HINT_AMOUNT = 6;
+        public static int FOUND_NPC_AMOUNT = 1;
+        public static int FOUND_HINT_AMOUNT = 1;
     }
 }

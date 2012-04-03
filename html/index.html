@@ -3,26 +3,42 @@
 <head>
     <script src='script/jquery-1.7.2.js' type='text/javascript'></script>
 
-    <script src='script/env.js' type='text/javascript'></script>
-    <script src='script/util.js' type='text/javascript'></script>
-    <script src='script/board.js' type='text/javascript'></script>
-    <script src='script/navigation.js' type='text/javascript'></script>
-    <script src='script/engine.js' type='text/javascript'></script>
-    <script src='script/view.js' type='text/javascript'></script>
-    <script src='script/loadxml.js' type='text/javascript'></script>
-    <script src='script/npc.js' type='text/javascript'></script>
+    <script src='script/Env.js' type='text/javascript'></script>
+    <script src='script/Constants.js' type='text/javascript'></script>
+    <script src='script/Utility.js' type='text/javascript'></script>
+    <script src='script/Board.js' type='text/javascript'></script>
+    <script src='script/PlayerService.js' type='text/javascript'></script>
+    <script src='script/GameEngine.js' type='text/javascript'></script>
+    <script src='script/View.js' type='text/javascript'></script>
+    <script src='script/LoadXml.js' type='text/javascript'></script>
+    <script src='script/NPCService.js' type='text/javascript'></script>
 
-    <script src='script/script.js' type='text/javascript'></script>
+    <script src='script/InitScript.js' type='text/javascript'></script>
 
     <link type='text/css' rel='stylesheet' href='style.css' />
     <link type='text/css' rel='stylesheet' href='handheld.css' media="only screen and (max-device-width: 1000px)" />
+    <meta name="viewport" content="width=100%; initial-scale=1; maximum-scale=1; minimum-scale=1; user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-30499700-1']);
+      _gaq.push(['_trackPageview']);
+      
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
 </head>
 
 <body>
 
 <div id='main'>
 
-    <div id='content'>
+    <div class='content'>
         <div id='npcHolder'>
             <img id='npcImage' src='images/blank.png'  alt="npcImage"/>
         </div>
@@ -41,7 +57,19 @@
         </div>
         <div id='roomHolder' class='holder'>
             <div class='roomTitle'>title</div>
-            <div class='roomHint'><div class="title"></div><div class="text"></div></div>
+            <div class='roomHint'>
+                <div class="title"></div>
+                <div class="text"></div>
+            </div>
+        </div>
+        <div id='receptionHolder' class='holder'>
+            <div class='receptionBox'>
+                <input type='submit' value='enter' onclick="OTMA.GameEngine.setState('MAP');"/>
+            </div>
+        </div>
+
+        <div id='winInstructionHolder' class='holder'>
+            <div class='winInstruction'>You have found all required hints and NPCs. Now go and find the exit door!</div>
         </div>
         <div id='background'>
             <img id='backgroundImage' src='images/map/1x1.png' alt="backgroundImage"/>
@@ -50,17 +78,17 @@
 
 
     <div id='navigation'>
-        <div id='npcButton'>
+        <div id='npcButton' class='npcButton'>
             <input type='submit' value='NPC' onclick="OTMA.View.toggleNPCConversation()"/>
         </div>
         <table class="navigationButtons">
             <tr>
-                <td rowspan="2"><input id='west' type='image' src='images/black_west.png' value='west' onclick='OTMA.Navigation.movePlayerTo("west")'/></td>
-                <td><input id='north' type='image' src='images/black_north.png' value='north' onclick='OTMA.Navigation.movePlayerTo("north")' /></td>
-                <td rowspan="2"><input id='east' type='image' src='images/black_east.png' value='east' onclick='OTMA.Navigation.movePlayerTo("east")'/></td>
+                <td rowspan="2"><input id='west' type='image' value='west' onclick='OTMA.GameEngine.movePlayer("west")'/></td>
+                <td><input id='north' type='image' value='north' onclick='OTMA.GameEngine.movePlayer("north")' /></td>
+                <td rowspan="2"><input id='east' type='image' value='east' onclick='OTMA.GameEngine.movePlayer("east")'/></td>
             </tr>
             <tr>
-                <td><input id='south' type='image' src='images/black_south.png' value='south' onclick='OTMA.Navigation.movePlayerTo("south")' /></td>
+                <td><input id='south' type='image' value='south' onclick='OTMA.GameEngine.movePlayer("south")' /></td>
             </tr>
         </table>
     </div>

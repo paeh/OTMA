@@ -1,0 +1,9 @@
+OTMA.Constants = {
+    HINT_TIME: 10000,
+
+    NPC_ROUND_SPEED: 2,
+    DEFAULT_STATE: 'RECEPTION',
+
+    WIN_NPC_COUNT: 2,
+    WIN_HINT_COUNT: 2
+};
