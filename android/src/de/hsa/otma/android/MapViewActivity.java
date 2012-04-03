@@ -128,7 +128,7 @@ public class MapViewActivity extends Activity {
         int offsetX = 0;
         int offsetY = 0;
         for (NPCPlayer otmaEmployee : otmaEmployees) {
-            Drawable drawable = getResources().getDrawable(otmaEmployee.getDrawableId());
+            Drawable drawable = getResources().getDrawable(otmaEmployee.getPicture());
 
             ImageView employeeImageView = getHead(width, drawable, offsetX, offsetY);
             layout.addView(employeeImageView);

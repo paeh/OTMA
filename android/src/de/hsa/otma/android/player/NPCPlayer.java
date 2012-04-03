@@ -3,15 +3,15 @@ package de.hsa.otma.android.player;
 import de.hsa.otma.android.map.Coordinate;
 
 public class NPCPlayer extends Player {
-    private int drawableId;
+    private int picture;
 
 
-    public NPCPlayer(Coordinate coordinate, int drawableId, String name) {
+    public NPCPlayer(Coordinate coordinate, int picture, String name) {
         super(coordinate, name);
-        this.drawableId = drawableId;
+        this.picture = picture;
     }
 
-    public int getDrawableId() {
-        return drawableId;
+    public int getPicture() {
+        return picture;
     }
 }
