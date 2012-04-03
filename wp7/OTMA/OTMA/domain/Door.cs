@@ -47,4 +47,13 @@ namespace OTMA.domain
             return result;
         }
     }
+
+    public class ExitDoor : Door
+    {
+        public ExitDoor(Coordinate coordinate, String picture)
+            : base(coordinate, picture)
+        {
+        }
+
+    }
 }

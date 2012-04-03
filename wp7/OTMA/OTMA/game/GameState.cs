@@ -13,6 +13,6 @@ namespace OTMA.game
 {
     public enum GameState
     {
-        InRoom, AtDoor, OnBoard
+        InRoom, AtDoor, OnBoard, AtExitDoor, Done
     }
 }
