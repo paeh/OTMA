@@ -198,7 +198,6 @@ function initialiseBoard() {
     });
     winDoor.room.type = 'WIN_ROOM';
     OTMA.Board.boardElements[winDoor.coordinate][winDoor.direction] = winDoor;
-    alert(winDoor.coordinate);
 
 }
 
