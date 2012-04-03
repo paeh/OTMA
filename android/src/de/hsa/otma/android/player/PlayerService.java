@@ -3,7 +3,7 @@ package de.hsa.otma.android.player;
 import de.hsa.otma.android.map.BoardElement;
 import de.hsa.otma.android.map.Coordinate;
 import de.hsa.otma.android.map.Board;
-import de.hsa.otma.android.map.MapDirection;
+import de.hsa.otma.android.map.Direction;
 
 public class PlayerService {
     public static final PlayerService INSTANCE = new PlayerService();
@@ -15,10 +15,10 @@ public class PlayerService {
         humanPlayer = new Player(new Coordinate(1, 1), "human");
     }
 
-    public BoardElement move(MapDirection direction) {
+    public BoardElement move(Direction direction) {
         BoardElement currentMapItem = getCurrentMapItem();
 
-        BoardElement newMapItem = currentMapItem.getMapItemFor(direction);
+        BoardElement newMapItem = currentMapItem.getElementFor(direction);
         if (newMapItem == null) return null;
 
         humanPlayer.moveTo(newMapItem.getCoordinate());
@@ -28,6 +28,6 @@ public class PlayerService {
 
     public BoardElement getCurrentMapItem() {
         Coordinate currentCoordinate = humanPlayer.getCoordinate();
-        return BOARD.getMapItemFor(currentCoordinate);
+        return BOARD.getElementFor(currentCoordinate);
     }
 }

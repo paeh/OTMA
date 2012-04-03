@@ -1,7 +1,5 @@
 package de.hsa.otma.android.map;
 
-import de.hsa.otma.android.player.NPCPlayer;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,33 +10,31 @@ public class BoardElement implements Serializable {
     
     private Coordinate coordinate;
 
-    private NPCPlayer npcPlayer;
-
-    private transient Map<MapDirection, BoardElement> directions = new HashMap<MapDirection, BoardElement>();
+    private transient Map<Direction, BoardElement> directions = new HashMap<Direction, BoardElement>();
 
     /**
      * Redundant storage of available directions. Needed to make directions variable transient to avoid serialisation
      * loops.
      */
-    private Set<MapDirection> availableDirections = new HashSet<MapDirection>();
+    private Set<Direction> availableDirections = new HashSet<Direction>();
 
-    private int drawableId;
+    private int picture;
 
-    public BoardElement(Coordinate coordinate, int drawableId) {
+    public BoardElement(Coordinate coordinate, int picture) {
         this.coordinate = coordinate;
-        this.drawableId = drawableId;
+        this.picture = picture;
     }
 
-    public void setBoundaryItems(BoardElement north, BoardElement east, BoardElement south, BoardElement west) {
-        setDirection(MapDirection.NORTH, north);
-        setDirection(MapDirection.EAST, east);
-        setDirection(MapDirection.SOUTH, south);
-        setDirection(MapDirection.WEST, west);
+    public void setBoundaryElements(BoardElement north, BoardElement east, BoardElement south, BoardElement west) {
+        setDirection(Direction.NORTH, north);
+        setDirection(Direction.EAST, east);
+        setDirection(Direction.SOUTH, south);
+        setDirection(Direction.WEST, west);
 
         updateAvailableDirections();
     }
 
-    private void setDirection(MapDirection direction, BoardElement item) {
+    private void setDirection(Direction direction, BoardElement item) {
         if (item != null)  {
             directions.put(direction, item);
         }
@@ -48,19 +44,19 @@ public class BoardElement implements Serializable {
         availableDirections = directions.keySet();
     }
 
-    public BoardElement getMapItemFor(MapDirection direction) {
+    public BoardElement getElementFor(Direction direction) {
         return directions.get(direction);
     }
 
-    public int getDrawableId() {
-        return drawableId;
+    public int getPicture() {
+        return picture;
     }
 
     public Coordinate getCoordinate() {
         return coordinate;
     }
 
-    public Set<MapDirection> getAvailableDirections() {
+    public Set<Direction> getAvailableDirections() {
         return availableDirections;
     }
 
@@ -84,15 +80,7 @@ public class BoardElement implements Serializable {
     public String toString() {
         return "BoardElement{" +
                 "coordinate=" + coordinate +
-                ", drawableId=" + drawableId +
+                ", picture=" + picture +
                 '}';
-    }
-
-    public NPCPlayer getNpcPlayer() {
-        return npcPlayer;
-    }
-
-    public void setNpcPlayer(NPCPlayer npcPlayer) {
-        this.npcPlayer = npcPlayer;
     }
 }

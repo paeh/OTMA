@@ -17,7 +17,7 @@ import android.widget.Toast;
 import de.hsa.otma.android.constants.Actions;
 import de.hsa.otma.android.constants.BundleKeys;
 import de.hsa.otma.android.map.BoardElement;
-import de.hsa.otma.android.map.MapDirection;
+import de.hsa.otma.android.map.Direction;
 import de.hsa.otma.android.player.NPCPlayer;
 
 import java.util.ArrayList;
@@ -29,9 +29,9 @@ public class MapViewActivity extends Activity {
     
     private class NavigationOnClickListener implements View.OnClickListener {
 
-        private MapDirection direction;
+        private Direction direction;
 
-        private NavigationOnClickListener(MapDirection direction) {
+        private NavigationOnClickListener(Direction direction) {
             this.direction = direction;
         }
 
@@ -99,21 +99,21 @@ public class MapViewActivity extends Activity {
         ImageView background = new ImageView(this);
 
         Log.e(MapViewActivity.class.getName(), mapItem.toString());
-        Drawable drawable = getResources().getDrawable(mapItem.getDrawableId());
+        Drawable drawable = getResources().getDrawable(mapItem.getPicture());
         background.setImageDrawable(drawable);
         background.setScaleType(ImageView.ScaleType.FIT_XY);
 
         layout.addView(background);
 
-        setButtonNavigationAction(MapDirection.WEST, R.id.westButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(MapDirection.EAST, R.id.eastButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(MapDirection.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(MapDirection.NORTH, R.id.northButton, mapItem.getAvailableDirections());
+        setButtonNavigationAction(Direction.WEST, R.id.westButton, mapItem.getAvailableDirections());
+        setButtonNavigationAction(Direction.EAST, R.id.eastButton, mapItem.getAvailableDirections());
+        setButtonNavigationAction(Direction.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
+        setButtonNavigationAction(Direction.NORTH, R.id.northButton, mapItem.getAvailableDirections());
 
         addOtmaEmployees(width, layout, otmaEmployees);
     }
 
-    private void setButtonNavigationAction(MapDirection direction, int buttonId, Set<MapDirection> availableDirections) {
+    private void setButtonNavigationAction(Direction direction, int buttonId, Set<Direction> availableDirections) {
         Button button = (Button) findViewById(buttonId);
 
         if (! availableDirections.contains(direction)) {

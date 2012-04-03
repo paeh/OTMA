@@ -4,7 +4,7 @@ import de.hsa.otma.android.R;
 import de.hsa.otma.android.map.Coordinate;
 import de.hsa.otma.android.map.Board;
 import de.hsa.otma.android.map.BoardElement;
-import de.hsa.otma.android.map.MapDirection;
+import de.hsa.otma.android.map.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,12 +41,12 @@ public class NPCService {
 
     private void move(NPCPlayer npc) {
         Coordinate currentCoordinate = npc.getCoordinate();
-        BoardElement currentMapItem = board.getMapItemFor(currentCoordinate);
-        ArrayList<MapDirection> availableDirections = new ArrayList<MapDirection>(currentMapItem.getAvailableDirections());
+        BoardElement currentMapItem = board.getElementFor(currentCoordinate);
+        ArrayList<Direction> availableDirections = new ArrayList<Direction>(currentMapItem.getAvailableDirections());
 
         int directionIndex = random.nextInt(availableDirections.size());
-        MapDirection targetDirection = availableDirections.get(directionIndex);
-        BoardElement targetMapItem = currentMapItem.getMapItemFor(targetDirection);
+        Direction targetDirection = availableDirections.get(directionIndex);
+        BoardElement targetMapItem = currentMapItem.getElementFor(targetDirection);
 
         if (targetMapItem.getNpcPlayer() == null) {
             targetMapItem.setNpcPlayer(npc);

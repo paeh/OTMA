@@ -1,5 +1,5 @@
 package de.hsa.otma.android.map;
 
-public enum MapDirection {
+public enum Direction {
     NORTH, EAST, SOUTH, WEST
 }

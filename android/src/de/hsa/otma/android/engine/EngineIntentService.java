@@ -8,7 +8,7 @@ import de.hsa.otma.android.constants.Actions;
 import de.hsa.otma.android.constants.BundleKeys;
 import de.hsa.otma.android.constants.ResultCodes;
 import de.hsa.otma.android.map.BoardElement;
-import de.hsa.otma.android.map.MapDirection;
+import de.hsa.otma.android.map.Direction;
 import de.hsa.otma.android.player.NPCService;
 import de.hsa.otma.android.player.PlayerService;
 
@@ -27,7 +27,7 @@ public class EngineIntentService extends IntentService {
     }
 
     private void movePlayerInDirection(Intent intent) {
-        MapDirection direction = MapDirection.valueOf(intent.getStringExtra(BundleKeys.DIRECTION));
+        Direction direction = Direction.valueOf(intent.getStringExtra(BundleKeys.DIRECTION));
         ResultReceiver receiver = (ResultReceiver) intent.getParcelableExtra(BundleKeys.RECEIVER);
 
         BoardElement newMapItem = PlayerService.INSTANCE.move(direction);
