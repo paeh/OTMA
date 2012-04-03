@@ -1,6 +1,6 @@
 format 74
 "OTMA"
-  revision 2
+  revision 3
   modified_by 11 "klassm"
 
 
@@ -159,8 +159,15 @@ format 74
 	idl_decl ""
       end
 
-      attribute 130315 "hints"
-	private explicit_type "Set<Hint>"
+      classrelation 129419 // <unidirectional association>
+	relation 129291 --->
+	  a role_name "" private
+	    classrelation_ref 129419 // <unidirectional association>
+	  b parent class_ref 128395 // Hint
+      end
+
+      attribute 137611 "introduction"
+	private explicit_type "String"
 	cpp_decl ""
 	java_decl ""
 	php_decl ""
@@ -168,11 +175,13 @@ format 74
 	idl_decl ""
       end
 
-      classrelation 129419 // <unidirectional association>
-	relation 129291 --->
-	  a role_name "" private
-	    classrelation_ref 129419 // <unidirectional association>
-	  b parent class_ref 128395 // Hint
+      attribute 137739 "title"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
       end
     end
 
@@ -273,6 +282,24 @@ format 74
 	python_decl ""
 	idl_decl ""
       end
+
+      attribute 137867 "description"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 137995 "title"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
     end
 
     class 128779 "Door"
@@ -306,6 +333,24 @@ format 74
 
       attribute 130827 "boardElement"
 	private type class_ref 128907 // BoardElement
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 137355 "title"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 137483 "abbreviation"
+	private explicit_type "String"
 	cpp_decl ""
 	java_decl ""
 	php_decl ""
@@ -445,7 +490,6 @@ format 74
 	idl_decl ""
       end
     end
-
   end
 
   classview 134539 "switch_button"

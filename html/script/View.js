@@ -35,8 +35,12 @@ OTMA.View = {
         },
 
         DOOR: {
-            updateButtons: function() {
+            updateButtons: function(currentMapItem) {
+                var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
                 var mapItem = { south: 'south', north: 'north' };
+                if (! OTMA.GameEngine.checkWinConditions() && door.room.type == 'WIN_ROOM') {
+                    mapItem.north = undefined;
+                }
                 OTMA.View.disableButtonsBasedOnDirections(mapItem);
             },
             updateBackground: function(currentMapItem) {
@@ -68,24 +72,24 @@ OTMA.View = {
                     OTMA.View.setBackground('images/champion.png');
                 } else {
                     OTMA.View.setBackground('images/room.png');
-                    OTMA.View.currentState.showRoomHint();
+                    OTMA.View.currentState.showRoomContent();
                     OTMA.util.setCSSVisibilityOnElement('#roomHolder', true);
 
                     $('#roomHolder div.roomTitle').html(door.room.title);
                 }
             },
-            showRoomHint: function() {
+            showRoomContent: function() {
                 if (OTMA.GameEngine.state != 'ROOM') {
                     return;
                 }
 
-                var hint = OTMA.GameEngine.getRandomRoomHint();
+                var content = OTMA.GameEngine.getRandomRoomContent();
 
-                $('#roomHolder div.roomHint div.title').html(hint.title);
-                $('#roomHolder div.roomHint div.text').html(hint.text);
+                $('#roomHolder div.roomContent div.title').html(content.title);
+                $('#roomHolder div.roomContent div.text').html(content.text);
 
-                $('#roomHolder div.roomHint').delay(OTMA.Constants.HINT_TIME).queue(function(next) {
-                    OTMA.View.states.ROOM.showRoomHint();
+                $('#roomHolder div.roomContent').delay(OTMA.Constants.ROOM_CONTENT_TIME).queue(function(next) {
+                    OTMA.View.states.ROOM.showRoomContent();
                     next();
                 });
             },
@@ -98,7 +102,7 @@ OTMA.View = {
                 // disable all buttons!
                 OTMA.View.disableButtonsBasedOnDirections({});
             },
-            updateBackground: function(currentMapItem) {
+            updateBackground: function() {
                 OTMA.View.setBackground('images/reception.png');
                 OTMA.util.setCSSVisibilityOnElement('#receptionHolder', true);
             },

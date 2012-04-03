@@ -22,6 +22,9 @@ OTMA.PlayerService = {
         },
         DOOR: {
             movePlayer: function(directionProperty) {
+                var door = OTMA.GameEngine.getCurrentBoardElement()[OTMA.PlayerService.Player.viewingDoor];
+                if (door.room.type=='WIN_ROOM' && ! OTMA.GameEngine.checkWinConditions()) return;
+
                 if (directionProperty == 'north') {
                     OTMA.GameEngine.setState('ROOM');
                     OTMA.PlayerService.Player.viewingRoom = true;
