@@ -8,13 +8,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class GameMapItem implements Serializable {
+public class BoardElement implements Serializable {
     
     private Coordinate coordinate;
 
     private NPCPlayer npcPlayer;
 
-    private transient Map<MapDirection, GameMapItem> directions = new HashMap<MapDirection, GameMapItem>();
+    private transient Map<MapDirection, BoardElement> directions = new HashMap<MapDirection, BoardElement>();
 
     /**
      * Redundant storage of available directions. Needed to make directions variable transient to avoid serialisation
@@ -24,12 +24,12 @@ public class GameMapItem implements Serializable {
 
     private int drawableId;
 
-    public GameMapItem(Coordinate coordinate, int drawableId) {
+    public BoardElement(Coordinate coordinate, int drawableId) {
         this.coordinate = coordinate;
         this.drawableId = drawableId;
     }
 
-    public void setBoundaryItems(GameMapItem north, GameMapItem east, GameMapItem south, GameMapItem west) {
+    public void setBoundaryItems(BoardElement north, BoardElement east, BoardElement south, BoardElement west) {
         setDirection(MapDirection.NORTH, north);
         setDirection(MapDirection.EAST, east);
         setDirection(MapDirection.SOUTH, south);
@@ -38,7 +38,7 @@ public class GameMapItem implements Serializable {
         updateAvailableDirections();
     }
 
-    private void setDirection(MapDirection direction, GameMapItem item) {
+    private void setDirection(MapDirection direction, BoardElement item) {
         if (item != null)  {
             directions.put(direction, item);
         }
@@ -48,7 +48,7 @@ public class GameMapItem implements Serializable {
         availableDirections = directions.keySet();
     }
 
-    public GameMapItem getMapItemFor(MapDirection direction) {
+    public BoardElement getMapItemFor(MapDirection direction) {
         return directions.get(direction);
     }
 
@@ -69,7 +69,7 @@ public class GameMapItem implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        GameMapItem that = (GameMapItem) o;
+        BoardElement that = (BoardElement) o;
 
         return !(coordinate != null ? !coordinate.equals(that.coordinate) : that.coordinate != null);
 
@@ -82,7 +82,7 @@ public class GameMapItem implements Serializable {
 
     @Override
     public String toString() {
-        return "GameMapItem{" +
+        return "BoardElement{" +
                 "coordinate=" + coordinate +
                 ", drawableId=" + drawableId +
                 '}';

@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import de.hsa.otma.android.constants.Actions;
 import de.hsa.otma.android.constants.BundleKeys;
-import de.hsa.otma.android.map.GameMapItem;
+import de.hsa.otma.android.map.BoardElement;
 import de.hsa.otma.android.map.MapDirection;
 import de.hsa.otma.android.player.NPCPlayer;
 
@@ -56,7 +56,7 @@ public class MapViewActivity extends Activity {
             if (resultData.get(BundleKeys.MAP_ITEM) == null) {
                 Toast.makeText(MapViewActivity.this, R.string.goto_mapitem_error, Toast.LENGTH_SHORT).show();
             } else {
-                GameMapItem mapItem = (GameMapItem) resultData.getSerializable(BundleKeys.MAP_ITEM);
+                BoardElement mapItem = (BoardElement) resultData.getSerializable(BundleKeys.MAP_ITEM);
                 ArrayList<NPCPlayer> otmaEmployees = (ArrayList<NPCPlayer>) resultData.getSerializable(BundleKeys.OTMA_EMPLOYEES);
 
                 createLayout(mapItem, otmaEmployees);
@@ -70,7 +70,7 @@ public class MapViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         Intent callingIntent = getIntent();
 
-        GameMapItem mapItem = (GameMapItem) callingIntent.getSerializableExtra(BundleKeys.MAP_ITEM);
+        BoardElement mapItem = (BoardElement) callingIntent.getSerializableExtra(BundleKeys.MAP_ITEM);
         ArrayList<NPCPlayer> otmaEmployees = (ArrayList<NPCPlayer>) callingIntent.getSerializableExtra(BundleKeys.OTMA_EMPLOYEES);
 
         if (mapItem == null) {
@@ -83,7 +83,7 @@ public class MapViewActivity extends Activity {
         createLayout(mapItem, otmaEmployees);
     }
 
-    private void createLayout(GameMapItem mapItem, ArrayList<NPCPlayer> otmaEmployees) {
+    private void createLayout(BoardElement mapItem, ArrayList<NPCPlayer> otmaEmployees) {
         setContentView(R.layout.main);
 
         Display display = getWindowManager().getDefaultDisplay();

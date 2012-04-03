@@ -2,8 +2,8 @@ package de.hsa.otma.android.player;
 
 import de.hsa.otma.android.R;
 import de.hsa.otma.android.map.Coordinate;
-import de.hsa.otma.android.map.GameMap;
-import de.hsa.otma.android.map.GameMapItem;
+import de.hsa.otma.android.map.Board;
+import de.hsa.otma.android.map.BoardElement;
 import de.hsa.otma.android.map.MapDirection;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class NPCService {
 
     public static final NPCService INSTANCE = new NPCService();
     
-    private GameMap gameMap = GameMap.INSTANCE;
+    private Board board = Board.INSTANCE;
     private Random random = new Random(System.nanoTime());
     
     private List<NPCPlayer> otmaEmployees = new ArrayList<NPCPlayer>();
@@ -41,12 +41,12 @@ public class NPCService {
 
     private void move(NPCPlayer npc) {
         Coordinate currentCoordinate = npc.getCoordinate();
-        GameMapItem currentMapItem = gameMap.getMapItemFor(currentCoordinate);
+        BoardElement currentMapItem = board.getMapItemFor(currentCoordinate);
         ArrayList<MapDirection> availableDirections = new ArrayList<MapDirection>(currentMapItem.getAvailableDirections());
 
         int directionIndex = random.nextInt(availableDirections.size());
         MapDirection targetDirection = availableDirections.get(directionIndex);
-        GameMapItem targetMapItem = currentMapItem.getMapItemFor(targetDirection);
+        BoardElement targetMapItem = currentMapItem.getMapItemFor(targetDirection);
 
         if (targetMapItem.getNpcPlayer() == null) {
             targetMapItem.setNpcPlayer(npc);
