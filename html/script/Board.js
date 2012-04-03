@@ -191,13 +191,14 @@ function initialiseBoard() {
 
     OTMA.Board.setRandomDoorsToXMLEvents(OTMA.Board.doors);
 
-    $(document).bind('meetsWinCondition', function() {
-        var door = OTMA.Board.setRoomToRandomDoor(OTMA.Board.doors, {
-            title: '!! YOU WIN !!',
-            abbreviation: 'WIN'
-        });
-        door.room.type = 'WIN_ROOM';
-        OTMA.Board.boardElements[door.coordinate][door.direction] = door;
+    var winDoor = OTMA.Board.setRoomToRandomDoor(OTMA.Board.doors, {
+        title: '!! YOU WIN !!',
+        abbreviation: 'WIN',
+        isWinDoor: true
     });
+    winDoor.room.type = 'WIN_ROOM';
+    OTMA.Board.boardElements[winDoor.coordinate][winDoor.direction] = winDoor;
+    alert(winDoor.coordinate);
+
 }
 

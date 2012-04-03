@@ -22,7 +22,7 @@ OTMA.PlayerService = {
         },
         DOOR: {
             movePlayer: function(directionProperty) {
-                if (directionProperty == 'north') {
+                if (directionProperty == 'north' && OTMA.GameEngine.checkWinConditions()) {
                     OTMA.GameEngine.setState('ROOM');
                     OTMA.PlayerService.Player.viewingRoom = true;
                 } else if (directionProperty == 'south') {
