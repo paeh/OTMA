@@ -282,6 +282,24 @@ format 74
 	python_decl ""
 	idl_decl ""
       end
+
+      attribute 137867 "description"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 137995 "title"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
     end
 
     class 128779 "Door"
