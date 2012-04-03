@@ -20,7 +20,7 @@ public class NPCService {
     private List<NPCPlayer> otmaEmployees = new ArrayList<NPCPlayer>();
 
     private NPCService() {
-        otmaEmployees.add(new NPCPlayer(new Coordinate(1, 1), R.drawable.head, "1", introduction));
+        otmaEmployees.add(new NPCPlayer(new Coordinate(1, 1), R.drawable.head, "1"));
     }
     
     public ArrayList<NPCPlayer> getAllNPCFor(Coordinate coordinate) {
@@ -41,16 +41,16 @@ public class NPCService {
 
     private void move(NPCPlayer npc) {
         Coordinate currentCoordinate = npc.getCoordinate();
-        BoardElement currentMapItem = board.getElementFor(currentCoordinate);
-        ArrayList<Direction> availableDirections = new ArrayList<Direction>(currentMapItem.getAvailableDirections());
+        BoardElement currentElement = board.getElementFor(currentCoordinate);
+        ArrayList<Direction> availableDirections = new ArrayList<Direction>(currentElement.getAvailableDirections());
 
         int directionIndex = random.nextInt(availableDirections.size());
         Direction targetDirection = availableDirections.get(directionIndex);
-        BoardElement targetMapItem = currentMapItem.getElementFor(targetDirection);
+        BoardElement targetElement = currentElement.getElementFor(targetDirection);
 
-        if (targetMapItem.getNpcPlayer() == null) {
-            targetMapItem.setNpcPlayer(npc);
-            npc.moveTo(targetMapItem.getCoordinate());
+        if (targetElement.getNpcPlayer() == null) {
+            targetElement.setNpcPlayer(npc);
+            npc.moveTo(targetElement.getCoordinate());
         }
     }
 }
