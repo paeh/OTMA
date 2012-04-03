@@ -35,9 +35,10 @@ OTMA.View = {
         },
 
         DOOR: {
-            updateButtons: function() {
+            updateButtons: function(currentMapItem) {
+                var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
                 var mapItem = { south: 'south', north: 'north' };
-                if (! OTMA.GameEngine.checkWinConditions()) {
+                if (! OTMA.GameEngine.checkWinConditions() && door.room.type == 'WIN_ROOM') {
                     mapItem.north = undefined;
                 }
                 OTMA.View.disableButtonsBasedOnDirections(mapItem);
