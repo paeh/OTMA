@@ -17,6 +17,20 @@ OTMA.View = {
             },
             updateBackground: function(currentMapItem) {
                 OTMA.View.setBackground('images/map/' + currentMapItem.picture);
+            },
+            showNPCConversation: function() {
+                var currentBoardElement = OTMA.GameEngine.getCurrentBoardElement();
+                var npc = OTMA.NPCService.getNPCForBoardElement(currentBoardElement);
+
+                if (! npc) return;
+
+                $('#conversation div.conversationTitle').html(npc.name);
+                $('#conversation div.conversationSubTitle').html(npc.title);
+                $('#conversation div.conversationText').html(npc.introduction);
+
+                OTMA.util.setCSSVisibilityOnElement('#conversationHolder', true);
+
+                $(document).trigger('npcFound', npc);
             }
         },
 
@@ -146,18 +160,9 @@ OTMA.View = {
     },
 
     showNPCConversation: function() {
-        var currentBoardElement = OTMA.GameEngine.getCurrentBoardElement();
-        var npc = OTMA.NPCService.getNPCForBoardElement(currentBoardElement);
-
-        if (! npc) return;
-
-        $('#conversation div.conversationTitle').html(npc.name);
-        $('#conversation div.conversationSubTitle').html(npc.title);
-        $('#conversation div.conversationText').html(npc.introduction);
-
-        OTMA.util.setCSSVisibilityOnElement('#conversationHolder', true);
-
-        $(document).trigger('npcFound', npc);
+        if (OTMA.View.currentState.showNPCConversation) {
+            OTMA.View.currentState.showNPCConversation();
+        }
     },
 
     hideNPCConversation: function() {
