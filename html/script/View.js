@@ -72,16 +72,18 @@ OTMA.View = {
                     OTMA.View.setBackground('images/champion.png');
                 } else {
                     OTMA.View.setBackground('images/room.png');
-                    OTMA.View.currentState.showRoomContent();
+                    OTMA.View.currentState.showRoomContent(door.room);
                     OTMA.util.setCSSVisibilityOnElement('#roomHolder', true);
 
                     $('#roomHolder div.roomTitle').html(door.room.title);
                 }
             },
-            showRoomContent: function() {
+            showRoomContent: function(room) {
                 if (OTMA.GameEngine.state != 'ROOM') {
                     return;
                 }
+
+                $('#roomHolder div.roomDescription').html(room.description);
 
                 var content = OTMA.GameEngine.getRandomRoomContent();
 
@@ -89,7 +91,7 @@ OTMA.View = {
                 $('#roomHolder div.roomContent div.text').html(content.text);
 
                 $('#roomHolder div.roomContent').delay(OTMA.Constants.ROOM_CONTENT_TIME).queue(function(next) {
-                    OTMA.View.states.ROOM.showRoomContent();
+                    OTMA.View.states.ROOM.showRoomContent(room);
                     next();
                 });
             },

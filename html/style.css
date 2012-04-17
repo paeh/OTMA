@@ -219,19 +219,6 @@ div#roomHolder div.roomTitle {
 
 div#roomHolder div.roomDescription {
     position: absolute;
-    left: 7%;
-    right: 7%;
-    top: 14%;
-    padding: 5px;
-    border: 2px silver solid;
-    border-radius: 5px;
-    background: rgba(188, 188, 188, 0.6);
-    max-height: 30%;
-    overflow: auto;
-}
-
-div#roomHolder div.roomContent {
-    position: absolute;
     bottom: 20px;
     left: 7%;
     right: 7%;
@@ -240,6 +227,19 @@ div#roomHolder div.roomContent {
     border-radius: 5px;
     background: rgba(188, 188, 188, 0.6);
     max-height: 40%;
+    overflow: auto;
+}
+
+div#roomHolder div.roomContent {
+    position: absolute;
+    left: 7%;
+    right: 7%;
+    top: 14%;
+    padding: 5px;
+    border: 2px silver solid;
+    border-radius: 5px;
+    background: rgba(188, 188, 188, 0.6);
+    max-height: 30%;
     overflow: auto;
 }
 

@@ -62,7 +62,6 @@ function initialiseNPC() {
     $.each(people, function(index, npc) {
         var boardElement = OTMA.NPCService.findRandomNonOccupiedBoardElement();
         npc.coordinate = boardElement.coordinate;
-        npc.coordinate = '1x1';
         npc.picture = OTMA.NPCService.getNextAvatarPicture();
         OTMA.NPCService.people.push(npc);
     });

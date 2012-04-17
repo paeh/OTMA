@@ -23,7 +23,14 @@ OTMA.PlayerService = {
         DOOR: {
             movePlayer: function(directionProperty) {
                 var door = OTMA.GameEngine.getCurrentBoardElement()[OTMA.PlayerService.Player.viewingDoor];
-                if (door.room.type=='WIN_ROOM' && ! OTMA.GameEngine.checkWinConditions()) return;
+
+                // block player from walking back when being within the win room
+                if (directionProperty == 'south' && OTMA.PlayerService.Player.viewingRoom && door.room.type=='WIN_ROOM'
+                    && OTMA.GameEngine.checkWinConditions()) return;
+
+                // block door if viewing win door and not having found all hints yet
+                if (directionProperty == 'north' && ! OTMA.PlayerService.Player.viewingRoom && door.room.type=='WIN_ROOM'
+                    && ! OTMA.GameEngine.checkWinConditions()) return;
 
                 if (directionProperty == 'north') {
                     OTMA.GameEngine.setState('ROOM');
