@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class XMLConfig {
+public class XMLConfig implements Config {
 
     private static final String TAG = XMLConfig.class.getSimpleName();
 
@@ -32,7 +32,7 @@ public class XMLConfig {
 
     private Element root;
 
-    public void load(String url) {
+    public XMLConfig(String url) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -45,6 +45,7 @@ public class XMLConfig {
         }
     }
 
+    @Override
     public List<Room> getRooms() {
         RoomDomainModelReader reader = new RoomDomainModelReader();
         List<Room> rooms = readDomainModelByTag("conference", reader);
@@ -53,10 +54,12 @@ public class XMLConfig {
         return rooms;
     }
 
+    @Override
     public List<NPCPlayer> getNPCPlayers() {
         return readDomainModelByTag("person", new NPCPlayerDomainModelReader());
     }
 
+    @Override
     public List<Hint> getHints() {
         return readDomainModelByTag("hint", new HintDomainModelReader());
     }
