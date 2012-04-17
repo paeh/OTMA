@@ -16,8 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import de.hsa.otma.android.constants.Actions;
 import de.hsa.otma.android.constants.BundleKeys;
-import de.hsa.otma.android.map.GameMapItem;
-import de.hsa.otma.android.map.MapDirection;
+import de.hsa.otma.android.map.BoardElement;
+import de.hsa.otma.android.map.Direction;
 import de.hsa.otma.android.player.NPCPlayer;
 
 import java.util.ArrayList;
@@ -29,9 +29,9 @@ public class MapViewActivity extends Activity {
     
     private class NavigationOnClickListener implements View.OnClickListener {
 
-        private MapDirection direction;
+        private Direction direction;
 
-        private NavigationOnClickListener(MapDirection direction) {
+        private NavigationOnClickListener(Direction direction) {
             this.direction = direction;
         }
 
@@ -56,7 +56,7 @@ public class MapViewActivity extends Activity {
             if (resultData.get(BundleKeys.MAP_ITEM) == null) {
                 Toast.makeText(MapViewActivity.this, R.string.goto_mapitem_error, Toast.LENGTH_SHORT).show();
             } else {
-                GameMapItem mapItem = (GameMapItem) resultData.getSerializable(BundleKeys.MAP_ITEM);
+                BoardElement mapItem = (BoardElement) resultData.getSerializable(BundleKeys.MAP_ITEM);
                 ArrayList<NPCPlayer> otmaEmployees = (ArrayList<NPCPlayer>) resultData.getSerializable(BundleKeys.OTMA_EMPLOYEES);
 
                 createLayout(mapItem, otmaEmployees);
@@ -70,7 +70,7 @@ public class MapViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         Intent callingIntent = getIntent();
 
-        GameMapItem mapItem = (GameMapItem) callingIntent.getSerializableExtra(BundleKeys.MAP_ITEM);
+        BoardElement mapItem = (BoardElement) callingIntent.getSerializableExtra(BundleKeys.MAP_ITEM);
         ArrayList<NPCPlayer> otmaEmployees = (ArrayList<NPCPlayer>) callingIntent.getSerializableExtra(BundleKeys.OTMA_EMPLOYEES);
 
         if (mapItem == null) {
@@ -83,7 +83,7 @@ public class MapViewActivity extends Activity {
         createLayout(mapItem, otmaEmployees);
     }
 
-    private void createLayout(GameMapItem mapItem, ArrayList<NPCPlayer> otmaEmployees) {
+    private void createLayout(BoardElement mapItem, ArrayList<NPCPlayer> otmaEmployees) {
         setContentView(R.layout.main);
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -99,21 +99,21 @@ public class MapViewActivity extends Activity {
         ImageView background = new ImageView(this);
 
         Log.e(MapViewActivity.class.getName(), mapItem.toString());
-        Drawable drawable = getResources().getDrawable(mapItem.getDrawableId());
+        Drawable drawable = getResources().getDrawable(mapItem.getPicture());
         background.setImageDrawable(drawable);
         background.setScaleType(ImageView.ScaleType.FIT_XY);
 
         layout.addView(background);
 
-        setButtonNavigationAction(MapDirection.WEST, R.id.westButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(MapDirection.EAST, R.id.eastButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(MapDirection.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(MapDirection.NORTH, R.id.northButton, mapItem.getAvailableDirections());
+        setButtonNavigationAction(Direction.WEST, R.id.westButton, mapItem.getAvailableDirections());
+        setButtonNavigationAction(Direction.EAST, R.id.eastButton, mapItem.getAvailableDirections());
+        setButtonNavigationAction(Direction.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
+        setButtonNavigationAction(Direction.NORTH, R.id.northButton, mapItem.getAvailableDirections());
 
         addOtmaEmployees(width, layout, otmaEmployees);
     }
 
-    private void setButtonNavigationAction(MapDirection direction, int buttonId, Set<MapDirection> availableDirections) {
+    private void setButtonNavigationAction(Direction direction, int buttonId, Set<Direction> availableDirections) {
         Button button = (Button) findViewById(buttonId);
 
         if (! availableDirections.contains(direction)) {
@@ -128,7 +128,7 @@ public class MapViewActivity extends Activity {
         int offsetX = 0;
         int offsetY = 0;
         for (NPCPlayer otmaEmployee : otmaEmployees) {
-            Drawable drawable = getResources().getDrawable(otmaEmployee.getDrawableId());
+            Drawable drawable = getResources().getDrawable(otmaEmployee.getPicture());
 
             ImageView employeeImageView = getHead(width, drawable, offsetX, offsetY);
             layout.addView(employeeImageView);

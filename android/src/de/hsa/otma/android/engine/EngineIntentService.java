@@ -7,8 +7,8 @@ import android.os.ResultReceiver;
 import de.hsa.otma.android.constants.Actions;
 import de.hsa.otma.android.constants.BundleKeys;
 import de.hsa.otma.android.constants.ResultCodes;
-import de.hsa.otma.android.map.GameMapItem;
-import de.hsa.otma.android.map.MapDirection;
+import de.hsa.otma.android.map.BoardElement;
+import de.hsa.otma.android.map.Direction;
 import de.hsa.otma.android.player.NPCService;
 import de.hsa.otma.android.player.PlayerService;
 
@@ -27,10 +27,10 @@ public class EngineIntentService extends IntentService {
     }
 
     private void movePlayerInDirection(Intent intent) {
-        MapDirection direction = MapDirection.valueOf(intent.getStringExtra(BundleKeys.DIRECTION));
+        Direction direction = Direction.valueOf(intent.getStringExtra(BundleKeys.DIRECTION));
         ResultReceiver receiver = (ResultReceiver) intent.getParcelableExtra(BundleKeys.RECEIVER);
 
-        GameMapItem newMapItem = PlayerService.INSTANCE.move(direction);
+        BoardElement newMapItem = PlayerService.INSTANCE.move(direction);
         NPCService.INSTANCE.moveAllNPC();
 
         assembleAndSendResult(receiver, newMapItem);
@@ -38,12 +38,12 @@ public class EngineIntentService extends IntentService {
 
     private void getCurrentMapItem(Intent intent) {
         ResultReceiver receiver = (ResultReceiver) intent.getParcelableExtra(BundleKeys.RECEIVER);
-        GameMapItem mapItem = PlayerService.INSTANCE.getCurrentMapItem();
+        BoardElement mapItem = PlayerService.INSTANCE.getCurrentMapItem();
 
         assembleAndSendResult(receiver, mapItem);
     }
 
-    private void assembleAndSendResult(ResultReceiver receiver, GameMapItem mapItem) {
+    private void assembleAndSendResult(ResultReceiver receiver, BoardElement mapItem) {
         Bundle resultBundle = new Bundle();
         resultBundle.putSerializable(BundleKeys.MAP_ITEM, mapItem);
 
