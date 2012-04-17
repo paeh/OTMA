@@ -1,3 +1,23 @@
+/*
+ * Software Systeme lecture SS2012 - "OTMA GAME"
+ *
+ *                  Copyright (C) 2012
+ * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 body {
     font-family:Verdana,sans-serif;
     margin: 0;
@@ -219,19 +239,6 @@ div#roomHolder div.roomTitle {
 
 div#roomHolder div.roomDescription {
     position: absolute;
-    left: 7%;
-    right: 7%;
-    top: 14%;
-    padding: 5px;
-    border: 2px silver solid;
-    border-radius: 5px;
-    background: rgba(188, 188, 188, 0.6);
-    max-height: 30%;
-    overflow: auto;
-}
-
-div#roomHolder div.roomContent {
-    position: absolute;
     bottom: 20px;
     left: 7%;
     right: 7%;
@@ -240,6 +247,19 @@ div#roomHolder div.roomContent {
     border-radius: 5px;
     background: rgba(188, 188, 188, 0.6);
     max-height: 40%;
+    overflow: auto;
+}
+
+div#roomHolder div.roomContent {
+    position: absolute;
+    left: 7%;
+    right: 7%;
+    top: 14%;
+    padding: 5px;
+    border: 2px silver solid;
+    border-radius: 5px;
+    background: rgba(188, 188, 188, 0.6);
+    max-height: 30%;
     overflow: auto;
 }
 
