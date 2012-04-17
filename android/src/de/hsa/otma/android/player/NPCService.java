@@ -20,7 +20,7 @@ public class NPCService {
     private List<NPCPlayer> otmaEmployees = new ArrayList<NPCPlayer>();
 
     private NPCService() {
-        otmaEmployees.add(new NPCPlayer(new Coordinate(1, 1), R.drawable.head, "1"));
+        otmaEmployees.add(new NPCPlayer(new Coordinate(1, 1), R.drawable.npc_1, "1", "", ""));
     }
     
     public ArrayList<NPCPlayer> getAllNPCFor(Coordinate coordinate) {

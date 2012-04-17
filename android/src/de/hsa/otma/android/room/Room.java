@@ -16,4 +16,20 @@ public class Room {
     private String title;
 
     private String description;
+    
+    private String abbreviation;
+
+    public Room(String title, String description, String abbreviation) {
+        this.title = title;
+        this.description = description;
+        this.abbreviation = abbreviation;
+    }
+
+    public Door getDoor() {
+        return door;
+    }
+
+    public void setDoor(Door door) {
+        this.door = door;
+    }
 }
