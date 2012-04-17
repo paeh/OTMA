@@ -45,8 +45,12 @@
             <Image Height="124" HorizontalAlignment="Left" Margin="334,43,0,0" Name="npcImage" Stretch="Fill" VerticalAlignment="Top" Width="136" />
             <TextBlock Height="51" HorizontalAlignment="Left" Margin="166,170,0,0" Name="doorLabel" Text="" VerticalAlignment="Top" Width="153" TextAlignment="Center" TextWrapping="Wrap" />
             <TextBlock Height="47" HorizontalAlignment="Left" Margin="103,117,0,0" Name="eventNameLabel" Text="" VerticalAlignment="Top" Width="277" TextAlignment="Center" TextWrapping="Wrap" />
-            <TextBlock Height="127" HorizontalAlignment="Left" Margin="103,187,0,0" Name="eventHintLabel" Text="" VerticalAlignment="Top" Width="277" TextAlignment="Center" TextTrimming="None" TextWrapping="Wrap" />
-            <TextBlock Height="120" HorizontalAlignment="Left" Margin="103,320,0,0" Name="eventDesciption" Text="" TextAlignment="Center" TextTrimming="None" TextWrapping="Wrap" VerticalAlignment="Top" Width="277" />
+            <ScrollViewer Height="110" Margin="0,275,0,383">
+                <TextBlock Height="110" HorizontalAlignment="Left" Margin="60,0,0,0" Name="eventHintLabel" Text="" VerticalAlignment="Top" Width="354" TextAlignment="Center" TextWrapping="Wrap" />
+            </ScrollViewer>
+            <ScrollViewer Height="110" Margin="0,391,0,267">
+                <TextBlock Height="110" HorizontalAlignment="Left" Margin="60,0,0,0" Name="eventDesciption" Text="" VerticalAlignment="Top" TextWrapping="Wrap" Width="354" />
+            </ScrollViewer>
         </Grid>
     </Grid>
  
