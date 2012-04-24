@@ -52,6 +52,9 @@ div.content {
     position: relative;
 }
 
+div.npcButton {
+    visibility: hidden;
+}
 
 
 

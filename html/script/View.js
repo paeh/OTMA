@@ -31,8 +31,10 @@ OTMA.View = {
                 var npc = OTMA.NPCService.getNPCForBoardElement(currentBoardElement);
                 if (npc && OTMA.GameEngine.state == 'MAP') {
                     $('#npcImage').attr('src', 'images/avatars/' + npc.picture);
+                    OTMA.util.setCSSVisibilityOnElement('#npcButton', true);
                 } else {
                     $('#npcImage').attr('src', 'images/blank.png');
+                    OTMA.util.setCSSVisibilityOnElement('#npcButton', false);
                 }
             },
             updateBackground: function(currentMapItem) {
