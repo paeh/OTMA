@@ -3,29 +3,19 @@
  *
  *                  Copyright (C) 2012
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 OTMA.View = {
     states: {
-
         MAP: {
             updateButtons: function(mapItem) {
                 var player = OTMA.PlayerService.Player;
                 OTMA.View.disableButtonsBasedOnDirections(mapItem);
             },
+            /**
+             * Hides or shows NPCs on a given map slice. Hides or shows NPC button used for getting the
+             * conversation view for NPCs.
+             */
             updateNPCView: function() {
                 var currentBoardElement = OTMA.GameEngine.getCurrentBoardElement();
                 var npc = OTMA.NPCService.getNPCForBoardElement(currentBoardElement);
@@ -137,6 +127,10 @@ OTMA.View = {
     },
     currentState: {},
 
+    /**
+     * Updates the global view, including buttons etc.
+     * Method decides which state (room, map, door) to show based on OTMA.View.currentState attribute.
+     */
     update: function() {
         var player = OTMA.PlayerService.Player;
         var mapItem = OTMA.Board.boardElements[player.coordinate];
@@ -154,16 +148,26 @@ OTMA.View = {
         }
     },
 
-    disableButtonIfNavigationIsUndefined: function(mapItem, property, buttonId) {
-        if (mapItem[property] == undefined) {
-            $(buttonId).attr('disabled', true);
-            $(buttonId).attr('src', 'images/grey_' + property + '.png');
+    /**
+     * Disables a button based on a given selector attribute if an attribute on the mapItem is undefined.
+     * @param mapItem mapItem used for checking
+     * @param propertyToCheck property on the mapItem to check.
+     * @param buttonSelector selector used for finding the button in the UI
+     */
+    disableButtonIfNavigationIsUndefined: function(mapItem, propertyToCheck, buttonSelector) {
+        if (mapItem[propertyToCheck] == undefined) {
+            $(buttonSelector).attr('disabled', true);
+            $(buttonSelector).attr('src', 'images/grey_' + propertyToCheck + '.png');
         } else {
-            $(buttonId).attr('disabled', false);
-            $(buttonId).attr('src', 'images/white_' + property + '.png');
+            $(buttonSelector).attr('disabled', false);
+            $(buttonSelector).attr('src', 'images/white_' + propertyToCheck + '.png');
         }
     },
 
+    /**
+     * Updates all direction buttons based on direction attributes on a map item.
+     * @param mapItem mapItem used for map checking.
+     */
     disableButtonsBasedOnDirections: function(mapItem) {
         OTMA.View.disableButtonIfNavigationIsUndefined(mapItem, 'north', '#north');
         OTMA.View.disableButtonIfNavigationIsUndefined(mapItem, 'south', '#south');
