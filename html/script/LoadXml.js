@@ -5,16 +5,28 @@
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
  */
 
+/**
+ * JavaScript object implementing all functionality to read the otma-config.xml file.
+ */
 OTMA.xmlContent = {
     people: [],
     events: [],
     hints: [],
 
+    /**
+     * Reset all contained data.
+     */
     reset: function() {
         OTMA.xmlContent.people = [];
         OTMA.xmlContent.events = [];
         OTMA.xmlContent.hints = [];
     },
+
+    /**
+     * Parse a given xml file content.
+     * @param fileContent xml content
+     * @param callback method pointer called when xml parsing is done.
+     */
     parseXMLFile: function(fileContent, callback) {
         OTMA.xmlContent.reset();
 
@@ -61,6 +73,12 @@ OTMA.xmlContent = {
     }
 };
 
+/**
+ * Load an xml file with a given filename from the current URL. Another URL is currently not possible because of the
+ * Same Origin Policy (http://de.wikipedia.org/wiki/Same-Origin-Policy)
+ * @param filename filename to load
+ * @param callback method pointer called when the xml has been parsed and loaded.
+ */
 function loadXML(filename, callback) {
     var baseUrl = document.URL.replace("index.html", "");
     $(document).load(baseUrl + filename, function(result) {

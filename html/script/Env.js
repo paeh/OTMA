@@ -5,5 +5,12 @@
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
  */
 
+/**
+ * Main OTMA package.
+ */
 OTMA = {};
+
+/**
+ * JQuery bugfix. DO NOT CHANGE!
+ */
 jQuery.cssProps.size = '';

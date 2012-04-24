@@ -5,18 +5,37 @@
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
  */
 
+/**
+ * JavaScript object implementing all functionality for the Board domain object.
+ */
 OTMA.Board = {
+    /**
+     * Map of all board elements. Key is a coordinate, value a BoardElement.
+     */
     boardElements: {},
 
+    /**
+     * Resets the board by deleting all saved board elements.
+     */
     reset:function() {
         OTMA.Board.boardElements = {}
     },
+
+    /**
+     * Finds out some random board element.
+     * @return {*} random board element
+     */
     getRandomBoardElement: function() {
         var coordinates = OTMA.Board.getCoordinatesArray();
         var randomNumber = OTMA.util.getRandomInteger(coordinates.length);
 
         return OTMA.Board.boardElements[coordinates[randomNumber]];
     },
+
+    /**
+     * Calculates an array of all saved coordinates on the board.
+     * @return {Array} all available coordinates.
+     */
     getCoordinatesArray: function() {
         var coordinates = [];
         for (var coordinate in OTMA.Board.boardElements) {
@@ -26,6 +45,12 @@ OTMA.Board = {
         }
         return coordinates;
     },
+
+    /**
+     * Get an array of board elements in all available directions of the given boardElement.
+     * @param boardElement boardElement
+     * @return {Array} available direction board elements.
+     */
     getBoardElementsInAvailableDirections: function(boardElement) {
         var directions = [];
         if (boardElement.south) directions.push(boardElement.south);
@@ -35,6 +60,13 @@ OTMA.Board = {
 
         return directions;
     },
+
+    /**
+     * Create a board element for a given coordinate and using a given background picture.
+     * @param picture background picture
+     * @param coordinate coordinate
+     * @return {Object} created board element
+     */
     createBoardElement: function(picture, coordinate) {
         var element = {
             picture: picture,
@@ -44,6 +76,15 @@ OTMA.Board = {
         OTMA.Board.boardElements[coordinate] = element;
         return element;
     },
+
+    /**
+     * Set adjacent board elements to a given board element.
+     * @param coordinate coordinate of the board element, on which the adjacent board elements are set
+     * @param north board element to the north
+     * @param east board element to the east
+     * @param south board element to the south
+     * @param west board element to the west
+     */
     setNavigationBorders: function(coordinate, north, east, south, west) {
         var boardItem = OTMA.Board.boardElements[coordinate];
         if (! boardItem) return;
@@ -60,8 +101,14 @@ OTMA.Board = {
             west: westMapItem
         });
     },
-    setRoomToRandomDoor: function(doors, room) {
 
+    /**
+     * Set a room to some unknown, random door.
+     * @param doors array of available doors.
+     * @param room room to set
+     * @return {*} found door, on which room is set
+     */
+    setRoomToRandomDoor: function(doors, room) {
         do {
             var randomNumber = OTMA.util.getRandomInteger(doors.length);
             var door = doors[randomNumber];
@@ -80,6 +127,11 @@ OTMA.Board = {
 
         return door;
     },
+
+    /**
+     * Associates all rooms from the XML content to random doors.
+     * @param availableDoors
+     */
     setRandomDoorsToXMLEvents: function(availableDoors) {
         $.each(OTMA.xmlContent.events, function(index, event) {
             var door = OTMA.Board.setRoomToRandomDoor(availableDoors, event);

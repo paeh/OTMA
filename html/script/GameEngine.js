@@ -10,7 +10,16 @@ OTMA.GameEngine = {
      * State is one of [RECEPTION, MAP, DOOR, ROOM]
      */
     state: 'MAP',
+
+    /**
+     * Hints that can be found in the game. This is loaded by using OTMA.xmlContent.
+     */
     hints: [],
+
+    /**
+     * Static content used for mixing in content within the rooms, so that players not only find hints but have to
+     * wait some time to find them.
+     */
     stories: [{
         title: 'Bla1',
         text: 'Bla1'
@@ -22,11 +31,19 @@ OTMA.GameEngine = {
         text: 'Bla3'
     }],
 
+    /**
+     * Get the current board element for the human player.
+     * @return {Object} current board element.
+     */
     getCurrentBoardElement: function() {
         var currentCoordinate = OTMA.PlayerService.Player.coordinate;
         return OTMA.Board.boardElements[currentCoordinate];
     },
 
+    /**
+     * Get some random room content. This is either a room hint or story.
+     * @return {*} random hint or story
+     */
     getRandomRoomContent: function() {
         var rand = OTMA.util.getRandomInteger(4);
         if (rand == 1) {
@@ -36,6 +53,10 @@ OTMA.GameEngine = {
         }
     },
 
+    /**
+     * Get some random story.
+     * @return {*} story
+     */
     getRandomRoomStory: function() {
         var stories = OTMA.GameEngine.stories;
         var randomHintNumber = OTMA.util.getRandomInteger(stories.length);
@@ -43,6 +64,10 @@ OTMA.GameEngine = {
         return stories[randomHintNumber];
     },
 
+    /**
+     * Get some random hint.
+     * @return {*} hint
+     */
     getRandomRoomHint: function() {
         var hints = OTMA.GameEngine.hints;
         var randomHintNumber = OTMA.util.getRandomInteger(hints.length);
@@ -53,15 +78,27 @@ OTMA.GameEngine = {
         return hint;
     },
 
+    /**
+     * Set the global game engine state. This triggers the 'stateChange' event.
+     * @param newState new state to set
+     */
     setState: function(newState) {
         OTMA.GameEngine.state = newState;
         $(document).trigger('stateChange', newState);
     },
 
+    /**
+     * Move the player. The method delegates to the PlayerService.
+     * @param direction direction to move the player
+     */
     movePlayer: function(direction) {
         OTMA.PlayerService.movePlayer(direction);
     },
 
+    /**
+     * Check whether all win conditions have been fulfilled.
+     * @return {Boolean} true if all win conditions have been fulfilled, else false
+     */
     checkWinConditions: function() {
         var player = OTMA.PlayerService.Player;
         return player.foundHints.length >= OTMA.Constants.WIN_HINT_COUNT &&
