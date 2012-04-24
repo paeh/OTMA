@@ -9,8 +9,11 @@ public class NPCPlayer extends Player {
     
     private String introduction;
 
-    public NPCPlayer(Coordinate coordinate, int picture, String name) {
+    public NPCPlayer(Coordinate coordinate, int picture, String name, String title, String introduction) {
         super(coordinate, name);
+        this.picture = picture;
+        this.title = title;
+        this.introduction = introduction;
     }
 
     public int getPicture() {

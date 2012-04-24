@@ -4,6 +4,7 @@ import de.hsa.otma.android.R;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class Board {
     public static final Board INSTANCE = new Board();
@@ -70,7 +71,16 @@ public class Board {
         map5x4.setBoundaryElements(map4x4, null, null, map5x3);
         map5x5.setBoundaryElements(map4x5, null, null, null);
     }
-    
+
+    private Random random = new Random(System.nanoTime());
+
+    public Coordinate getRandomCoordinateOnBoard() {
+        int x = random.nextInt(5) + 1;
+        int y = random.nextInt(5) + 1;
+
+        return new Coordinate(x, y);
+    }
+
     private BoardElement createBoardElementAndPutToBoard(int x, int y, int drawable) {
         Coordinate coordinate = new Coordinate(x, y);
         BoardElement boardElement = new BoardElement(coordinate, drawable);
