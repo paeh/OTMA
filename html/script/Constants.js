@@ -30,5 +30,23 @@ OTMA.Constants = {
     /**
      * The player has to find a certain amount of hints within rooms as win requirements.
      */
-    WIN_HINT_COUNT: 2
+    WIN_HINT_COUNT: 2,
+
+    /**
+     * Static content used for mixing in content within the rooms, so that players not only find hints but have to
+     * wait some time to find them.
+     */
+    STORY_ITEMS: [
+        new OTMA.domain.Story('Bla1', 'Bla1'),
+        new OTMA.domain.Story('Bla2', 'Bla2'),
+        new OTMA.domain.Story('Bla3', 'Bla3')
+    ],
+
+    /**
+     * You should only change this property if also providing appropriate images
+     * for the respective board coordinates!
+     * The linking between each board element still has to be hardcoded in OTMA.Board
+     */
+    MAP_WIDTH: 5,
+    MAP_HEIGHT: 5
 };

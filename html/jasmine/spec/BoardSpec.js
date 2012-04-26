@@ -9,11 +9,11 @@ describe("OTMA.Board", function() {
     beforeEach(function() {
         OTMA.Board.reset();
 
-        OTMA.Board.createBoardElement("1x1.png", "1x1");
-        OTMA.Board.createBoardElement("1x2.png", "1x2");
-        OTMA.Board.createBoardElement("1x3.png", "1x3");
-        OTMA.Board.createBoardElement("1x4.png", "1x4");
-        OTMA.Board.createBoardElement("1x5.png", "1x5");
+        OTMA.Board.createBoardElement(1,1);
+        OTMA.Board.createBoardElement(1,2);
+        OTMA.Board.createBoardElement(1,3);
+        OTMA.Board.createBoardElement(1,4);
+        OTMA.Board.createBoardElement(1,5);
     });
 
     it("should be able to reset the board", function() {
@@ -43,26 +43,15 @@ describe("OTMA.Board", function() {
         expect(coordinates).toContain('1x5');
     });
 
-    it("should be able to return all the available board directions from a given board element", function() {
-        var element = OTMA.Board.createBoardElement("1x1.png", "1x1");
-        element.west = OTMA.Board.createBoardElement("1x1.png", "1x2");
-        element.north = OTMA.Board.createBoardElement("1x1.png", "1x3");
-
-        var directionElements = OTMA.Board.getBoardElementsInAvailableDirections(element);
-
-        expect(directionElements.length).toBe(2);
-        expect(directionElements).toContain(element.west);
-        expect(directionElements).toContain(element.north);
-    });
-
     it("should be possible to associate a room with a random door", function() {
         OTMA.util.getRandomInteger = function() { return 0 };
 
-        var doors = [{
-            coordinate: '1x1'
-        }, {
-            coordinate: '1x2'
-        }];
+        var boardElement1x1 = new OTMA.domain.BoardElement('', '1x1');
+        var boardElement1x2 = new OTMA.domain.BoardElement('', '1x2');
+        var doors = [
+            new OTMA.domain.Door(boardElement1x1, 'north'),
+            new OTMA.domain.Door(boardElement1x2, 'north')
+        ];
         var room = {};
 
         var door = OTMA.Board.setRoomToRandomDoor(doors, room);
@@ -70,6 +59,6 @@ describe("OTMA.Board", function() {
         expect(room.door).toBe(door);
         expect(door.room).toBe(room);
 
-        expect(door.coordinate).toBe('1x1');
+        expect(door.boardElement).toBe(boardElement1x1);
     })
 });

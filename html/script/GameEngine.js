@@ -16,20 +16,7 @@ OTMA.GameEngine = {
      */
     hints: [],
 
-    /**
-     * Static content used for mixing in content within the rooms, so that players not only find hints but have to
-     * wait some time to find them.
-     */
-    stories: [{
-        title: 'Bla1',
-        text: 'Bla1'
-    }, {
-        title: 'Bla2',
-        text: 'Bla2'
-    }, {
-        title: 'Bla3',
-        text: 'Bla3'
-    }],
+
 
     /**
      * Get the current board element for the human player.
@@ -38,44 +25,6 @@ OTMA.GameEngine = {
     getCurrentBoardElement: function() {
         var currentCoordinate = OTMA.PlayerService.Player.coordinate;
         return OTMA.Board.boardElements[currentCoordinate];
-    },
-
-    /**
-     * Get some random room content. This is either a room hint or story.
-     * @return {*} random hint or story
-     */
-    getRandomRoomContent: function() {
-        var rand = OTMA.util.getRandomInteger(4);
-        if (rand == 1) {
-            return OTMA.GameEngine.getRandomRoomHint();
-        } else {
-            return OTMA.GameEngine.getRandomRoomStory();
-        }
-    },
-
-    /**
-     * Get some random story.
-     * @return {*} story
-     */
-    getRandomRoomStory: function() {
-        var stories = OTMA.GameEngine.stories;
-        var randomHintNumber = OTMA.util.getRandomInteger(stories.length);
-
-        return stories[randomHintNumber];
-    },
-
-    /**
-     * Get some random hint.
-     * @return {*} hint
-     */
-    getRandomRoomHint: function() {
-        var hints = OTMA.GameEngine.hints;
-        var randomHintNumber = OTMA.util.getRandomInteger(hints.length);
-
-        var hint = hints[randomHintNumber];
-        $(document).trigger('hintFound', hint);
-
-        return hint;
     },
 
     /**

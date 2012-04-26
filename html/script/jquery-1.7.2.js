@@ -1717,7 +1717,7 @@ jQuery.extend({
 			// Only defining an ID for JS objects if its cache already exists allows
 			// the code to shortcut on the same path as a DOM node with no cache
 			id = isNode ? elem[ internalKey ] : elem[ internalKey ] && internalKey,
-			isEvents = name === "events";
+			isEvents = name === "rooms";
 
 		// Avoid doing any more work than we need to when trying to get data on an
 		// object that has no data at all
@@ -1775,7 +1775,7 @@ jQuery.extend({
 		// Users should not attempt to inspect the internal events object using jQuery.data,
 		// it is undocumented and subject to change. But does anyone listen? No.
 		if ( isEvents && !thisCache[ name ] ) {
-			return privateCache.events;
+			return privateCache.rooms;
 		}
 
 		// Check for both converted-to-camel and non-converted data property names
@@ -2935,9 +2935,9 @@ jQuery.event = {
 		}
 
 		// Init the element's event structure and main handler, if this is the first
-		events = elemData.events;
+		events = elemData.rooms;
 		if ( !events ) {
-			elemData.events = events = {};
+			elemData.rooms = events = {};
 		}
 		eventHandle = elemData.handle;
 		if ( !eventHandle ) {
@@ -3032,7 +3032,7 @@ jQuery.event = {
 			t, tns, type, origType, namespaces, origCount,
 			j, events, special, handle, eventType, handleObj;
 
-		if ( !elemData || !(events = elemData.events) ) {
+		if ( !elemData || !(events = elemData.rooms) ) {
 			return;
 		}
 
@@ -3096,7 +3096,7 @@ jQuery.event = {
 
 			// removeData also checks for emptiness and clears the expando if empty
 			// so use it instead of delete
-			jQuery.removeData( elem, [ "events", "handle" ], true );
+			jQuery.removeData( elem, [ "rooms", "handle" ], true );
 		}
 	},
 
@@ -3164,7 +3164,7 @@ jQuery.event = {
 			// TODO: Stop taunting the data cache; remove global events and always attach to document
 			cache = jQuery.cache;
 			for ( i in cache ) {
-				if ( cache[ i ].events && cache[ i ].events[ type ] ) {
+				if ( cache[ i ].rooms && cache[ i ].rooms[ type ] ) {
 					jQuery.event.trigger( event, data, cache[ i ].handle.elem, true );
 				}
 			}
@@ -3212,7 +3212,7 @@ jQuery.event = {
 			cur = eventPath[i][0];
 			event.type = eventPath[i][1];
 
-			handle = ( jQuery._data( cur, "events" ) || {} )[ event.type ] && jQuery._data( cur, "handle" );
+			handle = ( jQuery._data( cur, "rooms" ) || {} )[ event.type ] && jQuery._data( cur, "handle" );
 			if ( handle ) {
 				handle.apply( cur, data );
 			}
@@ -3263,7 +3263,7 @@ jQuery.event = {
 		// Make a writable jQuery.Event from the native event object
 		event = jQuery.event.fix( event || window.event );
 
-		var handlers = ( (jQuery._data( this, "events" ) || {} )[ event.type ] || []),
+		var handlers = ( (jQuery._data( this, "rooms" ) || {} )[ event.type ] || []),
 			delegateCount = handlers.delegateCount,
 			args = [].slice.call( arguments, 0 ),
 			run_all = !event.exclusive && !event.namespace,
@@ -6112,11 +6112,11 @@ function cloneCopyEvent( src, dest ) {
 	var type, i, l,
 		oldData = jQuery._data( src ),
 		curData = jQuery._data( dest, oldData ),
-		events = oldData.events;
+		events = oldData.rooms;
 
 	if ( events ) {
 		delete curData.handle;
-		curData.events = {};
+		curData.rooms = {};
 
 		for ( type in events ) {
 			for ( i = 0, l = events[ type ].length; i < l; i++ ) {
@@ -6525,8 +6525,8 @@ jQuery.extend({
 			if ( id ) {
 				data = cache[ id ];
 
-				if ( data && data.events ) {
-					for ( var type in data.events ) {
+				if ( data && data.rooms ) {
+					for ( var type in data.rooms ) {
 						if ( special[ type ] ) {
 							jQuery.event.remove( elem, type );
 

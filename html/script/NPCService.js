@@ -29,8 +29,9 @@ OTMA.NPCService = {
      * @return {*} board element without a NPC.
      */
     findRandomNonOccupiedBoardElement: function() {
+        var boardItem;
         do {
-            var boardItem = OTMA.Board.getRandomBoardElement();
+            boardItem = OTMA.Board.getRandomBoardElement();
         } while (OTMA.NPCService.getNPCForBoardElement(boardItem));
         return boardItem;
     },
@@ -80,7 +81,7 @@ OTMA.NPCService = {
      */
     moveNPC: function(npc) {
         var currentBoardElement = OTMA.Board.boardElements[npc.coordinate];
-        var availableBoardElements = OTMA.Board.getBoardElementsInAvailableDirections(currentBoardElement);
+        var availableBoardElements = currentBoardElement.getAvailableNavigationDirections();
         do {
             var randomNumber = OTMA.util.getRandomInteger(availableBoardElements.length);
             var boardElement = availableBoardElements[randomNumber];

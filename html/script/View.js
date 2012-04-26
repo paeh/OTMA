@@ -37,7 +37,7 @@ OTMA.View = {
              * @param currentMapItem current map item
              */
             updateBackground: function(currentMapItem) {
-                OTMA.View.setBackground('images/map/' + currentMapItem.picture);
+                OTMA.View.setBackground('images/map/' + currentMapItem.image);
             },
 
             /**
@@ -126,7 +126,7 @@ OTMA.View = {
                     OTMA.util.setCSSVisibilityOnElement('#roomHolder', true);
 
                     $('#roomHolder div.roomTitle').html(door.room.title);
-                    $('#roomHolder div.roomDescription').html(room.description);
+                    $('#roomHolder div.roomDescription').html(door.room.description);
                 }
             },
 
@@ -139,7 +139,7 @@ OTMA.View = {
                     return;
                 }
 
-                var content = OTMA.GameEngine.getRandomRoomContent();
+                var content = room.getRandomContent();
 
                 $('#roomHolder div.roomContent div.title').html(content.title);
                 $('#roomHolder div.roomContent div.text').html(content.text);

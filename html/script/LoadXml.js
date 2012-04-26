@@ -10,15 +10,14 @@
  */
 OTMA.xmlContent = {
     people: [],
-    events: [],
-    hints: [],
+    rooms: [],
 
     /**
      * Reset all contained data.
      */
     reset: function() {
         OTMA.xmlContent.people = [];
-        OTMA.xmlContent.events = [];
+        OTMA.xmlContent.rooms = [];
         OTMA.xmlContent.hints = [];
     },
 
@@ -36,26 +35,7 @@ OTMA.xmlContent = {
             var name = $(personXML).attr('name');
             var title = $(personXML).attr('title');
 
-            OTMA.xmlContent.people.push({
-                name: name,
-                title: title,
-                introduction: introduction
-            })
-        });
-
-        var conferences = $(fileContent).find("conference");
-        var workshops = $(fileContent).find("workshop");
-        var events = $.merge(conferences, workshops);
-        $.each(events, function(index, eventXML) {
-            var title = $(eventXML).attr('title');
-            var abbreviation = $(eventXML).attr('abrv');
-            var description = $(eventXML).find('description').text();
-
-            OTMA.xmlContent.events.push({
-                title: title,
-                abbreviation: abbreviation,
-                description: description
-            })
+            OTMA.xmlContent.people.push(new OTMA.domain.NPCPlayer(name, title, introduction));
         });
 
         var hints = $(fileContent).find("hint");
@@ -68,6 +48,21 @@ OTMA.xmlContent = {
                 title: title
             })
         });
+
+        var conferences = $(fileContent).find("conference");
+        var workshops = $(fileContent).find("workshop");
+        var events = $.merge(conferences, workshops);
+        $.each(events, function(index, eventXML) {
+            var title = $(eventXML).attr('title');
+            var abbreviation = $(eventXML).attr('abrv');
+            var description = $(eventXML).find('description').text();
+
+            OTMA.xmlContent.rooms.push(
+                new OTMA.domain.Room(title, abbreviation, description, hints, OTMA.Constants.STORY_ITEMS)
+            );
+        });
+
+
 
         if (callback) callback();
     }

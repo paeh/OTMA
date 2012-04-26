@@ -11,14 +11,7 @@
  * @type {Object}
  */
 OTMA.PlayerService = {
-    /**
-     * Equals to the Player domain object
-     */
-    Player: {
-        coordinate: '1x1',
-        foundHints: [],
-        foundNPC: []
-    },
+    Player: new OTMA.domain.HumanPlayer('1x1'),
 
     /**
      * Current state. One of {MAP, DOOR, ROOM}
@@ -110,10 +103,10 @@ function initialisePlayerService() {
 
 
     $(document).bind('npcFound', function(event, npc) {
-        OTMA.util.addToArrayIfNotContained(OTMA.PlayerService.Player.foundNPC, npc);
+        OTMA.PlayerService.Player.addFoundNPC(npc);
     });
 
     $(document).bind('hintFound', function(event, hint) {
-        OTMA.util.addToArrayIfNotContained(OTMA.PlayerService.Player.foundHints, hint);
+        OTMA.PlayerService.Player.addFoundHint(hint);
     })
 }

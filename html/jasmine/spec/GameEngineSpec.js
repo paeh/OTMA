@@ -6,14 +6,6 @@
  */
 
 describe('OTMA.GameEngine', function() {
-    it("should be possible to get a random hint",  function() {
-        OTMA.util.getRandomInteger = function() { return 1 };
-        var hint1 = { text: 'a' };
-        var hint2 = { text: 'b' };
-        OTMA.GameEngine.hints = [hint1, hint2 ];
-
-        expect(OTMA.GameEngine.getRandomRoomHint()).toBe(hint2);
-    });
 
     it("should be possible to get the current board element", function() {
         OTMA.PlayerService.Player.coordinate = '1x5';
