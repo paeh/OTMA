@@ -1,9 +1,7 @@
 package de.hsa.otma.android.player;
 
-import de.hsa.otma.android.map.BoardElement;
-import de.hsa.otma.android.map.Coordinate;
-import de.hsa.otma.android.map.Board;
-import de.hsa.otma.android.map.Direction;
+import android.util.Log;
+import de.hsa.otma.android.map.*;
 
 public class PlayerService {
     public static final PlayerService INSTANCE = new PlayerService();
@@ -17,10 +15,20 @@ public class PlayerService {
 
     public BoardElement move(Direction direction) {
         BoardElement currentMapItem = getCurrentMapItem();
+        BoardElement newMapItem;
 
-        BoardElement newMapItem = currentMapItem.getElementFor(direction);
+        if(currentMapItem instanceof Door){
+            newMapItem = ((Door)currentMapItem).getOrigin();
+        }
+        else{
+            newMapItem = currentMapItem.getElementFor(direction);
+        }
+
+        Log.e("TAG", "current position = " + currentMapItem);
+
         if (newMapItem == null) return null;
 
+        Log.e("TAG", "moving to " + newMapItem);
         humanPlayer.moveTo(newMapItem.getCoordinate());
 
         return newMapItem;

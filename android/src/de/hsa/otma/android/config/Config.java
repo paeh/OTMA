@@ -1,8 +1,8 @@
 package de.hsa.otma.android.config;
 
+import de.hsa.otma.android.map.Room;
+import de.hsa.otma.android.player.Hint;
 import de.hsa.otma.android.player.NPCPlayer;
-import de.hsa.otma.android.room.Hint;
-import de.hsa.otma.android.room.Room;
 
 import java.util.List;
 

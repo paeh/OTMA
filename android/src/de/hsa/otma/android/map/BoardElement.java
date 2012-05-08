@@ -29,18 +29,26 @@ public class BoardElement implements Serializable {
         this.picture = picture;
     }
 
+    protected BoardElement(int picture) {
+        this(null, picture);
+    }
+
     public void setBoundaryElements(BoardElement north, BoardElement east, BoardElement south, BoardElement west) {
-        setDirection(Direction.NORTH, north);
-        setDirection(Direction.EAST, east);
-        setDirection(Direction.SOUTH, south);
-        setDirection(Direction.WEST, west);
+        setElementForDirection(Direction.NORTH, north);
+        setElementForDirection(Direction.EAST, east);
+        setElementForDirection(Direction.SOUTH, south);
+        setElementForDirection(Direction.WEST, west);
 
         updateAvailableDirections();
     }
 
-    private void setDirection(Direction direction, BoardElement item) {
+    public void setElementForDirection(Direction direction, BoardElement item) {
         if (item != null)  {
             directions.put(direction, item);
+            updateAvailableDirections();
+        } else {
+            directions.remove(direction);
+            updateAvailableDirections();
         }
     }
 

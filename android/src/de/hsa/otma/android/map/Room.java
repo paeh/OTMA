@@ -1,11 +1,12 @@
-package de.hsa.otma.android.room;
+package de.hsa.otma.android.map;
 
-import de.hsa.otma.android.map.Door;
+import de.hsa.otma.android.R;
+import de.hsa.otma.android.player.Hint;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Room {
+public class Room extends BoardElement {
 
     private Door door;
 
@@ -16,10 +17,11 @@ public class Room {
     private String title;
 
     private String description;
-    
+
     private String abbreviation;
 
     public Room(String title, String description, String abbreviation) {
+        super(R.drawable.room);
         this.title = title;
         this.description = description;
         this.abbreviation = abbreviation;
@@ -31,5 +33,20 @@ public class Room {
 
     public void setDoor(Door door) {
         this.door = door;
+    }
+
+    public String getTitle()
+    {
+        return title;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public String getAbbreviation()
+    {
+        return abbreviation;
     }
 }

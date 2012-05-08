@@ -1,43 +1,60 @@
 package de.hsa.otma.android.map;
 
-import de.hsa.otma.android.room.Room;
+import de.hsa.otma.android.R;
 
-public class Door extends BoardElement {
+import static de.hsa.otma.android.map.Direction.NORTH;
+import static de.hsa.otma.android.map.Direction.SOUTH;
 
+public class Door extends BoardElement
+{
     private Room room;
 
     private BoardElement origin;
-    
+
     private String title;
 
     private String abbreviation;
 
-    public Door(BoardElement origin, int picture) {
-        super(origin.getCoordinate(), picture);
+    public Door(Coordinate coordinate, BoardElement origin)
+    {
+        super(coordinate, R.drawable.door);
+        super.setElementForDirection(SOUTH, origin);
         this.origin = origin;
     }
 
-    public Room getRoom() {
+    public Room getRoom()
+    {
         return room;
     }
 
-    public void setRoom(Room room) {
+    public void setRoom(Room room)
+    {
         this.room = room;
+        super.setElementForDirection(NORTH, room);
     }
 
-    public String getAbbreviation() {
-        return abbreviation;
+    public String getAbbreviation()
+    {
+        return room.getAbbreviation();
     }
 
-    public void setAbbreviation(String abbreviation) {
-        this.abbreviation = abbreviation;
+    public String getTitle()
+    {
+        return room.getTitle();
     }
 
-    public String getTitle() {
-        return title;
+    public BoardElement getOrigin(){
+        return origin;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    @Override
+    public String toString()
+    {
+        return "Door{" +
+            "abbreviation='" + abbreviation + '\'' +
+            ", room=" + room +
+            ", origin=" + origin +
+            ", title='" + title + '\'' +
+            "} " + super.toString();
     }
 }

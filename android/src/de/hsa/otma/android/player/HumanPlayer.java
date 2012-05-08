@@ -1,7 +1,6 @@
 package de.hsa.otma.android.player;
 
 import de.hsa.otma.android.map.Coordinate;
-import de.hsa.otma.android.room.Hint;
 
 import java.util.HashSet;
 import java.util.Set;
