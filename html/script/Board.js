@@ -144,7 +144,7 @@ function initialiseBoard() {
     OTMA.Board.setNavigationBorders("3x5", "2x5", undefined, "4x5", "3x4");
 
     OTMA.Board.setNavigationBorders("4x1", "3x1", "4x2", "5x1", undefined);
-    OTMA.Board.setNavigationBorders("4x2", "4x2", "4x3", undefined, "4x1");
+    OTMA.Board.setNavigationBorders("4x2", "3x2", "4x3", undefined, "4x1");
     OTMA.Board.setNavigationBorders("4x3", undefined, undefined, "5x3", "4x2");
     OTMA.Board.setNavigationBorders("4x4", undefined, "4x5", "5x4", undefined);
     OTMA.Board.setNavigationBorders("4x5", "3x5", undefined, "5x5", "4x4");
