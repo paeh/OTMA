@@ -278,6 +278,15 @@ div#receptionHolder {
     z-index: 3;
 }
 
+div#receptionHolder div.hintInfo {
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    padding: 30px;
+    font-weight: bold;
+    color: #ff0000;
+    background-color: #ffffff;
+}
 div#receptionHolder div.receptionBox {
     position: absolute;
     text-align: center;
