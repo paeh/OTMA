@@ -9,7 +9,7 @@ OTMA.Constants = {
     /**
      * Time interval in which the room content is changed. Provided in milli seconds.
      */
-    ROOM_CONTENT_TIME: 5000,
+    ROOM_CONTENT_TIME: 1000,
 
     /**
      * NPCs can move in certain intervals. If set to 2, only every second player interaction with the game
@@ -37,7 +37,7 @@ OTMA.Constants = {
      * wait some time to find them.
      */
     STORY_ITEMS: [
-        new OTMA.domain.Story('Bla1', 'Bla1'),
+        new OTMA.domain.Story('Bla1', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum '),
         new OTMA.domain.Story('Bla2', 'Bla2'),
         new OTMA.domain.Story('Bla3', 'Bla3')
     ],

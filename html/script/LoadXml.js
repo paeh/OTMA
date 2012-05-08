@@ -43,10 +43,8 @@ OTMA.xmlContent = {
             var text = $(hintXML).text();
             var title = $(hintXML).attr('title');
 
-            OTMA.xmlContent.hints.push({
-                text: text,
-                title: title
-            })
+            var hint = new OTMA.domain.Hint(title, text);
+            OTMA.xmlContent.hints.push(hint);
         });
 
         var conferences = $(fileContent).find("conference");
@@ -58,7 +56,7 @@ OTMA.xmlContent = {
             var description = $(eventXML).find('description').text();
 
             OTMA.xmlContent.rooms.push(
-                new OTMA.domain.Room(title, abbreviation, description, hints, OTMA.Constants.STORY_ITEMS)
+                new OTMA.domain.Room(title, abbreviation, description, OTMA.xmlContent.hints, OTMA.Constants.STORY_ITEMS)
             );
         });
 
