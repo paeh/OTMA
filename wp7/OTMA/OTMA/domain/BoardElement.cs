@@ -1,4 +1,12 @@
 ﻿
+/*
+ * Software Systeme lecture SS2012 - "OTMA GAME"
+ * 
+ *                  Copyright (C) 2012                  
+ * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
+ *
+ */
+
 using System;
 using System.Net;
 using System.Windows;
@@ -13,7 +21,9 @@ using System.Collections.Generic;
 
 namespace OTMA.domain
 {
-
+    /// <summary>
+    /// The BoardElement class. Implements the Elements which will be used to create the whole game board.
+    /// </summary>
     public class BoardElement
     {
         public Dictionary<Direction, BoardElement> directions = new Dictionary<Direction, BoardElement>();

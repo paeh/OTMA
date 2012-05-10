@@ -1,4 +1,12 @@
 ﻿
+/*
+ * Software Systeme lecture SS2012 - "OTMA GAME"
+ * 
+ *                  Copyright (C) 2012                  
+ * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
+ *
+ */
+
 using System;
 using System.Net;
 using System.Windows;
@@ -12,6 +20,9 @@ using System.Windows.Shapes;
 
 namespace OTMA.domain
 {
+    /// <summary>
+    /// Wrapper class for x and y coordinates.
+    /// </summary>
     public class Coordinate
     {
         public int x { private set; get; }

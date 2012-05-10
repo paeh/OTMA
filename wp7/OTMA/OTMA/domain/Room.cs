@@ -1,4 +1,12 @@
 ﻿
+/*
+ * Software Systeme lecture SS2012 - "OTMA GAME"
+ * 
+ *                  Copyright (C) 2012                  
+ * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
+ *
+ */
+
 using System;
 using System.Net;
 using System.Windows;
@@ -14,6 +22,9 @@ using System.Runtime.CompilerServices;
 
 namespace OTMA.domain
 {
+    /// <summary>
+    /// The Room implementation as BoardElement.
+    /// </summary>
     public class Room: BoardElement
     {
         private static Random rand = new Random(DateTime.Now.Millisecond);

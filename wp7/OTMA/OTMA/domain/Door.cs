@@ -1,4 +1,12 @@
 ﻿
+/*
+ * Software Systeme lecture SS2012 - "OTMA GAME"
+ * 
+ *                  Copyright (C) 2012                  
+ * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
+ *
+ */
+
 using System;
 using System.Net;
 using System.Windows;
@@ -13,6 +21,9 @@ using System.Collections.Generic;
 
 namespace OTMA.domain
 {
+    /// <summary>
+    /// Door implementation as Boardelement. Is used to place enterable doors to the game board.
+    /// </summary>
     public class Door: BoardElement
     {
         public Door(Coordinate coordinate, String picture)

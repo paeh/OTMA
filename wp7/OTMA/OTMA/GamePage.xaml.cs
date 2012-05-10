@@ -1,4 +1,12 @@
 ﻿
+/*
+ * Software Systeme lecture SS2012 - "OTMA GAME"
+ * 
+ *                  Copyright (C) 2012                  
+ * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
+ *
+ */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +42,10 @@ namespace OTMA
             moveButtons.Add(Direction.West, leftButton);
             moveButtons.Add(Direction.South, downButton);
             this.contentTimer = new Timer(this.timeControlledRandomContent);
+
+            npcButton.IsEnabled = false;
+            conductNpcSpecificActionsIfNecessary(gameEngine.getCurrentBoardItem());
+
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -99,6 +111,7 @@ namespace OTMA
 
                 doDoorRelatedActionsIfNecessary(newPosition);
                 doRoomRelatedActionsIfNecessary(newPosition);
+                conductNpcSpecificActionsIfNecessary(newPosition);
             }
             else
             {
@@ -107,6 +120,14 @@ namespace OTMA
                 {
                     MessageBox.Show("You must find all hints and talk to all NPCs to exit!", "Can't exit", MessageBoxButton.OK);
                 }
+            }
+        }
+
+        private void conductNpcSpecificActionsIfNecessary(BoardElement newPosition)
+        {
+            if (gameEngine.getNpcForCurrentPosition() != null && newPosition != null && !(newPosition is Door) && !(newPosition is ExitDoor) && !(newPosition is Room))
+            {
+                npcButton.IsEnabled = true;
             }
         }
 
@@ -124,7 +145,11 @@ namespace OTMA
             {
                 var room = (newPosition as Room);
                 eventNameLabel.Text = room.roomEvent.title;
+                eventNameLabel.Height = calculateTextboxHeightForCaption(eventNameLabel);
+
                 eventDesciption.Text = room.roomEvent.description;
+                eventDesciption.Height = calculateTextboxHeight(eventDesciption);
+                
                 eventHintLabel.Text = getRandomRoomContent(room);
                 contentTimer.Change(CONTENT_TIMEOUT_IN_SECONDS * 1000, CONTENT_TIMEOUT_IN_SECONDS * 1000);
             }
@@ -135,6 +160,16 @@ namespace OTMA
                 eventDesciption.Text = "";
                 contentTimer.Change(Timeout.Infinite, Timeout.Infinite);
             }
+        }
+
+        private int calculateTextboxHeight(TextBlock block)
+        {
+            return Convert.ToInt32(block.FontSize * ((block.Text.Length * block.FontSize) / (block.Width * 1.4)));
+        }
+
+        private int calculateTextboxHeightForCaption(TextBlock block)
+        {
+            return Convert.ToInt32(block.FontSize * ((block.Text.Length * block.FontSize) / (block.Width * 0.85)));
         }
 
         private String getRandomRoomContent(Room room)
@@ -226,6 +261,7 @@ namespace OTMA
             downButton.IsEnabled = false;
             leftButton.IsEnabled = false;
             rightButton.IsEnabled = false;
+            npcButton.IsEnabled = false;
         }
     }
 }

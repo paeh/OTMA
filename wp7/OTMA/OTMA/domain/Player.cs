@@ -1,4 +1,12 @@
 ﻿
+/*
+ * Software Systeme lecture SS2012 - "OTMA GAME"
+ * 
+ *                  Copyright (C) 2012                  
+ * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
+ *
+ */
+
 using System;
 using System.Net;
 using System.Windows;
@@ -14,6 +22,9 @@ using OTMA.workaround;
 
 namespace OTMA.domain
 {
+    /// <summary>
+    /// The class which implements the user player.
+    /// </summary>
     public class Player
     {
         public String name { protected set; get; }

@@ -1,14 +1,13 @@
 ﻿
+/*
+ * Software Systeme lecture SS2012 - "OTMA GAME"
+ * 
+ *                  Copyright (C) 2012                  
+ * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
+ *
+ */
+
 using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using OTMA.domain;
 using OTMA.util;
 using System.Collections.Generic;
@@ -186,7 +185,7 @@ namespace OTMA.game
 
         private void shuffleNpcs()
         {
-            var boardElements = board.getAllAvailableBoardElements();
+            var boardElements = board.getAllAvailableRooms();
 
             foreach (NpcPlayer npc in npcs)
             {
