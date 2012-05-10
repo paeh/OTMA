@@ -3,19 +3,6 @@
  *
  *                  Copyright (C) 2012
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 body {
@@ -227,9 +214,10 @@ div#roomHolder div.roomTitle {
     text-align: center;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 20px;
     text-shadow: 2px 2px 2px #abc;
     max-height: 15%;
+    color: #fff;
 
     background: -moz-linear-gradient(top,  rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.27) 59%, rgba(0,0,0,0) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.65)), color-stop(59%,rgba(0,0,0,0.27)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
@@ -249,7 +237,7 @@ div#roomHolder div.roomDescription {
     border: 2px silver solid;
     border-radius: 5px;
     background: rgba(188, 188, 188, 0.6);
-    max-height: 40%;
+    max-height: 35%;
     overflow: auto;
 }
 
@@ -257,12 +245,12 @@ div#roomHolder div.roomContent {
     position: absolute;
     left: 7%;
     right: 7%;
-    top: 14%;
+    top: 25%;
     padding: 5px;
     border: 2px silver solid;
     border-radius: 5px;
     background: rgba(188, 188, 188, 0.6);
-    max-height: 30%;
+    max-height: 25%;
     overflow: auto;
 }
 
@@ -291,6 +279,15 @@ div#receptionHolder {
     z-index: 3;
 }
 
+div#receptionHolder div.hintInfo {
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    padding: 30px;
+    font-weight: bold;
+    color: #ff0000;
+    background-color: #ffffff;
+}
 div#receptionHolder div.receptionBox {
     position: absolute;
     text-align: center;

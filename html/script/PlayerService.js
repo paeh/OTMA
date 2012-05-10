@@ -3,31 +3,27 @@
  *
  *                  Copyright (C) 2012
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * PlayerService implements all attributes and methods to handle player interactions and player states within the
+ * game.
+ * @type {Object}
+ */
 OTMA.PlayerService = {
-    Player: {
-        coordinate: '1x1',
-        foundHints: [],
-        foundNPC: []
-    },
+    Player: new OTMA.domain.HumanPlayer('1x1'),
 
+    /**
+     * Current state. One of {MAP, DOOR, ROOM}
+     */
     currentState: {},
     states: {
         MAP: {
+            /**
+             * Move the player from it's current board element to a given direction.
+             * @param directionProperty direction to move the player
+             * @param currentMapItem current position of the player on the map.
+             */
             movePlayer: function(directionProperty, currentMapItem) {
                 var directionMapItem = currentMapItem[directionProperty];
                 if (! directionMapItem) return;
@@ -41,6 +37,11 @@ OTMA.PlayerService = {
             }
         },
         DOOR: {
+            /**
+             * Move the player from it's current board element to a given direction.
+             * Watch out! This also has to handle moving into win-doors / rooms.
+             * @param directionProperty direction to move the player
+             */
             movePlayer: function(directionProperty) {
                 var door = OTMA.GameEngine.getCurrentBoardElement()[OTMA.PlayerService.Player.viewingDoor];
 
@@ -62,18 +63,27 @@ OTMA.PlayerService = {
             }
         },
         ROOM: {
-            movePlayer: function(direction) {
+            /**
+             * Move the player from it's current board element to a given direction.
+             * @param directionProperty direction to move the player
+             */
+            movePlayer: function(directionProperty) {
                 var door = OTMA.GameEngine.getCurrentBoardElement()[OTMA.PlayerService.Player.viewingDoor];
                 var room = door.room;
 
                 if (room.type == 'WIN_ROOM') return;
 
-                if (direction != 'south') return;
+                if (directionProperty != 'south') return;
                 OTMA.GameEngine.setState('DOOR');
             }
         }
     },
 
+    /**
+     * Move a player into a given direction. This method also has to decide on which movePlayer method to call based on
+     * the current PlayerService state.
+     * @param directionProperty direction to move the player.
+     */
     movePlayer: function(directionProperty) {
         if (! OTMA.PlayerService.currentState) return;
 
@@ -93,10 +103,10 @@ function initialisePlayerService() {
 
 
     $(document).bind('npcFound', function(event, npc) {
-        OTMA.util.addToArrayIfNotContained(OTMA.PlayerService.Player.foundNPC, npc);
+        OTMA.PlayerService.Player.addFoundNPC(npc);
     });
 
     $(document).bind('hintFound', function(event, hint) {
-        OTMA.util.addToArrayIfNotContained(OTMA.PlayerService.Player.foundHints, hint);
+        OTMA.PlayerService.Player.addFoundHint(hint);
     })
 }

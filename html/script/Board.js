@@ -3,33 +3,39 @@
  *
  *                  Copyright (C) 2012
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * JavaScript object implementing all functionality for the Board domain object.
+ */
 OTMA.Board = {
+    /**
+     * Map of all board elements. Key is a coordinate, value a BoardElement.
+     */
     boardElements: {},
 
+    /**
+     * Resets the board by deleting all saved board elements.
+     */
     reset:function() {
         OTMA.Board.boardElements = {}
     },
+
+    /**
+     * Finds out some random board element.
+     * @return {*} random board element
+     */
     getRandomBoardElement: function() {
         var coordinates = OTMA.Board.getCoordinatesArray();
         var randomNumber = OTMA.util.getRandomInteger(coordinates.length);
 
         return OTMA.Board.boardElements[coordinates[randomNumber]];
     },
+
+    /**
+     * Calculates an array of all saved coordinates on the board.
+     * @return {Array} all available coordinates.
+     */
     getCoordinatesArray: function() {
         var coordinates = [];
         for (var coordinate in OTMA.Board.boardElements) {
@@ -39,24 +45,30 @@ OTMA.Board = {
         }
         return coordinates;
     },
-    getBoardElementsInAvailableDirections: function(boardElement) {
-        var directions = [];
-        if (boardElement.south) directions.push(boardElement.south);
-        if (boardElement.north) directions.push(boardElement.north);
-        if (boardElement.east) directions.push(boardElement.east);
-        if (boardElement.west) directions.push(boardElement.west);
 
-        return directions;
-    },
-    createBoardElement: function(picture, coordinate) {
-        var element = {
-            picture: picture,
-            coordinate: coordinate,
-            type: 'MAP'
-        };
+    /**
+     * Create a board element for a given coordinate and using a given background picture.
+     * @param xCoordinate x-coordinate
+     * @param yCoordinate y-coordinate
+     * @return {Object} created board element
+     */
+    createBoardElement: function(xCoordinate, yCoordinate) {
+        var coordinate = xCoordinate + "x" + yCoordinate;
+        var picture = coordinate + ".png";
+
+        var element = new OTMA.domain.BoardElement(picture, coordinate);
         OTMA.Board.boardElements[coordinate] = element;
         return element;
     },
+
+    /**
+     * Set adjacent board elements to a given board element.
+     * @param coordinate coordinate of the board element, on which the adjacent board elements are set
+     * @param north board element to the north
+     * @param east board element to the east
+     * @param south board element to the south
+     * @param west board element to the west
+     */
     setNavigationBorders: function(coordinate, north, east, south, west) {
         var boardItem = OTMA.Board.boardElements[coordinate];
         if (! boardItem) return;
@@ -66,23 +78,22 @@ OTMA.Board = {
         var westMapItem = OTMA.Board.boardElements[west];
         var eastMapItem = OTMA.Board.boardElements[east];
 
-        $.extend(boardItem, {
-            north: northMapItem,
-            south: southMapItem,
-            east: eastMapItem,
-            west: westMapItem
-        });
+        boardItem.setNavigationBorders(northMapItem, eastMapItem, southMapItem, westMapItem);
     },
-    setRoomToRandomDoor: function(doors, room) {
 
+    /**
+     * Set a room to some unknown, random door.
+     * @param doors array of available doors.
+     * @param room room to set
+     * @return {*} found door, on which room is set
+     */
+    setRoomToRandomDoor: function(doors, room) {
         do {
             var randomNumber = OTMA.util.getRandomInteger(doors.length);
             var door = doors[randomNumber];
 
             if (door) {
-                door['room'] = room;
-                door['type'] = 'DOOR';
-
+                door.setRoom(room);
                 room['door'] = door;
                 room['type'] = 'ROOM';
 
@@ -93,91 +104,26 @@ OTMA.Board = {
 
         return door;
     },
+
+    /**
+     * Associates all rooms from the XML content to random doors.
+     * @param availableDoors
+     */
     setRandomDoorsToXMLEvents: function(availableDoors) {
-        $.each(OTMA.xmlContent.events, function(index, event) {
+        $.each(OTMA.xmlContent.rooms, function(index, event) {
             var door = OTMA.Board.setRoomToRandomDoor(availableDoors, event);
-            OTMA.Board.boardElements[door.coordinate][door.direction] = door;
+            OTMA.Board.boardElements[door.boardElement.coordinate][door.direction] = door;
         });
     }
 };
 
 function initialiseBoard() {
-    OTMA.Board.doors = [{
-        coordinate: '1x2',
-        direction: 'north'
-    }, {
-        coordinate: '1x5',
-        direction: 'south'
-    }, {
-        coordinate: '2x1',
-        direction: 'west'
-    }, {
-        coordinate: '2x2',
-        direction: 'east'
-    }, {
-        coordinate: '2x4',
-        direction: 'west'
-    }, {
-        coordinate: '2x5',
-        direction: 'north'
-    }, {
-        coordinate: '3x1',
-        direction: 'east'
-    }, {
-        coordinate: '3x2',
-        direction: 'north'
-    }, {
-        coordinate: '3x4',
-        direction: 'south'
-    }, {
-        coordinate: '3x5',
-        direction: 'east'
-    }, {
-        coordinate: '4x1',
-        direction: 'west'
-    }, {
-        coordinate: '4x3',
-        direction: 'east'
-    }, {
-        coordinate: '4x4',
-        direction: 'north'
-    }, {
-        coordinate: '5x2',
-        direction: 'north'
-    }, {
-        coordinate: '5x5',
-        direction: 'west'
-    }];
 
-    OTMA.Board.createBoardElement("1x1.png", "1x1");
-    OTMA.Board.createBoardElement("1x2.png", "1x2");
-    OTMA.Board.createBoardElement("1x3.png", "1x3");
-    OTMA.Board.createBoardElement("1x4.png", "1x4");
-    OTMA.Board.createBoardElement("1x5.png", "1x5");
-
-    OTMA.Board.createBoardElement("2x1.png", "2x1");
-    OTMA.Board.createBoardElement("2x2.png", "2x2");
-    OTMA.Board.createBoardElement("2x3.png", "2x3");
-    OTMA.Board.createBoardElement("2x4.png", "2x4");
-    OTMA.Board.createBoardElement("2x5.png", "2x5");
-
-    OTMA.Board.createBoardElement("3x1.png", "3x1");
-    OTMA.Board.createBoardElement("3x2.png", "3x2");
-    OTMA.Board.createBoardElement("3x3.png", "3x3");
-    OTMA.Board.createBoardElement("3x4.png", "3x4");
-    OTMA.Board.createBoardElement("3x5.png", "3x5");
-
-    OTMA.Board.createBoardElement("4x1.png", "4x1");
-    OTMA.Board.createBoardElement("4x2.png", "4x2");
-    OTMA.Board.createBoardElement("4x3.png", "4x3");
-    OTMA.Board.createBoardElement("4x4.png", "4x4");
-    OTMA.Board.createBoardElement("4x5.png", "4x5");
-
-    OTMA.Board.createBoardElement("5x1.png", "5x1");
-    OTMA.Board.createBoardElement("5x2.png", "5x2");
-    OTMA.Board.createBoardElement("5x3.png", "5x3");
-    OTMA.Board.createBoardElement("5x4.png", "5x4");
-    OTMA.Board.createBoardElement("5x5.png", "5x5");
+    for (var i = 1; i <= OTMA.Constants.MAP_WIDTH; i++) {
+        for (var j = 1; j <= OTMA.Constants.MAP_HEIGHT; j++) {
+            OTMA.Board.createBoardElement(i, j);
+        }
+    }
 
     OTMA.Board.setNavigationBorders("1x1", undefined, undefined, "2x1", undefined);
     OTMA.Board.setNavigationBorders("1x2", undefined, "1x3", "2x2", undefined);
@@ -197,7 +143,7 @@ function initialiseBoard() {
     OTMA.Board.setNavigationBorders("3x4", undefined, "3x5", undefined, "3x3");
     OTMA.Board.setNavigationBorders("3x5", "2x5", undefined, "4x5", "3x4");
 
-    OTMA.Board.setNavigationBorders("4x1", "3x1", "4x2", "5x1", "undefined");
+    OTMA.Board.setNavigationBorders("4x1", "3x1", "4x2", "5x1", undefined);
     OTMA.Board.setNavigationBorders("4x2", "3x2", "4x3", undefined, "4x1");
     OTMA.Board.setNavigationBorders("4x3", undefined, undefined, "5x3", "4x2");
     OTMA.Board.setNavigationBorders("4x4", undefined, "4x5", "5x4", undefined);
@@ -209,6 +155,24 @@ function initialiseBoard() {
     OTMA.Board.setNavigationBorders("5x4", "4x4", undefined, undefined, "5x3");
     OTMA.Board.setNavigationBorders("5x5", "4x5", undefined, undefined, undefined);
 
+    OTMA.Board.doors = [
+        new OTMA.domain.Door(OTMA.Board.boardElements["1x2"], 'north'),
+        new OTMA.domain.Door(OTMA.Board.boardElements["1x5"], 'south'),
+        new OTMA.domain.Door(OTMA.Board.boardElements["2x1"], 'west'),
+        new OTMA.domain.Door(OTMA.Board.boardElements["2x2"], 'east'),
+        new OTMA.domain.Door(OTMA.Board.boardElements["2x4"], 'west'),
+        new OTMA.domain.Door(OTMA.Board.boardElements["2x5"], 'north'),
+        new OTMA.domain.Door(OTMA.Board.boardElements["3x1"], 'east'),
+        new OTMA.domain.Door(OTMA.Board.boardElements["3x2"], 'north'),
+        new OTMA.domain.Door(OTMA.Board.boardElements["3x4"], 'south'),
+        new OTMA.domain.Door(OTMA.Board.boardElements["3x5"], 'east'),
+        new OTMA.domain.Door(OTMA.Board.boardElements["4x1"], 'west'),
+        new OTMA.domain.Door(OTMA.Board.boardElements["4x3"], 'east'),
+        new OTMA.domain.Door(OTMA.Board.boardElements["4x4"], 'north'),
+        new OTMA.domain.Door(OTMA.Board.boardElements["5x2"], 'north'),
+        new OTMA.domain.Door(OTMA.Board.boardElements["5x5"], 'west')
+    ];
+
     OTMA.Board.setRandomDoorsToXMLEvents(OTMA.Board.doors);
 
     var winDoor = OTMA.Board.setRoomToRandomDoor(OTMA.Board.doors, {
@@ -217,7 +181,7 @@ function initialiseBoard() {
         isWinDoor: true
     });
     winDoor.room.type = 'WIN_ROOM';
-    OTMA.Board.boardElements[winDoor.coordinate][winDoor.direction] = winDoor;
+    OTMA.Board.boardElements[winDoor.boardElement.coordinate][winDoor.direction] = winDoor;
 
 }
 

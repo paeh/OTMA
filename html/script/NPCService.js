@@ -3,41 +3,54 @@
  *
  *                  Copyright (C) 2012
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * Class managing all Non-Playing-Characters (NPC).
+ * @type {Object}
+ */
 OTMA.NPCService = {
     people: [],
     availableAvatarImages: ['npc_1.png', 'npc_2.png', 'npc_3.png', 'npc_4.png', 'npc_5.png', 'npc_6.png', 'npc_7.png'],
     avatarImageCounter: -1,
     stepCounter: 0,
 
+    /**
+     * Resets all saved attributes within the NPCService.
+     */
     reset: function() {
         OTMA.NPCService.stepCounter = 0;
         OTMA.NPCService.avatarImageCounter = -1;
+        OTMA.NPCService.people = [];
     },
+
+    /**
+     * Find some random board element on which no NPC is already sitting.
+     * @return {*} board element without a NPC.
+     */
     findRandomNonOccupiedBoardElement: function() {
+        var boardItem;
         do {
-            var boardItem = OTMA.Board.getRandomBoardElement();
+            boardItem = OTMA.Board.getRandomBoardElement();
         } while (OTMA.NPCService.getNPCForBoardElement(boardItem));
         return boardItem;
     },
-    getNPCForBoardElement: function(boardItem) {
-        var coordinate = boardItem.coordinate;
+
+    /**
+     * Tries to find a NPC on a given board element.
+     * @param boardElement boardElement to use for looking up a NPC.
+     * @return {*} found NPC or undefined
+     */
+    getNPCForBoardElement: function(boardElement) {
+        var coordinate = boardElement.coordinate;
         return OTMA.NPCService.getNPCForCoordinate(coordinate);
     },
+
+    /**
+     * Tries to find a NPC on a given coordinate.
+     * @param coordinate coordinate to use for looking up a NPC.
+     * @return {*} found NPC or undefined
+     */
     getNPCForCoordinate: function(coordinate) {
         var ret = undefined;
         $.each(OTMA.NPCService.people, function(index, npc) {
@@ -47,6 +60,11 @@ OTMA.NPCService = {
         });
         return ret;
     },
+
+    /**
+     * Move all NPCs. Usually triggered when the human player moves to the next board element or interacts with a room
+     * or door.
+     */
     moveAllNPCs: function() {
         OTMA.NPCService.stepCounter++;
         if (OTMA.NPCService.stepCounter % OTMA.Constants.NPC_ROUND_SPEED != 0) return;
@@ -55,9 +73,15 @@ OTMA.NPCService = {
             OTMA.NPCService.moveNPC(npc);
         });
     },
+
+    /**
+     * Move an NPC to a random board element, which is adjacent to the NPC's current board element and is available
+     * (no other NPC is already on this board element)
+     * @param npc NPC to move
+     */
     moveNPC: function(npc) {
         var currentBoardElement = OTMA.Board.boardElements[npc.coordinate];
-        var availableBoardElements = OTMA.Board.getBoardElementsInAvailableDirections(currentBoardElement);
+        var availableBoardElements = currentBoardElement.getAvailableNavigationDirections();
         do {
             var randomNumber = OTMA.util.getRandomInteger(availableBoardElements.length);
             var boardElement = availableBoardElements[randomNumber];
@@ -70,6 +94,11 @@ OTMA.NPCService = {
             }
         } while (availableBoardElements.length > 0)
     },
+    /**
+     * Get the next available avatar picture for the availableAvatarImages array. If more avatar images are required
+     * than being available, the array pointer for the avatar pictures restarts at the beginning of the array.
+     * @return {*} found avatar picture
+     */
     getNextAvatarPicture: function() {
         OTMA.NPCService.avatarImageCounter++;
         OTMA.NPCService.avatarImageCounter %= OTMA.NPCService.availableAvatarImages.length;

@@ -1,20 +1,61 @@
 package de.hsa.otma.android.map;
 
+import android.util.Log;
 import de.hsa.otma.android.R;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
-public class Board {
+import static de.hsa.otma.android.map.Direction.*;
+
+public class Board
+{
     public static final Board INSTANCE = new Board();
     private Map<Coordinate, BoardElement> elements = new HashMap<Coordinate, BoardElement>();
 
-    private Board() {
+    private List<Door> doors = new ArrayList<Door>();
+
+    private Board()
+    {
         buildBoard();
     }
 
-    private void buildBoard() {
+    public Coordinate getRandomCoordinateOnBoard()
+    {
+        int x = random.nextInt(5) + 1;
+        int y = random.nextInt(5) + 1;
+
+        return new Coordinate(x, y);
+    }
+
+    private Random random = new Random(System.nanoTime());
+
+    private void createDoorForBoardElementInDirection(BoardElement element, Direction direction)
+    {
+        int x = -element.getCoordinate().getX();
+        int y = -element.getCoordinate().getY();
+        Coordinate coordinate = new Coordinate(x, y);
+        Door door = new Door(coordinate, element);
+        elements.put(coordinate, door);
+        element.setElementForDirection(direction, door);
+        doors.add(door);
+    }
+
+    private BoardElement createBoardElementAndPutToBoard(int x, int y, int drawable)
+    {
+        Coordinate coordinate = new Coordinate(x, y);
+        BoardElement boardElement = new BoardElement(coordinate, drawable);
+        elements.put(coordinate, boardElement);
+
+        return boardElement;
+    }
+
+    public BoardElement getElementFor(Coordinate coordinate)
+    {
+        return elements.get(coordinate);
+    }
+
+    private void buildBoard()
+    {
         BoardElement map1x1 = createBoardElementAndPutToBoard(1, 1, R.drawable.map_1x1);
         BoardElement map1x2 = createBoardElementAndPutToBoard(2, 1, R.drawable.map_1x2);
         BoardElement map1x3 = createBoardElementAndPutToBoard(3, 1, R.drawable.map_1x3);
@@ -70,26 +111,26 @@ public class Board {
         map5x3.setBoundaryElements(map4x3, map5x4, null, map5x2);
         map5x4.setBoundaryElements(map4x4, null, null, map5x3);
         map5x5.setBoundaryElements(map4x5, null, null, null);
-    }
 
-    private Random random = new Random(System.nanoTime());
 
-    public Coordinate getRandomCoordinateOnBoard() {
-        int x = random.nextInt(5) + 1;
-        int y = random.nextInt(5) + 1;
+        createDoorForBoardElementInDirection(map1x2, NORTH);
+        createDoorForBoardElementInDirection(map1x5, SOUTH);
 
-        return new Coordinate(x, y);
-    }
+        createDoorForBoardElementInDirection(map2x1, WEST);
+        createDoorForBoardElementInDirection(map2x2, EAST);
+        createDoorForBoardElementInDirection(map2x4, WEST);
+        createDoorForBoardElementInDirection(map2x5, NORTH);
 
-    private BoardElement createBoardElementAndPutToBoard(int x, int y, int drawable) {
-        Coordinate coordinate = new Coordinate(x, y);
-        BoardElement boardElement = new BoardElement(coordinate, drawable);
-        elements.put(coordinate, boardElement);
+        createDoorForBoardElementInDirection(map3x1, EAST);
+        createDoorForBoardElementInDirection(map3x2, NORTH);
+        createDoorForBoardElementInDirection(map3x4, SOUTH);
+        createDoorForBoardElementInDirection(map3x5, EAST);
 
-        return boardElement;
-    }
-    
-    public BoardElement getElementFor(Coordinate coordinate) {
-        return elements.get(coordinate);
+        createDoorForBoardElementInDirection(map4x1, WEST);
+        createDoorForBoardElementInDirection(map4x3, EAST);
+        createDoorForBoardElementInDirection(map4x4, NORTH);
+
+        createDoorForBoardElementInDirection(map5x2, NORTH);
+        createDoorForBoardElementInDirection(map5x5, WEST);
     }
 }

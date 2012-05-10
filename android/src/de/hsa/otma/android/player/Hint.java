@@ -1,4 +1,4 @@
-package de.hsa.otma.android.room;
+package de.hsa.otma.android.player;
 
 public class Hint {
     

@@ -3,27 +3,50 @@
  *
  *                  Copyright (C) 2012
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 OTMA.Constants = {
-    ROOM_CONTENT_TIME: 5000,
+    /**
+     * Time interval in which the room content is changed. Provided in milli seconds.
+     */
+    ROOM_CONTENT_TIME: 1000,
 
+    /**
+     * NPCs can move in certain intervals. If set to 2, only every second player interaction with the game
+     * will trigger a move action for all NPCs.
+     */
     NPC_ROUND_SPEED: 2,
+
+    /**
+     * Default state of the whole game engine. Usually this defaults to RECEPTION.
+     */
     DEFAULT_STATE: 'RECEPTION',
 
+    /**
+     * The player has to find a certain amount of NPCs as win requirement.
+     */
     WIN_NPC_COUNT: 2,
-    WIN_HINT_COUNT: 2
+
+    /**
+     * The player has to find a certain amount of hints within rooms as win requirements.
+     */
+    WIN_HINT_COUNT: 2,
+
+    /**
+     * Static content used for mixing in content within the rooms, so that players not only find hints but have to
+     * wait some time to find them.
+     */
+    STORY_ITEMS: [
+        new OTMA.domain.Story('Bla1', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum '),
+        new OTMA.domain.Story('Bla2', 'Bla2'),
+        new OTMA.domain.Story('Bla3', 'Bla3')
+    ],
+
+    /**
+     * You should only change this property if also providing appropriate images
+     * for the respective board coordinates!
+     * The linking between each board element still has to be hardcoded in OTMA.Board
+     */
+    MAP_WIDTH: 5,
+    MAP_HEIGHT: 5
 };

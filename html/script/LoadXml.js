@@ -3,31 +3,29 @@
  *
  *                  Copyright (C) 2012
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * JavaScript object implementing all functionality to read the otma-config.xml file.
+ */
 OTMA.xmlContent = {
     people: [],
-    events: [],
-    hints: [],
+    rooms: [],
 
+    /**
+     * Reset all contained data.
+     */
     reset: function() {
         OTMA.xmlContent.people = [];
-        OTMA.xmlContent.events = [];
+        OTMA.xmlContent.rooms = [];
         OTMA.xmlContent.hints = [];
     },
+
+    /**
+     * Parse a given xml file content.
+     * @param fileContent xml content
+     * @param callback method pointer called when xml parsing is done.
+     */
     parseXMLFile: function(fileContent, callback) {
         OTMA.xmlContent.reset();
 
@@ -37,11 +35,16 @@ OTMA.xmlContent = {
             var name = $(personXML).attr('name');
             var title = $(personXML).attr('title');
 
-            OTMA.xmlContent.people.push({
-                name: name,
-                title: title,
-                introduction: introduction
-            })
+            OTMA.xmlContent.people.push(new OTMA.domain.NPCPlayer(name, title, introduction));
+        });
+
+        var hints = $(fileContent).find("hint");
+        $.each(hints, function(index, hintXML) {
+            var text = $(hintXML).text();
+            var title = $(hintXML).attr('title');
+
+            var hint = new OTMA.domain.Hint(title, text);
+            OTMA.xmlContent.hints.push(hint);
         });
 
         var conferences = $(fileContent).find("conference");
@@ -52,28 +55,23 @@ OTMA.xmlContent = {
             var abbreviation = $(eventXML).attr('abrv');
             var description = $(eventXML).find('description').text();
 
-            OTMA.xmlContent.events.push({
-                title: title,
-                abbreviation: abbreviation,
-                description: description
-            })
+            OTMA.xmlContent.rooms.push(
+                new OTMA.domain.Room(title, abbreviation, description, OTMA.xmlContent.hints, OTMA.Constants.STORY_ITEMS)
+            );
         });
 
-        var hints = $(fileContent).find("hint");
-        $.each(hints, function(index, hintXML) {
-            var text = $(hintXML).text();
-            var title = $(hintXML).attr('title');
 
-            OTMA.xmlContent.hints.push({
-                text: text,
-                title: title
-            })
-        });
 
         if (callback) callback();
     }
 };
 
+/**
+ * Load an xml file with a given filename from the current URL. Another URL is currently not possible because of the
+ * Same Origin Policy (http://de.wikipedia.org/wiki/Same-Origin-Policy)
+ * @param filename filename to load
+ * @param callback method pointer called when the xml has been parsed and loaded.
+ */
 function loadXML(filename, callback) {
     var baseUrl = document.URL.replace("index.html", "");
     $(document).load(baseUrl + filename, function(result) {

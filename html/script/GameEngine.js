@@ -3,19 +3,6 @@
  *
  *                  Copyright (C) 2012
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 OTMA.GameEngine = {
@@ -23,58 +10,44 @@ OTMA.GameEngine = {
      * State is one of [RECEPTION, MAP, DOOR, ROOM]
      */
     state: 'MAP',
-    hints: [],
-    stories: [{
-        title: 'Bla1',
-        text: 'Bla1'
-    }, {
-        title: 'Bla2',
-        text: 'Bla2'
-    }, {
-        title: 'Bla3',
-        text: 'Bla3'
-    }],
 
+    /**
+     * Hints that can be found in the game. This is loaded by using OTMA.xmlContent.
+     */
+    hints: [],
+
+
+
+    /**
+     * Get the current board element for the human player.
+     * @return {Object} current board element.
+     */
     getCurrentBoardElement: function() {
         var currentCoordinate = OTMA.PlayerService.Player.coordinate;
         return OTMA.Board.boardElements[currentCoordinate];
     },
 
-    getRandomRoomContent: function() {
-        var rand = OTMA.util.getRandomInteger(4);
-        if (rand == 1) {
-            return OTMA.GameEngine.getRandomRoomHint();
-        } else {
-            return OTMA.GameEngine.getRandomRoomStory();
-        }
-    },
-
-    getRandomRoomStory: function() {
-        var stories = OTMA.GameEngine.stories;
-        var randomHintNumber = OTMA.util.getRandomInteger(stories.length);
-
-        return stories[randomHintNumber];
-    },
-
-    getRandomRoomHint: function() {
-        var hints = OTMA.GameEngine.hints;
-        var randomHintNumber = OTMA.util.getRandomInteger(hints.length);
-
-        var hint = hints[randomHintNumber];
-        $(document).trigger('hintFound', hint);
-
-        return hint;
-    },
-
+    /**
+     * Set the global game engine state. This triggers the 'stateChange' event.
+     * @param newState new state to set
+     */
     setState: function(newState) {
         OTMA.GameEngine.state = newState;
         $(document).trigger('stateChange', newState);
     },
 
+    /**
+     * Move the player. The method delegates to the PlayerService.
+     * @param direction direction to move the player
+     */
     movePlayer: function(direction) {
         OTMA.PlayerService.movePlayer(direction);
     },
 
+    /**
+     * Check whether all win conditions have been fulfilled.
+     * @return {Boolean} true if all win conditions have been fulfilled, else false
+     */
     checkWinConditions: function() {
         var player = OTMA.PlayerService.Player;
         return player.foundHints.length >= OTMA.Constants.WIN_HINT_COUNT &&

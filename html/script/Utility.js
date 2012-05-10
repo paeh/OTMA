@@ -3,27 +3,24 @@
  *
  *                  Copyright (C) 2012
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-jQuery.removeIndexFromArray = function(index, arr) {
-    return jQuery.grep(arr, function(elem, arrayIndex) {
+/**
+ * Remove some element from a given array.
+ * @param index index of the element to remove
+ * @param array array to remove the element from
+ * @return {Boolean} true if the element was removed, else false.
+ */
+jQuery.removeIndexFromArray = function(index, array) {
+    return jQuery.grep(array, function(elem, arrayIndex) {
         return arrayIndex !== index;
     });
 };
 
+/**
+ * Implements a size method for the amount of javascript object keys.
+ * @return {Number} amount of keys.
+ */
 Object.prototype.size = function () {
     var len = this.length ? --this.length : -1;
     for (var k in this)
@@ -32,9 +29,20 @@ Object.prototype.size = function () {
 };
 
 OTMA.util = {
+    /**
+     * Get some random integer between 0 and maximum.
+     * @param maximum maximum
+     * @return {Number} random number
+     */
     getRandomInteger: function(maximum) {
         return Math.floor(Math.random() * maximum);
     },
+
+    /**
+     * Set the CSS visibility on an element found by using the given selector.
+     * @param selector selector used for finding the DOM element
+     * @param doShow true if the DOM element should be visible, for hidden provide false
+     */
     setCSSVisibilityOnElement: function(selector, doShow) {
         var attr = 'hidden';
         if (doShow) attr = 'visible';
@@ -42,6 +50,12 @@ OTMA.util = {
             visibility: attr
         });
     },
+
+    /**
+     * Add an element to a given array if it is not yet contained within the array (set functionality).
+     * @param array array to use as a set
+    * @param item item to add
+     */
     addToArrayIfNotContained: function(array, item) {
         if ($.inArray(item, array) == -1) {
             array.push(item);

@@ -3,29 +3,23 @@
  *
  *                  Copyright (C) 2012
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 OTMA.View = {
     states: {
-
         MAP: {
-            updateButtons: function(mapItem) {
-                var player = OTMA.PlayerService.Player;
-                OTMA.View.disableButtonsBasedOnDirections(mapItem);
+            /**
+             * Update all buttons based on the current map item.
+             * @param currentMapItem current map item.
+             */
+            updateButtons: function(currentMapItem) {
+                OTMA.View.disableButtonsBasedOnDirections(currentMapItem);
             },
+
+            /**
+             * Hides or shows NPCs on a given map slice. Hides or shows NPC button used for getting the
+             * conversation view for NPCs.
+             */
             updateNPCView: function() {
                 var currentBoardElement = OTMA.GameEngine.getCurrentBoardElement();
                 var npc = OTMA.NPCService.getNPCForBoardElement(currentBoardElement);
@@ -37,9 +31,18 @@ OTMA.View = {
                     OTMA.util.setCSSVisibilityOnElement('#npcButton', false);
                 }
             },
+
+            /**
+             * Updates the main view background by showing the map slice image associated to the current map item.
+             * @param currentMapItem current map item
+             */
             updateBackground: function(currentMapItem) {
-                OTMA.View.setBackground('images/map/' + currentMapItem.picture);
+                OTMA.View.setBackground('images/map/' + currentMapItem.image);
             },
+
+            /**
+             * Shows an NPC conversation dialogue. This is usually triggered whenever the NPCButton has been clicked.
+             */
             showNPCConversation: function() {
                 var currentBoardElement = OTMA.GameEngine.getCurrentBoardElement();
                 var npc = OTMA.NPCService.getNPCForBoardElement(currentBoardElement);
@@ -57,6 +60,10 @@ OTMA.View = {
         },
 
         DOOR: {
+            /**
+             * Update all buttons based on the current map item.
+             * @param currentMapItem current map item.
+             */
             updateButtons: function(currentMapItem) {
                 var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
                 var mapItem = { south: 'south', north: 'north' };
@@ -65,28 +72,49 @@ OTMA.View = {
                 }
                 OTMA.View.disableButtonsBasedOnDirections(mapItem);
             },
+
+            /**
+             * Updates the main view background by showing the door image as well as the door description if a
+             * room is found behind the door.
+             * @param currentMapItem current map item
+             */
             updateBackground: function(currentMapItem) {
                 var abbreviation = currentMapItem[OTMA.PlayerService.Player.viewingDoor].room.abbreviation;
                 $('#doorDescriptionHolder div.doorDescription').html(abbreviation);
                 OTMA.View.setBackground('images/door.png');
                 OTMA.util.setCSSVisibilityOnElement('#doorDescriptionHolder', true);
             },
+
+            /**
+             * Empty implementation for NPC viewing. A NPC can never walk to a door.
+             */
             updateNPCView: function() {
                 $('#npcImage').attr('src', 'images/blank.png');
             }
         },
 
         ROOM: {
+            /**
+             * Update all buttons based on the current map item. Within a room, a player can only walk forward and
+             * backward.
+             * @param currentMapItem current map item.
+             */
             updateButtons: function(currentMapItem) {
                 var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
                 var room = door.room;
 
                 var mapItem = { south: 'south' };
                 if (room.type == 'WIN_ROOM') {
-                   mapItem = {};
+                    mapItem = {};
                 }
                 OTMA.View.disableButtonsBasedOnDirections(mapItem);
             },
+
+            /**
+             * Updates the main view background by showing the room image as well as showing room content (hints,
+             * stories and room specific description). The method also triggers the automatic changing of room content.
+             * @param currentMapItem current map item
+             */
             updateBackground: function(currentMapItem) {
                 var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
 
@@ -98,16 +126,20 @@ OTMA.View = {
                     OTMA.util.setCSSVisibilityOnElement('#roomHolder', true);
 
                     $('#roomHolder div.roomTitle').html(door.room.title);
+                    $('#roomHolder div.roomDescription').html(door.room.description);
                 }
             },
+
+            /**
+             * Dynamically changes the room content.
+             * @param room
+             */
             showRoomContent: function(room) {
                 if (OTMA.GameEngine.state != 'ROOM') {
                     return;
                 }
 
-                $('#roomHolder div.roomDescription').html(room.description);
-
-                var content = OTMA.GameEngine.getRandomRoomContent();
+                var content = room.getRandomContent();
 
                 $('#roomHolder div.roomContent div.title').html(content.title);
                 $('#roomHolder div.roomContent div.text').html(content.text);
@@ -117,19 +149,35 @@ OTMA.View = {
                     next();
                 });
             },
+
+            /**
+             * Empty implementation for NPC viewing. A NPC can never walk into a room.
+             */
             updateNPCView: function() {
                 $('#npcImage').attr('src', 'images/blank.png');
             }
         },
         RECEPTION: {
+            /**
+             * Update all buttons based on the current map item. Within a reception, a player can walk nowhere.
+             * Hence, all buttons are disabled.
+             */
             updateButtons: function() {
                 // disable all buttons!
                 OTMA.View.disableButtonsBasedOnDirections({});
             },
+
+            /**
+             * Show the reception background image.
+             */
             updateBackground: function() {
                 OTMA.View.setBackground('images/reception.png');
                 OTMA.util.setCSSVisibilityOnElement('#receptionHolder', true);
             },
+
+            /**
+             * Empty implementation for NPC viewing. A NPC can never walk to the reception.
+             */
             updateNPCView: function() {
                 $('#npcImage').attr('src', 'images/blank.png');
             }
@@ -137,6 +185,10 @@ OTMA.View = {
     },
     currentState: {},
 
+    /**
+     * Updates the global view, including buttons etc.
+     * Method decides which state (room, map, door) to show based on OTMA.View.currentState attribute.
+     */
     update: function() {
         var player = OTMA.PlayerService.Player;
         var mapItem = OTMA.Board.boardElements[player.coordinate];
@@ -154,16 +206,26 @@ OTMA.View = {
         }
     },
 
-    disableButtonIfNavigationIsUndefined: function(mapItem, property, buttonId) {
-        if (mapItem[property] == undefined) {
-            $(buttonId).attr('disabled', true);
-            $(buttonId).attr('src', 'images/grey_' + property + '.png');
+    /**
+     * Disables a button based on a given selector attribute if an attribute on the mapItem is undefined.
+     * @param mapItem mapItem used for checking
+     * @param propertyToCheck property on the mapItem to check.
+     * @param buttonSelector selector used for finding the button in the UI
+     */
+    disableButtonIfNavigationIsUndefined: function(mapItem, propertyToCheck, buttonSelector) {
+        if (mapItem[propertyToCheck] == undefined) {
+            $(buttonSelector).attr('disabled', true);
+            $(buttonSelector).attr('src', 'images/grey_' + propertyToCheck + '.png');
         } else {
-            $(buttonId).attr('disabled', false);
-            $(buttonId).attr('src', 'images/white_' + property + '.png');
+            $(buttonSelector).attr('disabled', false);
+            $(buttonSelector).attr('src', 'images/white_' + propertyToCheck + '.png');
         }
     },
 
+    /**
+     * Updates all direction buttons based on direction attributes on a map item.
+     * @param mapItem mapItem used for map checking.
+     */
     disableButtonsBasedOnDirections: function(mapItem) {
         OTMA.View.disableButtonIfNavigationIsUndefined(mapItem, 'north', '#north');
         OTMA.View.disableButtonIfNavigationIsUndefined(mapItem, 'south', '#south');
@@ -171,14 +233,24 @@ OTMA.View = {
         OTMA.View.disableButtonIfNavigationIsUndefined(mapItem, 'east', '#east');
     },
 
+    /**
+     * Update all buttons based on the current View state.
+     */
     updateButtons: function() {
         OTMA.View.currentState.updateButtons();
     },
 
+    /**
+     * Set the main content background image.
+     * @param picture image URL to set
+     */
     setBackground: function(picture) {
         $('#backgroundImage').attr('src', picture);
     },
 
+    /**
+     * Toggles the NPC conversation dialogue.
+     */
     toggleNPCConversation: function() {
         if ($('#conversation').css('visibility') == 'hidden') {
             OTMA.View.showNPCConversation();
@@ -187,12 +259,18 @@ OTMA.View = {
         }
     },
 
+    /**
+     * Shows the NPC conversation dialogue.
+     */
     showNPCConversation: function() {
         if (OTMA.View.currentState.showNPCConversation) {
             OTMA.View.currentState.showNPCConversation();
         }
     },
 
+    /**
+     * Hides the NPC conversation dialogue.
+     */
     hideNPCConversation: function() {
         OTMA.util.setCSSVisibilityOnElement('#conversationHolder', false);
     }
