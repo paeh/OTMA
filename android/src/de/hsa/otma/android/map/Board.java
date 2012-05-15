@@ -2,9 +2,10 @@ package de.hsa.otma.android.map;
 
 import android.util.Log;
 import de.hsa.otma.android.R;
+import de.hsa.otma.android.config.Config;
+import de.hsa.otma.android.config.XMLConfig;
 
 import java.util.*;
-
 import static de.hsa.otma.android.map.Direction.*;
 
 public class Board
@@ -28,6 +29,33 @@ public class Board
     }
 
     private Random random = new Random(System.nanoTime());
+
+    private void assignRoomsToRandomDoors(){
+        Log.i(Board.class.getName(), "Assigning rooms to doors!");
+
+        Config config = new XMLConfig("http://hs-augsburg.de/~lieback/pub/otma-config-game.xml");
+        List<Room> rooms = config.getRooms();
+        if(rooms == null){
+            throw new NullPointerException("No rooms specified in config - list of rooms null!");
+        }
+
+        if(doors.size() < rooms.size()){
+            rooms = rooms.subList(0, doors.size()-1);
+        }
+
+        for(Room room : rooms){
+            Door door;
+            do{
+               door = doors.get(random.nextInt(doors.size()));
+            }
+            while(door.getRoom() != null);
+
+            door.setRoom(room);
+            door.setAbbreviation(room.getAbbreviation());
+            door.setTitle(room.getTitle());
+        }
+        Log.i(Board.class.getName(), "All rooms have been assigned to doors!");
+    }
 
     private void createDoorForBoardElementInDirection(BoardElement element, Direction direction)
     {
@@ -132,5 +160,7 @@ public class Board
 
         createDoorForBoardElementInDirection(map5x2, NORTH);
         createDoorForBoardElementInDirection(map5x5, WEST);
+
+        assignRoomsToRandomDoors();
     }
 }

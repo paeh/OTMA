@@ -19,4 +19,9 @@ public class NPCPlayer extends Player {
     public int getPicture() {
         return picture;
     }
+
+    @Override
+    public String toString(){
+        return super.toString()+" title: "+title+" introduction: "+introduction;
+    }
 }

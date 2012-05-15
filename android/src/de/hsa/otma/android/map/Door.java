@@ -33,6 +33,14 @@ public class Door extends BoardElement
         super.setElementForDirection(NORTH, room);
     }
 
+    public void setTitle(String title){
+        this.title = title;
+    }
+
+    public void setAbbreviation(String abbreviation){
+        this.abbreviation = abbreviation;
+    }
+
     public String getAbbreviation()
     {
         return room.getAbbreviation();
