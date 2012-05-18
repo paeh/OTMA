@@ -22,7 +22,6 @@ import de.hsa.otma.android.constants.BundleKeys;
 import de.hsa.otma.android.map.BoardElement;
 import de.hsa.otma.android.map.Direction;
 import de.hsa.otma.android.player.NPCPlayer;
-
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -48,30 +47,24 @@ public class MapViewActivity extends Activity {
     }
 
     private class NPCOnClickListener implements View.OnClickListener{
-
         private final Context context;
         private final NPCPlayer npc;
 
         NPCOnClickListener(Context context, NPCPlayer npc){
-            Log.i("111elf", "Clicklistener added!");
             this.context = context;
             this.npc = npc;
         }
 
         @Override
         public void onClick(View view){
-            Log.i("111elf", "I've been clicked o.O");
-            /*
-            TODO: show overlay for npc text
-            AlertDialog
-             */
+            Log.i(MapViewActivity.class.getName(), "NPCButton has been clicked");
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage(npc.getIntroduction());
             builder.setTitle("Hello!!");
             builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            //To change body of implemented methods use File | Settings | File Templates.
+                            Log.i(MapViewActivity.class.getName(), "NPCDialog closing.");
                             dialogInterface.cancel();
                         }
                     });
@@ -149,16 +142,14 @@ public class MapViewActivity extends Activity {
         addNPCButton(mapItem.getNpcPlayer());
 
         addOtmaEmployees(width, layout, otmaEmployees);
-        Log.i("111elf", "passed constructor");
     }
 
     private void addNPCButton(NPCPlayer npc){
-        Log.i("111elf", "adding npc button");
+        Button button = (Button) findViewById(R.id.npcButton);
         if(npc == null){
+            button.setVisibility(Button.INVISIBLE);
             return;
         }
-
-        Button button = (Button) findViewById(R.id.npcButton);
         button.setOnClickListener(new NPCOnClickListener(this, npc));
     }
 
