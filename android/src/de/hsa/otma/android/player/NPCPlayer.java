@@ -6,7 +6,11 @@ public class NPCPlayer extends Player {
     private int picture;
 
     private String title;
-    
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
     private String introduction;
 
     public NPCPlayer(Coordinate coordinate, int picture, String name, String title, String introduction) {

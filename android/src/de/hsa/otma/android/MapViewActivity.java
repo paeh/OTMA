@@ -1,6 +1,9 @@
 package de.hsa.otma.android;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
@@ -41,6 +44,39 @@ public class MapViewActivity extends Activity {
             intent.putExtra(BundleKeys.DIRECTION, direction.toString());
             intent.putExtra(BundleKeys.RECEIVER, mapItemResultReceiver);
             startService(intent);
+        }
+    }
+
+    private class NPCOnClickListener implements View.OnClickListener{
+
+        private final Context context;
+        private final NPCPlayer npc;
+
+        NPCOnClickListener(Context context, NPCPlayer npc){
+            Log.i("111elf", "Clicklistener added!");
+            this.context = context;
+            this.npc = npc;
+        }
+
+        @Override
+        public void onClick(View view){
+            Log.i("111elf", "I've been clicked o.O");
+            /*
+            TODO: show overlay for npc text
+            AlertDialog
+             */
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage(npc.getIntroduction());
+            builder.setTitle("Hello!!");
+            builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //To change body of implemented methods use File | Settings | File Templates.
+                            dialogInterface.cancel();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
         }
     }
     
@@ -110,8 +146,22 @@ public class MapViewActivity extends Activity {
         setButtonNavigationAction(Direction.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
         setButtonNavigationAction(Direction.NORTH, R.id.northButton, mapItem.getAvailableDirections());
 
+        addNPCButton(mapItem.getNpcPlayer());
+
         addOtmaEmployees(width, layout, otmaEmployees);
+        Log.i("111elf", "passed constructor");
     }
+
+    private void addNPCButton(NPCPlayer npc){
+        Log.i("111elf", "adding npc button");
+        if(npc == null){
+            return;
+        }
+
+        Button button = (Button) findViewById(R.id.npcButton);
+        button.setOnClickListener(new NPCOnClickListener(this, npc));
+    }
+
 
     private void setButtonNavigationAction(Direction direction, int buttonId, Set<Direction> availableDirections) {
         Button button = (Button) findViewById(buttonId);
