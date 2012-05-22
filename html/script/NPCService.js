@@ -11,7 +11,7 @@
  */
 OTMA.NPCService = {
     people: [],
-    availableAvatarImages: ['npc_1.png', 'npc_2.png', 'npc_3.png', 'npc_4.png', 'npc_5.png', 'npc_6.png', 'npc_7.png'],
+    availableAvatarImages: OTMA.Constants.AVAILABLE_NPC_IMAGES,
     avatarImageCounter: -1,
     stepCounter: 0,
 

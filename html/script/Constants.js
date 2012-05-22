@@ -47,7 +47,7 @@ OTMA.Constants = {
     RECEPTION_TEXT: 'Note: All hints available in the game will be given to you on win.',
     WIN_MEETS_REQUIREMENTS_TEXT: 'You have found all required hints and NPCs. Now go and find the exit door!',
     WIN_CAPTION: 'YOU WIN!',
-    WIN_PAGE_TEXT: 'Congratulations! Click <a href="http://www.example.com" target="_blank">here</a> to find out more about OTMA and to see all the game hints.',
+    WIN_PAGE_TEXT: 'Congratulations! Click <a href="http://www.onthemove-academy.org/" target="_blank">here</a> to find out more about OTMA and to see all the game hints.',
 
     /**
      * You should only change this property if also providing appropriate images
@@ -55,5 +55,11 @@ OTMA.Constants = {
      * The linking between each board element still has to be hardcoded in OTMA.Board
      */
     MAP_WIDTH: 5,
-    MAP_HEIGHT: 5
+    MAP_HEIGHT: 5,
+
+    /**
+     * Images for the NPC players. Only change this array if also changing the available avatar images in
+     * images/avatars!
+     */
+    AVAILABLE_NPC_IMAGES: ['npc_1.png', 'npc_2.png', 'npc_3.png', 'npc_4.png', 'npc_5.png', 'npc_6.png', 'npc_7.png']
 };
