@@ -119,9 +119,8 @@ OTMA.View = {
                 var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
 
                 if (door.room.type == 'WIN_ROOM') {
-                    OTMA.View.setBackground('images/champion.png');
+                    OTMA.View.setBackground('images/finish.png');
                     OTMA.util.setCSSVisibilityOnElement('#winHolder', true);
-                    $('#winHolder div.winCaption').html(OTMA.Constants.WIN_CAPTION);
                     $('#winHolder div.winText').html(OTMA.Constants.WIN_PAGE_TEXT);
                 } else {
                     OTMA.View.setBackground('images/room.png');
