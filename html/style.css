@@ -228,48 +228,38 @@ div#winInstructionHolder div {
 }
 
 div#roomHolder div.roomTitle {
+    margin: 20px 30px 0 30px;
     padding: 5px;
     text-align: center;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 20px;
     text-shadow: 2px 2px 2px #abc;
-    max-height: 15%;
-    color: #fff;
-
-    background: -moz-linear-gradient(top,  rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.27) 59%, rgba(0,0,0,0) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.65)), color-stop(59%,rgba(0,0,0,0.27)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.27) 59%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.27) 59%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.27) 59%,rgba(0,0,0,0) 100%); /* IE10+ */
-    background: linear-gradient(top,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.27) 59%,rgba(0,0,0,0) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+    color: #000;
+    max-height: 70px;
+    overflow: auto;
 }
 
 div#roomHolder div.roomDescription {
     position: absolute;
     bottom: 20px;
-    left: 7%;
-    right: 7%;
+    left: 6%;
+    right: 8%;
     padding: 5px;
-    border: 2px silver solid;
-    border-radius: 5px;
-    background: rgba(188, 188, 188, 0.6);
-    max-height: 35%;
+    max-height: 32%;
     overflow: auto;
+    color: #fff;
 }
 
 div#roomHolder div.roomContent {
     position: absolute;
-    left: 7%;
-    right: 7%;
-    top: 25%;
+    left: 12%;
+    right: 11%;
+    top: 27%;
     padding: 5px;
-    border: 2px silver solid;
-    border-radius: 5px;
-    background: rgba(188, 188, 188, 0.6);
-    max-height: 25%;
+    max-height: 26%;
     overflow: auto;
+    color: #000;
 }
 
 div#roomHolder div.roomContent div.title {

@@ -16,8 +16,6 @@ OTMA.GameEngine = {
      */
     hints: [],
 
-
-
     /**
      * Get the current board element for the human player.
      * @return {Object} current board element.
