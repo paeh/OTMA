@@ -22,7 +22,7 @@ OTMA.Constants = {
      * are ['RECEPTION', 'MAP', 'DOOR', 'ROOM']. However, DOOR and ROOM should never be assigned here, as those
      * need more date in various variables.
      */
-    DEFAULT_STATE: 'ROOM',
+    DEFAULT_STATE: 'RECEPTION',
 
     /**
      * The player has to find a certain amount of NPCs as win requirement.
