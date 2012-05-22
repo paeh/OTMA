@@ -106,7 +106,6 @@ namespace OTMA
                 if (gameEngine.getCurrentGameState() == GameState.Done)
                 {
                     hyperlinkButton1.Visibility = System.Windows.Visibility.Visible;
-                    eventNameLabel.FontSize = 26;
                 }
 
                 var imageUri = new Uri(newPosition.picture, UriKind.Relative);
