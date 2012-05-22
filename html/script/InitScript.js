@@ -117,4 +117,6 @@ $(document).ready(function() {
         initialiseView();
     });
 
+    OTMA.PlayerService.Player.viewingDoor = 'WIN'
+
 });
