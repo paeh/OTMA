@@ -139,18 +139,18 @@ public class MapViewActivity extends Activity {
         setButtonNavigationAction(Direction.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
         setButtonNavigationAction(Direction.NORTH, R.id.northButton, mapItem.getAvailableDirections());
 
-        addNPCButton(mapItem.getNpcPlayer());
+        addNPCButton(otmaEmployees);
 
         addOtmaEmployees(width, layout, otmaEmployees);
     }
 
-    private void addNPCButton(NPCPlayer npc){
+    private void addNPCButton(ArrayList<NPCPlayer> otmaEmployees){
         Button button = (Button) findViewById(R.id.npcButton);
-        if(npc == null){
+        if(otmaEmployees == null || otmaEmployees.size() == 0){
             button.setVisibility(Button.INVISIBLE);
             return;
         }
-        button.setOnClickListener(new NPCOnClickListener(this, npc));
+        button.setOnClickListener(new NPCOnClickListener(this, otmaEmployees.get(0)));
     }
 
 
