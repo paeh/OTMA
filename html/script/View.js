@@ -120,6 +120,9 @@ OTMA.View = {
 
                 if (door.room.type == 'WIN_ROOM') {
                     OTMA.View.setBackground('images/champion.png');
+                    OTMA.util.setCSSVisibilityOnElement('#winHolder', true);
+                    $('#winHolder div.winCaption').html(OTMA.Constants.WIN_CAPTION);
+                    $('#winHolder div.winText').html(OTMA.Constants.WIN_PAGE_TEXT);
                 } else {
                     OTMA.View.setBackground('images/room.png');
                     OTMA.View.currentState.showRoomContent(door.room);
@@ -171,6 +174,7 @@ OTMA.View = {
              * Show the reception background image.
              */
             updateBackground: function() {
+                $('#receptionHolder div.hintInfo').html(OTMA.Constants.RECEPTION_TEXT);
                 OTMA.View.setBackground('images/reception.png');
                 OTMA.util.setCSSVisibilityOnElement('#receptionHolder', true);
             },
@@ -305,6 +309,7 @@ function initialiseView() {
     });
 
     $(document).bind('meetsWinCondition', function() {
+        $('#winInstructionHolder div.winInstruction').html(OTMA.Constants.WIN_MEETS_REQUIREMENTS_TEXT);
         OTMA.util.setCSSVisibilityOnElement('#winInstructionHolder', true);
     });
 }

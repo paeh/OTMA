@@ -151,6 +151,24 @@ div.holder {
     visibility: hidden;
 }
 
+div#winHolder {
+    top: 50%;
+    text-align: center;
+    color: white;
+    z-index: 4;
+    padding: 20px;
+}
+
+div#winHolder div.winCaption {
+    font-size: 30px;
+    position: relative;
+}
+div#winHolder div.winText {
+    font-size: 20px;
+    position: relative;
+    margin: 20px;
+}
+
 div#conversationHolder {
     top: 5%;
     bottom: 5%;
