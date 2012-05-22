@@ -55,6 +55,11 @@ namespace OTMA.game
             }
         }
 
+        public GameState getCurrentGameState()
+        {
+            return state;
+        }
+
         public void shuffleDoorEvents()
         {
             var doors = board.getAllAvailableDoors();
@@ -66,7 +71,7 @@ namespace OTMA.game
                 var room = doors[randomNumber].getRoom();
 
                 room.setHints(hints);
-                room.setStories(new List<Story>() { new Story("", "e=mc²"), new Story("", "dummy1"), new Story("", "dummy2"), new Story("", "your only limit is your own imagination") });
+                room.setStories(ConfigStub.DEFAULT_STORIES);
                 room.setEvent(roomEvent);
                 doors.RemoveAt(randomNumber);
             }
@@ -211,7 +216,7 @@ namespace OTMA.game
 
         public Boolean allRequirementsSatisfied()
         {
-            return human.foundHints.Count >= VictoryRequirements.FOUND_HINT_AMOUNT && human.foundNpcs.Count >= VictoryRequirements.FOUND_NPC_AMOUNT;
+            return human.foundHints.Count >= ConfigStub.NEEDED_HINT_AMOUNT && human.foundNpcs.Count >= ConfigStub.NEEDED_NPC_AMOUNT;
         }
 
     }

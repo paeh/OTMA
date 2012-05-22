@@ -13,17 +13,20 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="True" Loaded="PhoneApplicationPage_Loaded">
 
-    <!--LayoutRoot is the root grid where all page content is placed-->
-    <!--Sample code showing usage of ApplicationBar-->
-    <!--<phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
-                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>-->
-    <TextBlock Height="31" Name="textBlock1" Text="Please wait while game is loading" Width="306" />
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--LayoutRoot is the root grid where all page content is placed-->
+        <!--Sample code showing usage of ApplicationBar-->
+        <!--<phone:PhoneApplicationPage.ApplicationBar>
+            <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+                <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
+                <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
+                <shell:ApplicationBar.MenuItems>
+                    <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
+                    <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
+                </shell:ApplicationBar.MenuItems>
+            </shell:ApplicationBar>
+        </phone:PhoneApplicationPage.ApplicationBar>-->
+        <TextBlock Name="textBlock1" Text="Please wait while game is loading" Margin="12,347,12,171" FontSize="28" TextWrapping="Wrap" TextAlignment="Center" />
+        <Button Content="Start" Height="79" HorizontalAlignment="Left" Margin="87,603,0,0" Name="button1" VerticalAlignment="Top" Width="306" IsEnabled="False" Click="button1_Click" />
+    </Grid>
 </phone:PhoneApplicationPage>

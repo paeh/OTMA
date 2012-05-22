@@ -41,6 +41,12 @@ namespace OTMA
 
         private void xmlLoadingDone(IAsyncResult result)
         {
+            textBlock1.Text = ConfigStub.RECEPTION_TEXT;
+            button1.IsEnabled = true;
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
             NavigationService.Navigate(new Uri("/GamePage.xaml", UriKind.Relative));
         }
     }
