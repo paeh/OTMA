@@ -287,32 +287,25 @@ div#receptionHolder {
     z-index: 3;
 }
 
-div#receptionHolder div.hintInfo {
-    position: absolute;
-    text-align: center;
-    bottom: 0;
-    padding: 30px;
-    font-weight: bold;
-    color: #ff0000;
-    background-color: #ffffff;
-}
 div#receptionHolder div.receptionBox {
     position: absolute;
     text-align: center;
-    width: 100%;
-    top: 70%;
-
-    background: -moz-linear-gradient(top, rgba(157,213,58,0.01) 0%, rgba(161,213,79,0.98) 50%, rgba(128,194,23,1) 51%, rgba(124,188,10,0) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(157,213,58,0.01)), color-stop(50%,rgba(161,213,79,0.98)), color-stop(51%,rgba(128,194,23,1)), color-stop(100%,rgba(124,188,10,0))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, rgba(157,213,58,0.01) 0%,rgba(161,213,79,0.98) 50%,rgba(128,194,23,1) 51%,rgba(124,188,10,0) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, rgba(157,213,58,0.01) 0%,rgba(161,213,79,0.98) 50%,rgba(128,194,23,1) 51%,rgba(124,188,10,0) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, rgba(157,213,58,0.01) 0%,rgba(161,213,79,0.98) 50%,rgba(128,194,23,1) 51%,rgba(124,188,10,0) 100%); /* IE10+ */
-    background: linear-gradient(top, rgba(157,213,58,0.01) 0%,rgba(161,213,79,0.98) 50%,rgba(128,194,23,1) 51%,rgba(124,188,10,0) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#039dd53a', endColorstr='#007cbc0a',GradientType=0 ); /* IE6-9 */
+    width: 150px;
+    top: 51%;
+    right: 57%;
+}
+div#receptionHolder div.hintInfo {
+    position: absolute;
+    text-align: center;
+    bottom: 40px;
+    padding: 40px;
+    font-weight: bold;
+    color: #fff;
 }
 
 div#receptionHolder div.receptionBox input {
     margin: 5px;
-    height: 50px;
+    height: 30px;
+    width: 80%;
 }
 
