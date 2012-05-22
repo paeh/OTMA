@@ -20,7 +20,7 @@ namespace OtmaTest
 
             Assert.IsFalse(engine.allRequirementsSatisfied());
 
-            for (int i = 0; i < VictoryRequirements.FOUND_HINT_AMOUNT; i++)
+            for (int i = 0; i < ConfigStub.NEEDED_HINT_AMOUNT; i++)
             {
                 engine.logHint(new Hint("hello", "moto"));
             }

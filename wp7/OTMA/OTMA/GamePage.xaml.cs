@@ -103,6 +103,12 @@ namespace OTMA
 
             if (newPosition != null)
             {
+                if (gameEngine.getCurrentGameState() == GameState.Done)
+                {
+                    hyperlinkButton1.Visibility = System.Windows.Visibility.Visible;
+                    eventNameLabel.FontSize = 26;
+                }
+
                 var imageUri = new Uri(newPosition.picture, UriKind.Relative);
                 mainImage.Source = new BitmapImage(imageUri);
 
@@ -118,7 +124,7 @@ namespace OTMA
                 var currentDoor = gameEngine.getCurrentDoorItem();
                 if (currentDoor != null && currentDoor is ExitDoor && !gameEngine.allRequirementsSatisfied())
                 {
-                    MessageBox.Show("You must find all hints and talk to all NPCs to exit!", "Can't exit", MessageBoxButton.OK);
+                    MessageBox.Show(String.Format("You must find {0} hint(s) and talk to {1} NPC(s) to exit!", ConfigStub.NEEDED_HINT_AMOUNT, ConfigStub.NEEDED_NPC_AMOUNT), "Can't exit", MessageBoxButton.OK);
                 }
             }
         }

@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using OTMA.domain;
+using OTMA.util;
 
 namespace OTMA.game
 {
@@ -97,21 +98,21 @@ namespace OTMA.game
             var door5x2 = createAndAddDoor(5, 2, "/OTMA;component/Images/door.png");
             var door5x5 = createAndAddDoor(5, 5, "/OTMA;component/Images/door.png");
 
-            var room1x2 = createAndAddRoom(1, 2, "");
-            var room1x5 = createAndAddRoom(1, 5, "");
-            var room2x1 = createAndAddRoom(2, 1, "");
-            var room2x2 = createAndAddRoom(2, 2, "");
-            var room2x4 = createAndAddRoom(2, 4, "");
-            var room2x5 = createAndAddRoom(2, 5, "");
-            var room3x1 = createAndAddRoom(3, 1, "");
-            var room3x2 = createAndAddRoom(3, 2, "");
-            var room3x4 = createAndAddRoom(3, 4, "");
+            var room1x2 = createAndAddRoom(1, 2, "/OTMA;component/Images/room.png");
+            var room1x5 = createAndAddRoom(1, 5, "/OTMA;component/Images/room.png");
+            var room2x1 = createAndAddRoom(2, 1, "/OTMA;component/Images/room.png");
+            var room2x2 = createAndAddRoom(2, 2, "/OTMA;component/Images/room.png");
+            var room2x4 = createAndAddRoom(2, 4, "/OTMA;component/Images/room.png");
+            var room2x5 = createAndAddRoom(2, 5, "/OTMA;component/Images/room.png");
+            var room3x1 = createAndAddRoom(3, 1, "/OTMA;component/Images/room.png");
+            var room3x2 = createAndAddRoom(3, 2, "/OTMA;component/Images/room.png");
+            var room3x4 = createAndAddRoom(3, 4, "/OTMA;component/Images/room.png");
             //var room3x5 = createAndAddRoom(3, 5, "");
-            var room4x1 = createAndAddRoom(4, 1, "");
-            var room4x3 = createAndAddRoom(4, 3, "");
-            var room4x4 = createAndAddRoom(4, 4, "");
-            var room5x2 = createAndAddRoom(5, 2, "");
-            var room5x5 = createAndAddRoom(5, 5, "");
+            var room4x1 = createAndAddRoom(4, 1, "/OTMA;component/Images/room.png");
+            var room4x3 = createAndAddRoom(4, 3, "/OTMA;component/Images/room.png");
+            var room4x4 = createAndAddRoom(4, 4, "/OTMA;component/Images/room.png");
+            var room5x2 = createAndAddRoom(5, 2, "/OTMA;component/Images/room.png");
+            var room5x5 = createAndAddRoom(5, 5, "/OTMA;component/Images/room.png");
 
             door1x2.setBoundaryItems(room1x2, null, map1x2, null);
             door1x5.setBoundaryItems(room1x5, null, map1x5, null);
@@ -186,8 +187,8 @@ namespace OTMA.game
             exitDoor.setBoundaryItems(exitRoom, null, map3x5, null);
             doors.Add(coordinate, exitDoor);
 
-            exitRoom.setHints(new List<Hint>() { new Hint("Final title1", "bla1"), new Hint("Final title2", "bla2"), new Hint("Final title3", "bla3") });
-            exitRoom.setStories(new List<Story>() { new Story("Final title4", "bla4"), new Story("Final title5", "bla5"), new Story("Final title6", "bla6") });
+            exitRoom.setHints(ConfigStub.FINAL_HINTS);
+            exitRoom.setStories(ConfigStub.FINAL_STORIES);
             exitRoom.setEvent(exitEvent);
             rooms.Add(coordinate, exitRoom);
 
