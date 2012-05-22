@@ -71,6 +71,7 @@ OTMA.View = {
                     mapItem.north = undefined;
                 }
                 OTMA.View.disableButtonsBasedOnDirections(mapItem);
+                OTMA.util.setCSSVisibilityOnElement('#npcButton', false);
             },
 
             /**
@@ -108,6 +109,7 @@ OTMA.View = {
                     mapItem = {};
                 }
                 OTMA.View.disableButtonsBasedOnDirections(mapItem);
+                OTMA.util.setCSSVisibilityOnElement('#npcButton', false);
             },
 
             /**
