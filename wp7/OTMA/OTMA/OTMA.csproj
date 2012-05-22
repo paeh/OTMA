@@ -145,6 +145,7 @@
     <Resource Include="Images\door.png" />
     <Resource Include="Images\player_avatar.png" />
     <Resource Include="Images\room.png" />
+    <Resource Include="Images\reception.png" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />

@@ -43,15 +43,15 @@
             <Button Content="Ask" Height="72" HorizontalAlignment="Left" Margin="12,636,0,0" Name="npcButton" VerticalAlignment="Top" Width="160" Click="npcButton_Click" />
             <Image Height="556" HorizontalAlignment="Left" Margin="12,17,0,0" Name="mainImage" Stretch="Fill" VerticalAlignment="Top" Width="458" Source="/OTMA;component/Images/1x1.png" />
             <Image Height="124" HorizontalAlignment="Left" Margin="334,43,0,0" Name="npcImage" Stretch="Fill" VerticalAlignment="Top" Width="136" />
-            <TextBlock Height="51" HorizontalAlignment="Left" Margin="131,200,0,0" Name="doorLabel" Text="" VerticalAlignment="Top" Width="218" TextAlignment="Center" TextWrapping="Wrap" Foreground="White" />
-            <ScrollViewer Height="75" Margin="0,117,0,577">
-                <TextBlock Height="50" HorizontalAlignment="Left" Margin="103,0,0,0" Name="eventNameLabel" Text="" VerticalAlignment="Top" Width="277" TextAlignment="Center" TextWrapping="Wrap" MinHeight="50" FontSize="22" Foreground="White" OpacityMask="{x:Null}" MinWidth="277" />
+            <TextBlock Height="51" HorizontalAlignment="Left" Margin="133,173,0,0" Name="doorLabel" Text="" VerticalAlignment="Top" Width="218" TextAlignment="Center" TextWrapping="Wrap" Foreground="White" />
+            <ScrollViewer Margin="-4,63,4,621" Foreground="Black">
+                <TextBlock Height="50" HorizontalAlignment="Left" Margin="103,0,0,0" Name="eventNameLabel" Text="" VerticalAlignment="Top" Width="277" TextAlignment="Center" TextWrapping="Wrap" MinHeight="50" FontSize="23" Foreground="Black" OpacityMask="{x:Null}" MinWidth="277" />
             </ScrollViewer>
-                <ScrollViewer Height="110" Margin="0,275,0,383">
-                <TextBlock Height="110" HorizontalAlignment="Left" Margin="60,0,0,0" Name="eventHintLabel" Text="" VerticalAlignment="Top" Width="354" TextAlignment="Center" TextWrapping="Wrap" MinHeight="0" />
+                <ScrollViewer Margin="0,173,0,449">
+                <TextBlock Height="110" HorizontalAlignment="Left" Margin="60,0,0,0" Name="eventHintLabel" Text="" VerticalAlignment="Top" Width="354" TextAlignment="Center" TextWrapping="Wrap" MinHeight="0" Foreground="Black" />
             </ScrollViewer>
-            <ScrollViewer Margin="0,391,0,267">
-                <TextBlock Height="110" HorizontalAlignment="Left" Margin="60,0,0,0" Name="eventDesciption" Text="" VerticalAlignment="Top" TextWrapping="Wrap" Width="354" MinHeight="0" />
+            <ScrollViewer Margin="0,380,0,239">
+                <TextBlock Height="111" HorizontalAlignment="Left" Margin="60,0,0,0" Name="eventDesciption" Text="" VerticalAlignment="Top" TextWrapping="Wrap" Width="362" MinHeight="0" />
             </ScrollViewer>
             <HyperlinkButton Content="You won! Click here for more Information." Height="54" HorizontalAlignment="Left" Margin="12,447,0,0" Name="hyperlinkButton1" VerticalAlignment="Top" Width="458" IsEnabled="True" Visibility="Collapsed" NavigateUri="http://www.onthemove-academy.org/" TargetName="_blank" />
         </Grid>

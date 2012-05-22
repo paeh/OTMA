@@ -181,7 +181,7 @@ namespace OTMA.game
             var coordinate = new Coordinate(3, 5);
             var exitDoor = new ExitDoor(coordinate, "/OTMA;component/Images/door.png");
             var exitEvent = new Event("Finish", "Finish", "img");
-            var exitRoom = new Room(coordinate, "img");
+            var exitRoom = new Room(coordinate, "/OTMA;component/Images/finish.png");
 
             exitDoor.setRoomEvent(exitEvent);
             exitDoor.setBoundaryItems(exitRoom, null, map3x5, null);

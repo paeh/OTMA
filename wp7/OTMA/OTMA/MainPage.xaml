@@ -26,7 +26,8 @@
                 </shell:ApplicationBar.MenuItems>
             </shell:ApplicationBar>
         </phone:PhoneApplicationPage.ApplicationBar>-->
-        <TextBlock Name="textBlock1" Text="Please wait while game is loading" Margin="12,347,12,171" FontSize="28" TextWrapping="Wrap" TextAlignment="Center" />
-        <Button Content="Start" Height="79" HorizontalAlignment="Left" Margin="87,603,0,0" Name="button1" VerticalAlignment="Top" Width="306" IsEnabled="False" Click="button1_Click" />
+        <Image Height="517" HorizontalAlignment="Left" Margin="12,190,0,0" Name="image1" Stretch="Fill" VerticalAlignment="Top" Width="456" Source="/OTMA;component/Images/reception.png" />
+        <TextBlock Name="textBlock1" Text="Please wait while game is loading" Margin="48,530,45,122" FontSize="24" TextWrapping="Wrap" TextAlignment="Center" />
+        <Button Content="Start" Height="79" HorizontalAlignment="Left" Margin="34,438,0,0" Name="button1" VerticalAlignment="Top" Width="182" IsEnabled="False" Click="button1_Click" />
     </Grid>
 </phone:PhoneApplicationPage>
