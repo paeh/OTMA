@@ -18,7 +18,9 @@ OTMA.Constants = {
     NPC_ROUND_SPEED: 2,
 
     /**
-     * Default state of the whole game engine. Usually this defaults to RECEPTION.
+     * Default state of the whole game engine. Usually this defaults to RECEPTION. Available states
+     * are ['RECEPTION', 'MAP', 'DOOR', 'ROOM']. However, DOOR and ROOM should never be assigned here, as those
+     * need more date in various variables.
      */
     DEFAULT_STATE: 'RECEPTION',
 
@@ -41,6 +43,11 @@ OTMA.Constants = {
         new OTMA.domain.Story('Bla2', 'Bla2'),
         new OTMA.domain.Story('Bla3', 'Bla3')
     ],
+
+    RECEPTION_TEXT: 'Note: All hints available in the game will be given to you on win.',
+    WIN_MEETS_REQUIREMENTS_TEXT: 'You have found all required hints and NPCs. Now go and find the exit door!',
+    WIN_CAPTION: 'YOU WIN!',
+    WIN_PAGE_TEXT: 'Congratulations! Click <a href="http://www.example.com" target="_blank">here</a> to find out more about OTMA and to see all the game hints.',
 
     /**
      * You should only change this property if also providing appropriate images
