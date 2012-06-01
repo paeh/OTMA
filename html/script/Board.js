@@ -23,7 +23,7 @@ OTMA.Board = {
 
     /**
      * Finds out some random board element.
-     * @return {*} random board element
+     * @return {OTMA.domain.BoardElement} random board element
      */
     getRandomBoardElement: function() {
         var coordinates = OTMA.Board.getCoordinatesArray();
@@ -48,9 +48,9 @@ OTMA.Board = {
 
     /**
      * Create a board element for a given coordinate and using a given background picture.
-     * @param xCoordinate x-coordinate
-     * @param yCoordinate y-coordinate
-     * @return {Object} created board element
+     * @param {Integer} xCoordinate x-coordinate
+     * @param {Integer} yCoordinate y-coordinate
+     * @return {OTMA.domain.BoardElement} created board element
      */
     createBoardElement: function(xCoordinate, yCoordinate) {
         var coordinate = xCoordinate + "x" + yCoordinate;
@@ -63,11 +63,11 @@ OTMA.Board = {
 
     /**
      * Set adjacent board elements to a given board element.
-     * @param coordinate coordinate of the board element, on which the adjacent board elements are set
-     * @param north board element to the north
-     * @param east board element to the east
-     * @param south board element to the south
-     * @param west board element to the west
+     * @param {String} coordinate coordinate of the board element, on which the adjacent board elements are set
+     * @param {OTMA.domain.BoardElement} north board element to the north
+     * @param {OTMA.domain.BoardElement} east board element to the east
+     * @param {OTMA.domain.BoardElement} south board element to the south
+     * @param {OTMA.domain.BoardElement} west board element to the west
      */
     setNavigationBorders: function(coordinate, north, east, south, west) {
         var boardItem = OTMA.Board.boardElements[coordinate];
@@ -83,9 +83,9 @@ OTMA.Board = {
 
     /**
      * Set a room to some unknown, random door.
-     * @param doors array of available doors.
-     * @param room room to set
-     * @return {*} found door, on which room is set
+     * @param {OTMA.domain.Door[]} doors array of available doors.
+     * @param {OTMA.domain.Room} room room to set
+     * @return {OTMA.domain.Door} found door, on which room is set
      */
     setRoomToRandomDoor: function(doors, room) {
         do {
@@ -107,7 +107,7 @@ OTMA.Board = {
 
     /**
      * Associates all rooms from the XML content to random doors.
-     * @param availableDoors
+     * @param {OTMA.domain.Door[]} availableDoors
      */
     setRandomDoorsToXMLEvents: function(availableDoors) {
         $.each(OTMA.xmlContent.rooms, function(index, event) {
@@ -180,13 +180,9 @@ function initialiseBoard() {
 
     OTMA.Board.setRandomDoorsToXMLEvents(OTMA.Board.doors);
 
-    var winDoor = OTMA.Board.setRoomToRandomDoor(OTMA.Board.doors, {
-        title: '!! YOU WIN !!',
-        abbreviation: 'WIN',
-        isWinDoor: true
-    });
+    var winDoor = OTMA.Board.setRoomToRandomDoor(OTMA.Board.doors, new OTMA.domain.Room('You Win!', 'You Win', 'You Win', [], []));
     winDoor.room.type = 'WIN_ROOM';
-    OTMA.Board.boardElements[winDoor.boardElement.coordinate][winDoor.direction] = winDoor;
 
+    OTMA.Board.boardElements[winDoor.boardElement.coordinate][winDoor.direction] = winDoor;
 }
 

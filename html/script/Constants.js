@@ -9,7 +9,7 @@ OTMA.Constants = {
     /**
      * Time interval in which the room content is changed. Provided in milli seconds.
      */
-    ROOM_CONTENT_TIME: 1,
+    ROOM_CONTENT_TIME: 10000,
 
     /**
      * NPCs can move in certain intervals. If set to 2, only every second player interaction with the game
