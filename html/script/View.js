@@ -26,7 +26,7 @@ OTMA.View = {
              */
             updateNPCView: function() {
                 var currentBoardElement = OTMA.GameEngine.getCurrentBoardElement();
-                var npc = OTMA.NPCService.getNPCForBoardElement(currentBoardElement);
+                var npc = OTMA.NPCService.INSTANCE.getNPCForBoardElement(currentBoardElement);
                 if (npc && OTMA.GameEngine.state == 'MAP') {
                     $('#npcImage').attr('src', 'images/avatars/' + npc.picture);
                     OTMA.util.setCSSVisibilityOnElement('#npcButton', true);
@@ -49,7 +49,7 @@ OTMA.View = {
              */
             showNPCConversation: function() {
                 var currentBoardElement = OTMA.GameEngine.getCurrentBoardElement();
-                var npc = OTMA.NPCService.getNPCForBoardElement(currentBoardElement);
+                var npc = OTMA.NPCService.INSTANCE.getNPCForBoardElement(currentBoardElement);
 
                 if (! npc) return;
 

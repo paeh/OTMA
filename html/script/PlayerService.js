@@ -7,7 +7,7 @@
 
 /**
  * PlayerService implements all attributes and methods to handle player interactions and player states within the
- * game.
+ * game. Usually, do not instantiate the class but use the singleton INSTANCE object.
  * @class
  */
 OTMA.PlayerService = function() {

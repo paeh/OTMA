@@ -6,13 +6,18 @@
  */
 
 describe("OTMA.NPCService", function() {
-    it("should be possible to get the next sequential avatar picture", function() {
-        OTMA.NPCService.reset();
-        OTMA.NPCService.availableAvatarImages = ['1', '2'];
+    var npcService;
+    beforeEach(function() {
+        npcService = OTMA.NPCService.INSTANCE;
+    });
 
-        expect(OTMA.NPCService.getNextAvatarPicture()).toBe('1');
-        expect(OTMA.NPCService.getNextAvatarPicture()).toBe('2');
-        expect(OTMA.NPCService.getNextAvatarPicture()).toBe('1');
+    it("should be possible to get the next sequential avatar picture", function() {
+        npcService.reset();
+        npcService.availableAvatarImages = ['1', '2'];
+
+        expect(npcService.getNextAvatarPicture()).toBe('1');
+        expect(npcService.getNextAvatarPicture()).toBe('2');
+        expect(npcService.getNextAvatarPicture()).toBe('1');
     });
 
     it("should be possible to determine whether a coordinate is occupied by some NPC", function() {
@@ -22,25 +27,26 @@ describe("OTMA.NPCService", function() {
         var npc2 = {
             coordinate: '1x2'
         };
-        OTMA.NPCService.people = [npc1, npc2];
+        npcService.people = [npc1, npc2];
 
-        expect(OTMA.NPCService.getNPCForCoordinate('1x1')).toBe(npc1);
-        expect(OTMA.NPCService.getNPCForCoordinate('1x2')).toBe(npc2);
-        expect(OTMA.NPCService.getNPCForCoordinate('1x3')).toBe(undefined);
+        expect(npcService.getNPCForCoordinate('1x1')).toBe(npc1);
+        expect(npcService.getNPCForCoordinate('1x2')).toBe(npc2);
+        expect(npcService.getNPCForCoordinate('1x3')).toBe(undefined);
     });
 
     it("NPC should move only be moved if in a distinct interval", function() {
+        // in a test, we may reassign the constant
         OTMA.Constants.NPC_ROUND_SPEED = 2;
 
         var counter = 0;
-        OTMA.NPCService.moveNPC = function() { counter += 1 };
+        npcService.moveNPC = function() { counter += 1 };
 
-        OTMA.NPCService.people = [ 'a' ];
+        npcService.people = [ 'a' ];
 
-        OTMA.NPCService.moveAllNPCs();
+        npcService.moveAllNPCs();
         expect(counter).toBe(0);
 
-        OTMA.NPCService.moveAllNPCs();
+        npcService.moveAllNPCs();
         expect(counter).toBe(1);
     })
 });

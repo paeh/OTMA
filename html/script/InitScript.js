@@ -112,8 +112,6 @@ $(document).ready(function() {
         updateLayout();
     }, false);
 
-
-
     loadXML("otma-config.xml", function() {
         initialiseBoard();
         initialiseNPC();
