@@ -67,7 +67,8 @@ OTMA.View = {
             updateButtons: function(currentMapItem) {
                 var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
                 var mapItem = { south: 'south', north: 'north' };
-                if (! OTMA.GameEngine.checkWinConditions() && door.room.type == 'WIN_ROOM') {
+
+                if (! door.room || (! OTMA.GameEngine.checkWinConditions() && door.room.type == 'WIN_ROOM')) {
                     mapItem.north = undefined;
                 }
                 OTMA.View.disableButtonsBasedOnDirections(mapItem);
@@ -80,9 +81,13 @@ OTMA.View = {
              * @param currentMapItem current map item
              */
             updateBackground: function(currentMapItem) {
-                var abbreviation = currentMapItem[OTMA.PlayerService.Player.viewingDoor].room.abbreviation;
-                $('#doorDescriptionHolder div.doorDescription').html(abbreviation);
                 OTMA.View.setBackground('images/door.png');
+                var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
+
+                if (! door.room) return;
+
+                var abbreviation = door.room.abbreviation;
+                $('#doorDescriptionHolder div.doorDescription').html(abbreviation);
                 OTMA.util.setCSSVisibilityOnElement('#doorDescriptionHolder', true);
             },
 

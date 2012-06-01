@@ -111,8 +111,7 @@ OTMA.Board = {
      */
     setRandomDoorsToXMLEvents: function(availableDoors) {
         $.each(OTMA.xmlContent.rooms, function(index, event) {
-            var door = OTMA.Board.setRoomToRandomDoor(availableDoors, event);
-            OTMA.Board.boardElements[door.boardElement.coordinate][door.direction] = door;
+            OTMA.Board.setRoomToRandomDoor(availableDoors, event);
         });
     }
 };
@@ -172,6 +171,11 @@ function initialiseBoard() {
         new OTMA.domain.Door(OTMA.Board.boardElements["5x2"], 'north'),
         new OTMA.domain.Door(OTMA.Board.boardElements["5x5"], 'west')
     ];
+
+    $.each(OTMA.Board.doors, function(index, door) {
+        var boardElement = door.boardElement;
+        OTMA.Board.boardElements[boardElement.coordinate][door.direction] = door;
+    });
 
     OTMA.Board.setRandomDoorsToXMLEvents(OTMA.Board.doors);
 

@@ -45,8 +45,11 @@ OTMA.PlayerService = {
             movePlayer: function(directionProperty) {
                 var door = OTMA.GameEngine.getCurrentBoardElement()[OTMA.PlayerService.Player.viewingDoor];
 
+                // block player from walking into a door that does not have a room assigned to it
+                if (directionProperty == 'north' && ! door.room) return;
+
                 // block player from walking back when being within the win room
-                if (directionProperty == 'south' && OTMA.PlayerService.Player.viewingRoom && door.room.type=='WIN_ROOM'
+                if (directionProperty == 'south' && OTMA.PlayerService.Player.viewingRoom && door.room && door.room.type=='WIN_ROOM'
                     && OTMA.GameEngine.checkWinConditions()) return;
 
                 // block door if viewing win door and not having found all hints yet
