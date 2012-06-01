@@ -7,10 +7,11 @@
 
 OTMA.domain = {};
 
-OTMA.domain.Board = function() {
-    this.boardElements = {};
-};
-
+/**
+ * Represents an element on the board.
+ * @param {String} image name of the image to use for the board element
+ * @param {String} coordinate of the board element. Should look like '3x1'
+ */
 OTMA.domain.BoardElement = function(image, coordinate) {
     this.image = image;
     this.coordinate = coordinate;
@@ -34,6 +35,11 @@ OTMA.domain.BoardElement = function(image, coordinate) {
     }
 };
 
+/**
+ * Represents a door on the board.
+ * @param {OTMA.domain.BoardElement} boardElement associated element on the board
+ * @param {String} direction direction of the door on the board element.
+ */
 OTMA.domain.Door = function(boardElement, direction) {
     this.direction = direction;
     if (! boardElement) {
@@ -49,8 +55,15 @@ OTMA.domain.Door = function(boardElement, direction) {
 };
 OTMA.domain.Door.prototype = new OTMA.domain.BoardElement(undefined, undefined);
 
+/**
+ * Superclass for Human and NPC Players.
+ */
 OTMA.domain.Player = function() {};
 
+/**
+ * Represents a human player.
+ * @param {String} coordinate coordinate of the player. Looks like '1x1'
+ */
 OTMA.domain.HumanPlayer = function(coordinate) {
     this.coordinate = coordinate;
     this.foundHints = [];
@@ -66,6 +79,12 @@ OTMA.domain.HumanPlayer = function(coordinate) {
 };
 OTMA.domain.HumanPlayer.prototype = new OTMA.domain.Player();
 
+/**
+ * Represents an NPC Player.
+ * @param {String} name name of the NPC player.
+ * @param {String} title title of the NPC player.
+ * @param {String} introduction introduction text of the NPC player.
+ */
 OTMA.domain.NPCPlayer = function(name, title, introduction) {
     this.name = name;
     this.introduction = introduction;
@@ -76,8 +95,16 @@ OTMA.domain.NPCPlayer = function(name, title, introduction) {
 };
 OTMA.domain.NPCPlayer.prototype = new OTMA.domain.Player();
 
+/**
+ * Base class for both hints and stories that can be found within a room.
+ */
 OTMA.domain.RoomStory = function() {};
 
+/**
+ * Represents a hint within the game.
+ * @param {String} title title text
+ * @param {String} text content
+ */
 OTMA.domain.Hint = function(title, text) {
     this.title = title;
     this.text = text;
@@ -85,6 +112,11 @@ OTMA.domain.Hint = function(title, text) {
 };
 OTMA.domain.Hint.prototype = new OTMA.domain.RoomStory();
 
+/**
+ * Represents a story within the game.
+ * @param {String} title title text
+ * @param {String} text content
+ */
 OTMA.domain.Story = function(title, text) {
     this.title = title;
     this.text = text;
@@ -92,6 +124,14 @@ OTMA.domain.Story = function(title, text) {
 };
 OTMA.domain.Story.prototype = new OTMA.domain.RoomStory();
 
+/**
+ * Represents a room.
+ * @param {String} title room title
+ * @param {String} abbreviation room abbreviation
+ * @param {String} description room description
+ * @param {OTMA.domain.Hint[]} hints room hints
+ * @param {OTMA.domain.Story[]} storyItems room story items
+ */
 OTMA.domain.Room = function(title, abbreviation, description, hints, storyItems) {
     this.title = title;
     this.abbreviation = abbreviation;

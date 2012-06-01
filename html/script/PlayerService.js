@@ -110,5 +110,5 @@ function initialisePlayerService() {
 
     $(document).bind('hintFound', function(event, hint) {
         OTMA.PlayerService.Player.addFoundHint(hint);
-    })
+    });
 }
