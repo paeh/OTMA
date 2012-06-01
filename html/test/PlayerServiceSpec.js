@@ -8,8 +8,10 @@
 describe("OTMA.PlayerService", function() {
     var boardElement;
     var playerService;
+    var gameEngine;
     beforeEach(function() {
         playerService = OTMA.PlayerService.INSTANCE;
+        gameEngine = OTMA.GameEngine.INSTANCE;
 
         boardElement = new OTMA.domain.BoardElement(undefined, 'initial');
         boardElement.north = new OTMA.domain.BoardElement(undefined, 'north');
@@ -42,7 +44,7 @@ describe("OTMA.PlayerService", function() {
         playerService.states.MAP.movePlayer('west', boardElement);
         expect(playerService.Player.coordinate).toBe('some');
         expect(playerService.Player.viewingDoor).toBe('west');
-        expect(OTMA.GameEngine.state).toBe('DOOR');
+        expect(gameEngine.state).toBe('DOOR');
     });
 
     it("should ignore state DOOR moves without an attached room", function() {
@@ -53,14 +55,14 @@ describe("OTMA.PlayerService", function() {
     it("should block state DOOR moves towards a win room when not meeting all requirements", function() {
         playerService.Player.viewingDoor = 'west';
         boardElement.west.room.type = 'WIN_ROOM';
-        OTMA.GameEngine.checkWinConditions = function() { return false };
+       gameEngine.checkWinConditions = function() { return false };
         expect(playerService.states.DOOR.movePlayer('north', boardElement)).toBeFalsy();
     });
 
     it("should not block state DOOR moves towards a win room when not meeting all requirements", function() {
         playerService.Player.viewingDoor = 'west';
         boardElement.west.room.type = 'WIN_ROOM';
-        OTMA.GameEngine.checkWinConditions = function() { return true };
+        gameEngine.checkWinConditions = function() { return true };
         expect(playerService.states.DOOR.movePlayer('north', boardElement)).toBeTruthy();
         expect(playerService.Player.viewingRoom).toBeTruthy();
     });
@@ -68,14 +70,14 @@ describe("OTMA.PlayerService", function() {
     it("should be possible to walk back towards the map", function() {
         playerService.Player.viewingDoor = 'west';
         expect(playerService.states.DOOR.movePlayer('south', boardElement)).toBeTruthy();
-        expect(OTMA.GameEngine.state).toBe('MAP');
+        expect(gameEngine.state).toBe('MAP');
         expect(playerService.Player.viewingDoor).toBe(undefined);
     });
 
     it("should be possible to walk out of a room when having the direction property set to south", function() {
         playerService.Player.viewingDoor = 'west';
         expect(playerService.states.ROOM.movePlayer('south', boardElement)).toBeTruthy();
-        expect(OTMA.GameEngine.state).toBe('DOOR');
+        expect(gameEngine.state).toBe('DOOR');
     });
 
     it("should not be possible to walk in any other direction than south when being in a room", function() {

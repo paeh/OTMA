@@ -76,7 +76,7 @@
                 Lorem Ipsum!
             </div>
             <div class='receptionBox'>
-                <input type='submit' value='enter' onclick="OTMA.GameEngine.setState('MAP');"/>
+                <input type='submit' value='enter' onclick="OTMA.GameEngine.INSTANCE.setState('MAP');"/>
             </div>
         </div>
 
@@ -101,12 +101,12 @@
         </div>
         <table class="navigationButtons">
             <tr>
-                <td rowspan="2"><input id='west' type='image' value='west' onclick='OTMA.GameEngine.movePlayer("west")'/></td>
-                <td><input id='north' type='image' value='north' onclick='OTMA.GameEngine.movePlayer("north")' /></td>
-                <td rowspan="2"><input id='east' type='image' value='east' onclick='OTMA.GameEngine.movePlayer("east")'/></td>
+                <td rowspan="2"><input id='west' type='image' value='west' onclick='OTMA.GameEngine.INSTANCE.movePlayer("west")'/></td>
+                <td><input id='north' type='image' value='north' onclick='OTMA.GameEngine.INSTANCE.movePlayer("north")' /></td>
+                <td rowspan="2"><input id='east' type='image' value='east' onclick='OTMA.GameEngine.INSTANCE.movePlayer("east")'/></td>
             </tr>
             <tr>
-                <td><input id='south' type='image' value='south' onclick='OTMA.GameEngine.movePlayer("south")' /></td>
+                <td><input id='south' type='image' value='south' onclick='OTMA.GameEngine.INSTANCE.movePlayer("south")' /></td>
             </tr>
         </table>
     </div>

@@ -42,7 +42,7 @@ OTMA.PlayerService = function() {
 
                 if (directionMapItem.type == 'DOOR') {
                     OTMA.PlayerService.INSTANCE.Player.viewingDoor = directionProperty;
-                    OTMA.GameEngine.setState('DOOR');
+                    OTMA.GameEngine.INSTANCE.setState('DOOR');
                 } else {
                     that.Player.coordinate = directionMapItem.coordinate;
                 }
@@ -64,13 +64,13 @@ OTMA.PlayerService = function() {
 
                 // block door if viewing win door and not having found all hints yet
                 if (directionProperty == 'north' && ! that.Player.viewingRoom && door.room.type=='WIN_ROOM'
-                    && ! OTMA.GameEngine.checkWinConditions()) return false;
+                    && ! OTMA.GameEngine.INSTANCE.checkWinConditions()) return false;
 
                 if (directionProperty == 'north') {
-                    OTMA.GameEngine.setState('ROOM');
+                    OTMA.GameEngine.INSTANCE.setState('ROOM');
                     that.Player.viewingRoom = true;
                 } else if (directionProperty == 'south') {
-                    OTMA.GameEngine.setState('MAP');
+                    OTMA.GameEngine.INSTANCE.setState('MAP');
                     that.Player.viewingDoor = undefined;
                 }
                 return true;
@@ -89,7 +89,7 @@ OTMA.PlayerService = function() {
                 if (room.type == 'WIN_ROOM') return false;
 
                 if (directionProperty != 'south') return false;
-                OTMA.GameEngine.setState('DOOR');
+                OTMA.GameEngine.INSTANCE.setState('DOOR');
                 return true;
             }
         }

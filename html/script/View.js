@@ -25,7 +25,7 @@ OTMA.View = {
              * conversation view for NPCs.
              */
             updateNPCView: function() {
-                var currentBoardElement = OTMA.GameEngine.getCurrentBoardElement();
+                var currentBoardElement = OTMA.GameEngine.INSTANCE.getCurrentBoardElement();
                 var npc = OTMA.NPCService.INSTANCE.getNPCForBoardElement(currentBoardElement);
                 if (npc && OTMA.GameEngine.state == 'MAP') {
                     $('#npcImage').attr('src', 'images/avatars/' + npc.picture);
@@ -70,12 +70,12 @@ OTMA.View = {
              */
             updateButtons: function(currentMapItem) {
                 var door = currentMapItem[OTMA.PlayerService.INSTANCE.Player.viewingDoor];
-                var mapItem = { south: 'south', north: 'north' };
+                var availableDirections = { south: 'south', north: 'north' };
 
-                if (! door.room || (! OTMA.GameEngine.checkWinConditions() && door.room.type == 'WIN_ROOM')) {
-                    mapItem.north = undefined;
+                if (! door.room || (! OTMA.GameEngine.INSTANCE.checkWinConditions() && door.room.type == 'WIN_ROOM')) {
+                    availableDirections.north = undefined;
                 }
-                OTMA.View.disableButtonsBasedOnDirections(mapItem);
+                OTMA.View.disableButtonsBasedOnDirections(availableDirections);
                 OTMA.util.setCSSVisibilityOnElement('#npcButton', false);
             },
 
@@ -238,13 +238,13 @@ OTMA.View = {
 
     /**
      * Updates all direction buttons based on direction attributes on a map item.
-     * @param {OTMA.domain.BoardElement} mapItem mapItem used for map checking.
+     * @param {Object} directions directions used for map checking.
      */
-    disableButtonsBasedOnDirections: function(mapItem) {
-        OTMA.View.disableButtonIfNavigationIsUndefined(mapItem, 'north', '#north');
-        OTMA.View.disableButtonIfNavigationIsUndefined(mapItem, 'south', '#south');
-        OTMA.View.disableButtonIfNavigationIsUndefined(mapItem, 'west', '#west');
-        OTMA.View.disableButtonIfNavigationIsUndefined(mapItem, 'east', '#east');
+    disableButtonsBasedOnDirections: function(directions) {
+        OTMA.View.disableButtonIfNavigationIsUndefined(directions, 'north', '#north');
+        OTMA.View.disableButtonIfNavigationIsUndefined(directions, 'south', '#south');
+        OTMA.View.disableButtonIfNavigationIsUndefined(directions, 'west', '#west');
+        OTMA.View.disableButtonIfNavigationIsUndefined(directions, 'east', '#east');
     },
 
     /**
@@ -314,7 +314,7 @@ function initialiseView() {
             40: 'south'
         };
         if (keyMap[keyCode]) {
-            OTMA.GameEngine.movePlayer(keyMap[keyCode]);
+            OTMA.GameEngine.INSTANCE.movePlayer(keyMap[keyCode]);
         }
     });
 

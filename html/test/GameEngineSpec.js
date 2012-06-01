@@ -8,8 +8,10 @@
 describe('OTMA.GameEngine', function() {
 
     var playerService;
+    var gameEngine;
     beforeEach(function() {
         playerService = OTMA.PlayerService.INSTANCE;
+        gameEngine = OTMA.GameEngine.INSTANCE;
     });
 
     it("should be possible to get the current board element", function() {
@@ -18,7 +20,7 @@ describe('OTMA.GameEngine', function() {
         var element = {a: 'b'};
         OTMA.Board.INSTANCE.boardElements['1x5'] = element;
 
-        expect(OTMA.GameEngine.getCurrentBoardElement()).toBe(element);
+        expect(gameEngine.getCurrentBoardElement()).toBe(element);
     });
 
     it("should return true if all win conditions are met", function() {
@@ -26,11 +28,11 @@ describe('OTMA.GameEngine', function() {
         OTMA.Constants.WIN_HINT_COUNT = 1;
         OTMA.Constants.WIN_NPC_COUNT = 1;
 
-        expect(OTMA.GameEngine.checkWinConditions()).toBe(false);
+        expect(gameEngine.checkWinConditions()).toBe(false);
 
         playerService.Player.foundHints = [ 1 ];
         playerService.Player.foundNPC = [ 1 ];
 
-        expect(OTMA.GameEngine.checkWinConditions()).toBe(true);
+        expect(gameEngine.checkWinConditions()).toBe(true);
     });
 });
