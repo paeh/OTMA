@@ -43,7 +43,7 @@ OTMA.NPCService = function() {
     this.findRandomNonOccupiedBoardElement = function() {
         var boardItem;
         do {
-            boardItem = OTMA.Board.getRandomBoardElement();
+            boardItem = OTMA.Board.INSTANCE.getRandomBoardElement();
         } while (that.getNPCForBoardElement(boardItem));
         return boardItem;
     };
@@ -92,7 +92,7 @@ OTMA.NPCService = function() {
      * @param {OTMA.domain.NPCPlayer} npc NPC to move
      */
     this.moveNPC = function(npc) {
-        var currentBoardElement = OTMA.Board.boardElements[npc.coordinate];
+        var currentBoardElement = OTMA.Board.INSTANCE.boardElements[npc.coordinate];
         var availableBoardElements = currentBoardElement.getAvailableNavigationDirections();
         do {
             var randomNumber = OTMA.util.getRandomInteger(availableBoardElements.length);

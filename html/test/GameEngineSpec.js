@@ -16,7 +16,7 @@ describe('OTMA.GameEngine', function() {
         playerService.Player.coordinate = '1x5';
 
         var element = {a: 'b'};
-        OTMA.Board.boardElements['1x5'] = element;
+        OTMA.Board.INSTANCE.boardElements['1x5'] = element;
 
         expect(OTMA.GameEngine.getCurrentBoardElement()).toBe(element);
     });

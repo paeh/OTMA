@@ -19,9 +19,10 @@ describe("OTMA.PlayerService", function() {
 
         boardElement.west.room = new OTMA.domain.Room('', '', '', [], []);
 
-        OTMA.Board.boardElements['initial'] = boardElement;
-        OTMA.Board.boardElements['north'] = boardElement.north;
-        OTMA.Board.boardElements['south'] = boardElement.south;
+        var board = OTMA.Board.INSTANCE;
+        board.boardElements['initial'] = boardElement;
+        board.boardElements['north'] = boardElement.north;
+        board.boardElements['south'] = boardElement.south;
     });
 
     it("should handle state MAP move with an undefined direct map item", function() {

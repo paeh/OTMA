@@ -6,34 +6,36 @@
  */
 
 describe("OTMA.Board", function() {
+    var board;
     beforeEach(function() {
-        OTMA.Board.reset();
+        board = OTMA.Board.INSTANCE;
+        board.reset();
 
-        OTMA.Board.createBoardElement(1,1);
-        OTMA.Board.createBoardElement(1,2);
-        OTMA.Board.createBoardElement(1,3);
-        OTMA.Board.createBoardElement(1,4);
-        OTMA.Board.createBoardElement(1,5);
+        board.createBoardElement(1,1);
+        board.createBoardElement(1,2);
+        board.createBoardElement(1,3);
+        board.createBoardElement(1,4);
+        board.createBoardElement(1,5);
     });
 
     it("should be able to reset the board", function() {
-        OTMA.Board.reset();
-        expect(OTMA.Board.boardElements.size()).toBe(0);
+        board.reset();
+        expect(board.boardElements.size()).toBe(0);
     });
 
     it("should be possible to get a random board element", function() {
         for (var i = 0; i < 10; i++) {
-            expect(OTMA.Board.getRandomBoardElement()).toBeDefined();
+            expect(board.getRandomBoardElement()).toBeDefined();
         }
     });
 
     it("should use the random number returned from the utility method to get the random board element", function() {
         OTMA.util.getRandomInteger = function() { return 1 };
-        expect(OTMA.Board.getRandomBoardElement().coordinate).toBe('1x2');
+        expect(board.getRandomBoardElement().coordinate).toBe('1x2');
     });
 
     it("should be possible to get an array containing all the board coordinates", function() {
-        var coordinates = OTMA.Board.getCoordinatesArray();
+        var coordinates = board.getCoordinatesArray();
         expect(coordinates.length).toBe(5);
 
         expect(coordinates).toContain('1x1');
@@ -54,7 +56,7 @@ describe("OTMA.Board", function() {
         ];
         var room = new OTMA.domain.Room('', '', '', [], []);
 
-        var door = OTMA.Board.setRoomToRandomDoor(doors, room);
+        var door = board.setRoomToRandomDoor(doors, room);
 
         expect(room.door).toBe(door);
         expect(door.room).toBe(room);

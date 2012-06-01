@@ -205,7 +205,7 @@ OTMA.View = {
      */
     update: function() {
         var player = OTMA.PlayerService.INSTANCE.Player;
-        var mapItem = OTMA.Board.boardElements[player.coordinate];
+        var mapItem = OTMA.Board.INSTANCE.boardElements[player.coordinate];
 
         $.each($('div.holder'), function(index, element) {
             OTMA.util.setCSSVisibilityOnElement('#' + element.id, false);

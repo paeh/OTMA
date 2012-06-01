@@ -104,7 +104,7 @@ OTMA.PlayerService = function() {
         if (! that.currentState) return;
 
         var currentCoordinate = that.Player.coordinate;
-        var currentMapItem = OTMA.Board.boardElements[currentCoordinate];
+        var currentMapItem = OTMA.Board.INSTANCE.boardElements[currentCoordinate];
 
         that.currentState.movePlayer(directionProperty, currentMapItem);
         $(document).trigger('playerMove');

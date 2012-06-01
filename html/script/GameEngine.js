@@ -25,7 +25,7 @@ OTMA.GameEngine = {
      */
     getCurrentBoardElement: function() {
         var currentCoordinate = OTMA.PlayerService.INSTANCE.Player.coordinate;
-        return OTMA.Board.boardElements[currentCoordinate];
+        return OTMA.Board.INSTANCE.boardElements[currentCoordinate];
     },
 
     /**
