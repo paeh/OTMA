@@ -52,7 +52,7 @@ describe("OTMA.Board", function() {
             new OTMA.domain.Door(boardElement1x1, 'north'),
             new OTMA.domain.Door(boardElement1x2, 'north')
         ];
-        var room = {};
+        var room = new OTMA.domain.Room('', '', '', [], []);
 
         var door = OTMA.Board.setRoomToRandomDoor(doors, room);
 

@@ -26,7 +26,7 @@ OTMA.NPCService = {
 
     /**
      * Find some random board element on which no NPC is already sitting.
-     * @return {*} board element without a NPC.
+     * @return {OTMA.domain.BoardElement} board element without a NPC.
      */
     findRandomNonOccupiedBoardElement: function() {
         var boardItem;
@@ -38,8 +38,8 @@ OTMA.NPCService = {
 
     /**
      * Tries to find a NPC on a given board element.
-     * @param boardElement boardElement to use for looking up a NPC.
-     * @return {*} found NPC or undefined
+     * @param {OTMA.domain.BoardElement} boardElement boardElement to use for looking up a NPC.
+     * @return {OTMA.domain.NPCPlayer} found NPC or undefined
      */
     getNPCForBoardElement: function(boardElement) {
         var coordinate = boardElement.coordinate;
@@ -48,8 +48,8 @@ OTMA.NPCService = {
 
     /**
      * Tries to find a NPC on a given coordinate.
-     * @param coordinate coordinate to use for looking up a NPC.
-     * @return {*} found NPC or undefined
+     * @param {String} coordinate coordinate to use for looking up a NPC.
+     * @return {OTMA.domain.NPCPlayer} found NPC or undefined
      */
     getNPCForCoordinate: function(coordinate) {
         var ret = undefined;
@@ -77,7 +77,7 @@ OTMA.NPCService = {
     /**
      * Move an NPC to a random board element, which is adjacent to the NPC's current board element and is available
      * (no other NPC is already on this board element)
-     * @param npc NPC to move
+     * @param {OTMA.domain.NPCPlayer} npc NPC to move
      */
     moveNPC: function(npc) {
         var currentBoardElement = OTMA.Board.boardElements[npc.coordinate];
@@ -97,7 +97,7 @@ OTMA.NPCService = {
     /**
      * Get the next available avatar picture for the availableAvatarImages array. If more avatar images are required
      * than being available, the array pointer for the avatar pictures restarts at the beginning of the array.
-     * @return {*} found avatar picture
+     * @return {String} found avatar picture
      */
     getNextAvatarPicture: function() {
         OTMA.NPCService.avatarImageCounter++;

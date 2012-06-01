@@ -5,6 +5,11 @@
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
  */
 
+/*
+Be very, very careful when changing something here.
+This functionality implements screen rotation and zooming on
+different display sizes (i.e. computer / smartphone browsers).
+ */
 $(document).ready(function() {
     // this attribute is not provided on every screen orientation change ...
     if (window.orientation != undefined) {

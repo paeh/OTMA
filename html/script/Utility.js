@@ -7,8 +7,8 @@
 
 /**
  * Remove some element from a given array.
- * @param index index of the element to remove
- * @param array array to remove the element from
+ * @param {Integer} index index of the element to remove
+ * @param {Array} array array to remove the element from
  * @return {Boolean} true if the element was removed, else false.
  */
 jQuery.removeIndexFromArray = function(index, array) {
@@ -31,7 +31,7 @@ Object.prototype.size = function () {
 OTMA.util = {
     /**
      * Get some random integer between 0 and maximum.
-     * @param maximum maximum
+     * @param {Integer} maximum maximum
      * @return {Number} random number
      */
     getRandomInteger: function(maximum) {
@@ -40,8 +40,8 @@ OTMA.util = {
 
     /**
      * Set the CSS visibility on an element found by using the given selector.
-     * @param selector selector used for finding the DOM element
-     * @param doShow true if the DOM element should be visible, for hidden provide false
+     * @param {String} selector selector used for finding the DOM element
+     * @param {Boolean} doShow true if the DOM element should be visible, for hidden provide false
      */
     setCSSVisibilityOnElement: function(selector, doShow) {
         var attr = 'hidden';
@@ -53,8 +53,8 @@ OTMA.util = {
 
     /**
      * Add an element to a given array if it is not yet contained within the array (set functionality).
-     * @param array array to use as a set
-    * @param item item to add
+     * @param {Array} array array to use as a set
+     * @param {Object} item item to add
      */
     addToArrayIfNotContained: function(array, item) {
         if ($.inArray(item, array) == -1) {

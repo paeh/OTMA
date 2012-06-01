@@ -18,7 +18,7 @@ OTMA.GameEngine = {
 
     /**
      * Get the current board element for the human player.
-     * @return {Object} current board element.
+     * @return {OTMA.domain.BoardElement} current board element.
      */
     getCurrentBoardElement: function() {
         var currentCoordinate = OTMA.PlayerService.Player.coordinate;
@@ -27,7 +27,7 @@ OTMA.GameEngine = {
 
     /**
      * Set the global game engine state. This triggers the 'stateChange' event.
-     * @param newState new state to set
+     * @param {String} newState new state to set
      */
     setState: function(newState) {
         OTMA.GameEngine.state = newState;
@@ -36,7 +36,7 @@ OTMA.GameEngine = {
 
     /**
      * Move the player. The method delegates to the PlayerService.
-     * @param direction direction to move the player
+     * @param {String} direction direction to move the player
      */
     movePlayer: function(direction) {
         OTMA.PlayerService.movePlayer(direction);

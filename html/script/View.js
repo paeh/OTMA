@@ -10,7 +10,7 @@ OTMA.View = {
         MAP: {
             /**
              * Update all buttons based on the current map item.
-             * @param currentMapItem current map item.
+             * @param {OTMA.domain.BoardElement} currentMapItem current map item.
              */
             updateButtons: function(currentMapItem) {
                 OTMA.View.disableButtonsBasedOnDirections(currentMapItem);
@@ -34,7 +34,7 @@ OTMA.View = {
 
             /**
              * Updates the main view background by showing the map slice image associated to the current map item.
-             * @param currentMapItem current map item
+             * @param {OTMA.domain.BoardElement} currentMapItem current map item
              */
             updateBackground: function(currentMapItem) {
                 OTMA.View.setBackground('images/map/' + currentMapItem.image);
@@ -62,7 +62,7 @@ OTMA.View = {
         DOOR: {
             /**
              * Update all buttons based on the current map item.
-             * @param currentMapItem current map item.
+             * @param {OTMA.domain.BoardElement} currentMapItem current map item.
              */
             updateButtons: function(currentMapItem) {
                 var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
@@ -78,7 +78,7 @@ OTMA.View = {
             /**
              * Updates the main view background by showing the door image as well as the door description if a
              * room is found behind the door.
-             * @param currentMapItem current map item
+             * @param {OTMA.domain.BoardElement} currentMapItem current map item
              */
             updateBackground: function(currentMapItem) {
                 OTMA.View.setBackground('images/door.png');
@@ -103,7 +103,7 @@ OTMA.View = {
             /**
              * Update all buttons based on the current map item. Within a room, a player can only walk forward and
              * backward.
-             * @param currentMapItem current map item.
+             * @param {OTMA.domain.BoardElement} currentMapItem current map item.
              */
             updateButtons: function(currentMapItem) {
                 var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
@@ -120,7 +120,7 @@ OTMA.View = {
             /**
              * Updates the main view background by showing the room image as well as showing room content (hints,
              * stories and room specific description). The method also triggers the automatic changing of room content.
-             * @param currentMapItem current map item
+             * @param {OTMA.domain.BoardElement} currentMapItem current map item
              */
             updateBackground: function(currentMapItem) {
                 var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
@@ -141,7 +141,7 @@ OTMA.View = {
 
             /**
              * Dynamically changes the room content.
-             * @param room
+             * @param {OTMA.domain.Room} room
              */
             showRoomContent: function(room) {
                 if (OTMA.GameEngine.state != 'ROOM') {
@@ -218,9 +218,9 @@ OTMA.View = {
 
     /**
      * Disables a button based on a given selector attribute if an attribute on the mapItem is undefined.
-     * @param mapItem mapItem used for checking
-     * @param propertyToCheck property on the mapItem to check.
-     * @param buttonSelector selector used for finding the button in the UI
+     * @param {OTMA.domain.BoardElement} mapItem mapItem used for checking
+     * @param {String} propertyToCheck property on the mapItem to check.
+     * @param {String} buttonSelector selector used for finding the button in the UI
      */
     disableButtonIfNavigationIsUndefined: function(mapItem, propertyToCheck, buttonSelector) {
         if (mapItem[propertyToCheck] == undefined) {
@@ -234,7 +234,7 @@ OTMA.View = {
 
     /**
      * Updates all direction buttons based on direction attributes on a map item.
-     * @param mapItem mapItem used for map checking.
+     * @param {OTMA.domain.BoardElement} mapItem mapItem used for map checking.
      */
     disableButtonsBasedOnDirections: function(mapItem) {
         OTMA.View.disableButtonIfNavigationIsUndefined(mapItem, 'north', '#north');
@@ -252,7 +252,7 @@ OTMA.View = {
 
     /**
      * Set the main content background image.
-     * @param picture image URL to set
+     * @param {String} picture image URL to set
      */
     setBackground: function(picture) {
         $('#backgroundImage').attr('src', picture);

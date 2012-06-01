@@ -21,8 +21,8 @@ OTMA.PlayerService = {
         MAP: {
             /**
              * Move the player from it's current board element to a given direction.
-             * @param directionProperty direction to move the player
-             * @param currentMapItem current position of the player on the map.
+             * @param {String} directionProperty direction to move the player
+             * @param {OTMA.domain.BoardElement} currentMapItem current position of the player on the map.
              */
             movePlayer: function(directionProperty, currentMapItem) {
                 var directionMapItem = currentMapItem[directionProperty];
@@ -41,7 +41,8 @@ OTMA.PlayerService = {
             /**
              * Move the player from it's current board element to a given direction.
              * Watch out! This also has to handle moving into win-doors / rooms.
-             * @param directionProperty direction to move the player
+             * @param  {String} directionProperty direction to move the player
+             * @param {OTMA.domain.BoardElement} currentMapItem current position of the player on the map.
              */
             movePlayer: function(directionProperty, currentMapItem) {
                 var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
@@ -66,7 +67,8 @@ OTMA.PlayerService = {
         ROOM: {
             /**
              * Move the player from it's current board element to a given direction.
-             * @param directionProperty direction to move the player
+             * @param {String} directionProperty direction to move the player
+             * @param {OTMA.domain.BoardElement} currentMapItem current position of the player on the map.
              */
             movePlayer: function(directionProperty, currentMapItem) {
                 var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
@@ -84,7 +86,7 @@ OTMA.PlayerService = {
     /**
      * Move a player into a given direction. This method also has to decide on which movePlayer method to call based on
      * the current PlayerService state.
-     * @param directionProperty direction to move the player.
+     * @param {String} directionProperty direction to move the player.
      */
     movePlayer: function(directionProperty) {
         if (! OTMA.PlayerService.currentState) return;

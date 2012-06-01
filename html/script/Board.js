@@ -17,7 +17,7 @@ OTMA.Board = {
     /**
      * Resets the board by deleting all saved board elements.
      */
-    reset:function() {
+    reset: function() {
         OTMA.Board.boardElements = {}
     },
 
@@ -34,7 +34,7 @@ OTMA.Board = {
 
     /**
      * Calculates an array of all saved coordinates on the board.
-     * @return {Array} all available coordinates.
+     * @return {String[]} all available coordinates.
      */
     getCoordinatesArray: function() {
         var coordinates = [];
@@ -64,10 +64,10 @@ OTMA.Board = {
     /**
      * Set adjacent board elements to a given board element.
      * @param {String} coordinate coordinate of the board element, on which the adjacent board elements are set
-     * @param {OTMA.domain.BoardElement} north board element to the north
-     * @param {OTMA.domain.BoardElement} east board element to the east
-     * @param {OTMA.domain.BoardElement} south board element to the south
-     * @param {OTMA.domain.BoardElement} west board element to the west
+     * @param {String} north coordinate to the north
+     * @param {String} east coordinate to the east
+     * @param {String} south coordinate to the south
+     * @param {String} west coordinate to the west
      */
     setNavigationBorders: function(coordinate, north, east, south, west) {
         var boardItem = OTMA.Board.boardElements[coordinate];
