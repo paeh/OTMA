@@ -26,14 +26,15 @@ OTMA.PlayerService = {
              */
             movePlayer: function(directionProperty, currentMapItem) {
                 var directionMapItem = currentMapItem[directionProperty];
-                if (! directionMapItem) return;
-
-                OTMA.PlayerService.Player.coordinate = directionMapItem.coordinate;
+                if (! directionMapItem) return false;
 
                 if (directionMapItem.type == 'DOOR') {
                     OTMA.PlayerService.Player.viewingDoor = directionProperty;
                     OTMA.GameEngine.setState('DOOR');
+                } else {
+                    OTMA.PlayerService.Player.coordinate = directionMapItem.coordinate;
                 }
+                return true;
             }
         },
         DOOR: {
@@ -42,19 +43,15 @@ OTMA.PlayerService = {
              * Watch out! This also has to handle moving into win-doors / rooms.
              * @param directionProperty direction to move the player
              */
-            movePlayer: function(directionProperty) {
-                var door = OTMA.GameEngine.getCurrentBoardElement()[OTMA.PlayerService.Player.viewingDoor];
+            movePlayer: function(directionProperty, currentMapItem) {
+                var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
 
                 // block player from walking into a door that does not have a room assigned to it
-                if (directionProperty == 'north' && ! door.room) return;
-
-                // block player from walking back when being within the win room
-                if (directionProperty == 'south' && OTMA.PlayerService.Player.viewingRoom && door.room && door.room.type=='WIN_ROOM'
-                    && OTMA.GameEngine.checkWinConditions()) return;
+                if (directionProperty == 'north' && ! door.room) return false;
 
                 // block door if viewing win door and not having found all hints yet
                 if (directionProperty == 'north' && ! OTMA.PlayerService.Player.viewingRoom && door.room.type=='WIN_ROOM'
-                    && ! OTMA.GameEngine.checkWinConditions()) return;
+                    && ! OTMA.GameEngine.checkWinConditions()) return false;
 
                 if (directionProperty == 'north') {
                     OTMA.GameEngine.setState('ROOM');
@@ -63,6 +60,7 @@ OTMA.PlayerService = {
                     OTMA.GameEngine.setState('MAP');
                     OTMA.PlayerService.Player.viewingDoor = undefined;
                 }
+                return true;
             }
         },
         ROOM: {
@@ -70,14 +68,15 @@ OTMA.PlayerService = {
              * Move the player from it's current board element to a given direction.
              * @param directionProperty direction to move the player
              */
-            movePlayer: function(directionProperty) {
-                var door = OTMA.GameEngine.getCurrentBoardElement()[OTMA.PlayerService.Player.viewingDoor];
+            movePlayer: function(directionProperty, currentMapItem) {
+                var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
                 var room = door.room;
 
-                if (room.type == 'WIN_ROOM') return;
+                if (room.type == 'WIN_ROOM') return false;
 
-                if (directionProperty != 'south') return;
+                if (directionProperty != 'south') return false;
                 OTMA.GameEngine.setState('DOOR');
+                return true;
             }
         }
     },

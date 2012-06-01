@@ -111,7 +111,8 @@ OTMA.Board = {
      */
     setRandomDoorsToXMLEvents: function(availableDoors) {
         $.each(OTMA.xmlContent.rooms, function(index, event) {
-            OTMA.Board.setRoomToRandomDoor(availableDoors, event);
+            var door = OTMA.Board.setRoomToRandomDoor(availableDoors, event);
+            OTMA.Board.boardElements[door.boardElement.coordinate][door.direction] = door;
         });
     }
 };
