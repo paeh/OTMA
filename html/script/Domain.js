@@ -41,6 +41,7 @@ OTMA.domain.BoardElement = function(image, coordinate) {
  * @param {OTMA.domain.BoardElement} boardElement associated element on the board
  * @param {String} direction direction of the door on the board element.
  * @class
+ * @augments OTMA.domain.BoardElement
  */
 OTMA.domain.Door = function(boardElement, direction) {
     this.direction = direction;
@@ -67,6 +68,7 @@ OTMA.domain.Player = function() {};
  * Represents a human player.
  * @param {String} coordinate coordinate of the player. Looks like '1x1'
  * @class
+ * @augments OTMA.domain.Player
  */
 OTMA.domain.HumanPlayer = function(coordinate) {
     this.coordinate = coordinate;
@@ -89,6 +91,7 @@ OTMA.domain.HumanPlayer.prototype = new OTMA.domain.Player();
  * @param {String} title title of the NPC player.
  * @param {String} introduction introduction text of the NPC player.
  * @class
+ * @augments OTMA.domain.Player
  */
 OTMA.domain.NPCPlayer = function(name, title, introduction) {
     this.name = name;
@@ -111,6 +114,7 @@ OTMA.domain.RoomStory = function() {};
  * @param {String} title title text
  * @param {String} text content
  * @class
+ * @augments OTMA.domain.RoomStory
  */
 OTMA.domain.Hint = function(title, text) {
     this.title = title;
@@ -124,6 +128,7 @@ OTMA.domain.Hint.prototype = new OTMA.domain.RoomStory();
  * @param {String} title title text
  * @param {String} text content
  * @class
+ * @augments OTMA.domain.RoomStory
  */
 OTMA.domain.Story = function(title, text) {
     this.title = title;
@@ -154,7 +159,7 @@ OTMA.domain.Room = function(title, abbreviation, description, hints, storyItems)
 
     /**
      * Get some random room content. This is either a room hint or story.
-     * @return {*} random hint or story
+     * @return {OTMA.domain.RoomStory} random hint or story
      */
     this.getRandomContent = function() {
         var rand = OTMA.util.getRandomInteger(4);
@@ -167,7 +172,7 @@ OTMA.domain.Room = function(title, abbreviation, description, hints, storyItems)
 
     /**
      * Get some random story.
-     * @return {*} story
+     * @return {OTMA.domain.Story} story
      */
     var getRandomStoryItem = function() {
         var randomHintNumber = OTMA.util.getRandomInteger(that.storyItems.length);
@@ -177,7 +182,7 @@ OTMA.domain.Room = function(title, abbreviation, description, hints, storyItems)
 
     /**
      * Get some random hint.
-     * @return {*} hint
+     * @return {OTMA.domain.Hint} hint
      */
     var getRandomHint = function() {
         var randomHintNumber = OTMA.util.getRandomInteger(that.hints.length);

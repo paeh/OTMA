@@ -19,10 +19,16 @@ OTMA.NPCService = function() {
 
     /**
      * Available avatar images.
+     * @private
      */
     this.availableAvatarImages = OTMA.Constants.AVAILABLE_NPC_IMAGES;
 
+    /**
+     * @private
+     * @type {Number}
+     */
     this.avatarImageCounter = -1;
+
     var stepCounter = 0;
 
     var that = this;
@@ -78,8 +84,8 @@ OTMA.NPCService = function() {
      * or door.
      */
     this.moveAllNPCs = function() {
-        that.stepCounter++;
-        if (that.stepCounter % OTMA.Constants.NPC_ROUND_SPEED != 0) return;
+        stepCounter++;
+        if (stepCounter % OTMA.Constants.NPC_ROUND_SPEED != 0) return;
 
         $.each(that.people, function(index, npc) {
             that.moveNPC(npc);

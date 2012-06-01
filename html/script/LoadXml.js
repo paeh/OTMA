@@ -58,7 +58,7 @@ OTMA.XML = function() {
             var description = $(eventXML).find('description').text();
 
            that.rooms.push(
-                new OTMA.domain.Room(title, abbreviation, description, that.hints, OTMA.Constants.STORY_ITEMS)
+                new OTMA.domain.Room(title, abbreviation, description, hints, OTMA.Constants.STORY_ITEMS)
             );
         });
 

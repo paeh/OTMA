@@ -33,7 +33,7 @@ OTMA.View = function() {
             updateNPCView: function() {
                 var currentBoardElement = OTMA.GameEngine.INSTANCE.getCurrentBoardElement();
                 var npc = OTMA.NPCService.INSTANCE.getNPCForBoardElement(currentBoardElement);
-                if (npc && OTMA.GameEngine.state == 'MAP') {
+                if (npc && OTMA.GameEngine.INSTANCE.state == 'MAP') {
                     $('#npcImage').attr('src', 'images/avatars/' + npc.picture);
                     OTMA.util.setCSSVisibilityOnElement('#npcButton', true);
                 } else {
@@ -154,7 +154,7 @@ OTMA.View = function() {
              * @param {OTMA.domain.Room} room
              */
             showRoomContent: function(room) {
-                if (OTMA.GameEngine.state != 'ROOM') {
+                if (OTMA.GameEngine.INSTANCE.state != 'ROOM') {
                     return;
                 }
 
