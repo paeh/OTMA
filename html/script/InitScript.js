@@ -122,6 +122,5 @@ $(document).ready(function() {
         initialiseView();
     });
 
-    OTMA.PlayerService.Player.viewingDoor = 'WIN'
-
+    OTMA.PlayerService.INSTANCE.Player.viewingDoor = 'WIN'
 });

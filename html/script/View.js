@@ -5,6 +5,10 @@
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
  */
 
+/**
+ * Class responsible for generating the actual view shown to the user.
+ * @class
+ */
 OTMA.View = {
     states: {
         MAP: {
@@ -65,7 +69,7 @@ OTMA.View = {
              * @param {OTMA.domain.BoardElement} currentMapItem current map item.
              */
             updateButtons: function(currentMapItem) {
-                var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
+                var door = currentMapItem[OTMA.PlayerService.INSTANCE.Player.viewingDoor];
                 var mapItem = { south: 'south', north: 'north' };
 
                 if (! door.room || (! OTMA.GameEngine.checkWinConditions() && door.room.type == 'WIN_ROOM')) {
@@ -82,7 +86,7 @@ OTMA.View = {
              */
             updateBackground: function(currentMapItem) {
                 OTMA.View.setBackground('images/door.png');
-                var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
+                var door = currentMapItem[OTMA.PlayerService.INSTANCE.Player.viewingDoor];
 
                 if (! door.room) return;
 
@@ -106,7 +110,7 @@ OTMA.View = {
              * @param {OTMA.domain.BoardElement} currentMapItem current map item.
              */
             updateButtons: function(currentMapItem) {
-                var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
+                var door = currentMapItem[OTMA.PlayerService.INSTANCE.Player.viewingDoor];
                 var room = door.room;
 
                 var mapItem = { south: 'south' };
@@ -123,7 +127,7 @@ OTMA.View = {
              * @param {OTMA.domain.BoardElement} currentMapItem current map item
              */
             updateBackground: function(currentMapItem) {
-                var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
+                var door = currentMapItem[OTMA.PlayerService.INSTANCE.Player.viewingDoor];
 
                 if (door.room.type == 'WIN_ROOM') {
                     OTMA.View.setBackground('images/finish.png');
@@ -200,7 +204,7 @@ OTMA.View = {
      * Method decides which state (room, map, door) to show based on OTMA.View.currentState attribute.
      */
     update: function() {
-        var player = OTMA.PlayerService.Player;
+        var player = OTMA.PlayerService.INSTANCE.Player;
         var mapItem = OTMA.Board.boardElements[player.coordinate];
 
         $.each($('div.holder'), function(index, element) {

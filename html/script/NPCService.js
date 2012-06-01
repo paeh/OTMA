@@ -7,7 +7,7 @@
 
 /**
  * Class managing all Non-Playing-Characters (NPC).
- * @type {Object}
+ * @class
  */
 OTMA.NPCService = {
     people: [],
@@ -107,7 +107,7 @@ OTMA.NPCService = {
 };
 
 function initialiseNPC() {
-    var people = OTMA.xmlContent.people;
+    var people = OTMA.XML.people;
     $.each(people, function(index, npc) {
         var boardElement = OTMA.NPCService.findRandomNonOccupiedBoardElement();
         npc.coordinate = boardElement.coordinate;

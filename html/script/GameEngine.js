@@ -5,6 +5,9 @@
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
  */
 
+/**
+ * @class
+ */
 OTMA.GameEngine = {
     /**
      * State is one of [RECEPTION, MAP, DOOR, ROOM]
@@ -21,7 +24,7 @@ OTMA.GameEngine = {
      * @return {OTMA.domain.BoardElement} current board element.
      */
     getCurrentBoardElement: function() {
-        var currentCoordinate = OTMA.PlayerService.Player.coordinate;
+        var currentCoordinate = OTMA.PlayerService.INSTANCE.Player.coordinate;
         return OTMA.Board.boardElements[currentCoordinate];
     },
 
@@ -39,7 +42,7 @@ OTMA.GameEngine = {
      * @param {String} direction direction to move the player
      */
     movePlayer: function(direction) {
-        OTMA.PlayerService.movePlayer(direction);
+        OTMA.PlayerService.INSTANCE.movePlayer(direction);
     },
 
     /**
@@ -47,7 +50,7 @@ OTMA.GameEngine = {
      * @return {Boolean} true if all win conditions have been fulfilled, else false
      */
     checkWinConditions: function() {
-        var player = OTMA.PlayerService.Player;
+        var player = OTMA.PlayerService.INSTANCE.Player;
         return player.foundHints.length >= OTMA.Constants.WIN_HINT_COUNT &&
             player.foundNPC.length >= OTMA.Constants.WIN_NPC_COUNT;
     }
@@ -60,6 +63,6 @@ function initialiseGameEngine() {
             $(document).unbind('playerMove', winListener);
         }
     };
-    OTMA.GameEngine.hints = OTMA.xmlContent.hints;
+    OTMA.GameEngine.hints = OTMA.XML.hints;
     $(document).bind('playerMove', winListener )
 }

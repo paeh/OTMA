@@ -7,8 +7,9 @@
 
 /**
  * JavaScript object implementing all functionality to read the otma-config.xml file.
+ * @class
  */
-OTMA.xmlContent = {
+OTMA.XML = {
     people: [],
     rooms: [],
 
@@ -16,9 +17,9 @@ OTMA.xmlContent = {
      * Reset all contained data.
      */
     reset: function() {
-        OTMA.xmlContent.people = [];
-        OTMA.xmlContent.rooms = [];
-        OTMA.xmlContent.hints = [];
+        OTMA.XML.people = [];
+        OTMA.XML.rooms = [];
+        OTMA.XML.hints = [];
     },
 
     /**
@@ -27,7 +28,7 @@ OTMA.xmlContent = {
      * @param {Function} callback method pointer called when xml parsing is done.
      */
     parseXMLFile: function(fileContent, callback) {
-        OTMA.xmlContent.reset();
+        OTMA.XML.reset();
 
         var persons = $(fileContent).find('person');
         $.each(persons, function(index, personXML) {
@@ -35,7 +36,7 @@ OTMA.xmlContent = {
             var name = $(personXML).attr('name');
             var title = $(personXML).attr('title');
 
-            OTMA.xmlContent.people.push(new OTMA.domain.NPCPlayer(name, title, introduction));
+            OTMA.XML.people.push(new OTMA.domain.NPCPlayer(name, title, introduction));
         });
 
         var hints = $(fileContent).find("hint");
@@ -44,7 +45,7 @@ OTMA.xmlContent = {
             var title = $(hintXML).attr('title');
 
             var hint = new OTMA.domain.Hint(title, text);
-            OTMA.xmlContent.hints.push(hint);
+            OTMA.XML.hints.push(hint);
         });
 
         var conferences = $(fileContent).find("conference");
@@ -55,8 +56,8 @@ OTMA.xmlContent = {
             var abbreviation = $(eventXML).attr('abrv');
             var description = $(eventXML).find('description').text();
 
-            OTMA.xmlContent.rooms.push(
-                new OTMA.domain.Room(title, abbreviation, description, OTMA.xmlContent.hints, OTMA.Constants.STORY_ITEMS)
+            OTMA.XML.rooms.push(
+                new OTMA.domain.Room(title, abbreviation, description, OTMA.XML.hints, OTMA.Constants.STORY_ITEMS)
             );
         });
 
@@ -75,6 +76,6 @@ OTMA.xmlContent = {
 function loadXML(filename, callback) {
     var baseUrl = document.URL.replace("index.html", "");
     $(document).load(baseUrl + filename, function(result) {
-        OTMA.xmlContent.parseXMLFile(result, callback);
+        OTMA.XML.parseXMLFile(result, callback);
     });
 }

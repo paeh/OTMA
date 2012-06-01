@@ -7,6 +7,7 @@
 
 /**
  * JavaScript object implementing all functionality for the Board domain object.
+ * @class
  */
 OTMA.Board = {
     /**
@@ -110,7 +111,7 @@ OTMA.Board = {
      * @param {OTMA.domain.Door[]} availableDoors
      */
     setRandomDoorsToXMLEvents: function(availableDoors) {
-        $.each(OTMA.xmlContent.rooms, function(index, event) {
+        $.each(OTMA.XML.rooms, function(index, event) {
             var door = OTMA.Board.setRoomToRandomDoor(availableDoors, event);
             OTMA.Board.boardElements[door.boardElement.coordinate][door.direction] = door;
         });

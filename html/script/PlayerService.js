@@ -8,16 +8,28 @@
 /**
  * PlayerService implements all attributes and methods to handle player interactions and player states within the
  * game.
- * @type {Object}
+ * @class
  */
-OTMA.PlayerService = {
-    Player: new OTMA.domain.HumanPlayer('1x1'),
+OTMA.PlayerService = function() {
+    var that = this;
+
+    /**
+     * Main Player
+     * @type {OTMA.domain.HumanPlayer}
+     */
+    this.Player = new OTMA.domain.HumanPlayer('1x1');
 
     /**
      * Current state. One of {MAP, DOOR, ROOM}
+     * @type {String}
      */
-    currentState: {},
-    states: {
+    this.currentState = {};
+
+    /**
+     * Available states
+     * @type {Object}
+     */
+    this.states = {
         MAP: {
             /**
              * Move the player from it's current board element to a given direction.
@@ -29,10 +41,10 @@ OTMA.PlayerService = {
                 if (! directionMapItem) return false;
 
                 if (directionMapItem.type == 'DOOR') {
-                    OTMA.PlayerService.Player.viewingDoor = directionProperty;
+                    OTMA.PlayerService.INSTANCE.Player.viewingDoor = directionProperty;
                     OTMA.GameEngine.setState('DOOR');
                 } else {
-                    OTMA.PlayerService.Player.coordinate = directionMapItem.coordinate;
+                    that.Player.coordinate = directionMapItem.coordinate;
                 }
                 return true;
             }
@@ -45,21 +57,21 @@ OTMA.PlayerService = {
              * @param {OTMA.domain.BoardElement} currentMapItem current position of the player on the map.
              */
             movePlayer: function(directionProperty, currentMapItem) {
-                var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
+                var door = currentMapItem[that.Player.viewingDoor];
 
                 // block player from walking into a door that does not have a room assigned to it
                 if (directionProperty == 'north' && ! door.room) return false;
 
                 // block door if viewing win door and not having found all hints yet
-                if (directionProperty == 'north' && ! OTMA.PlayerService.Player.viewingRoom && door.room.type=='WIN_ROOM'
+                if (directionProperty == 'north' && ! that.Player.viewingRoom && door.room.type=='WIN_ROOM'
                     && ! OTMA.GameEngine.checkWinConditions()) return false;
 
                 if (directionProperty == 'north') {
                     OTMA.GameEngine.setState('ROOM');
-                    OTMA.PlayerService.Player.viewingRoom = true;
+                    that.Player.viewingRoom = true;
                 } else if (directionProperty == 'south') {
                     OTMA.GameEngine.setState('MAP');
-                    OTMA.PlayerService.Player.viewingDoor = undefined;
+                    that.Player.viewingDoor = undefined;
                 }
                 return true;
             }
@@ -71,7 +83,7 @@ OTMA.PlayerService = {
              * @param {OTMA.domain.BoardElement} currentMapItem current position of the player on the map.
              */
             movePlayer: function(directionProperty, currentMapItem) {
-                var door = currentMapItem[OTMA.PlayerService.Player.viewingDoor];
+                var door = currentMapItem[that.Player.viewingDoor];
                 var room = door.room;
 
                 if (room.type == 'WIN_ROOM') return false;
@@ -81,36 +93,38 @@ OTMA.PlayerService = {
                 return true;
             }
         }
-    },
+    };
 
     /**
      * Move a player into a given direction. This method also has to decide on which movePlayer method to call based on
      * the current PlayerService state.
      * @param {String} directionProperty direction to move the player.
      */
-    movePlayer: function(directionProperty) {
-        if (! OTMA.PlayerService.currentState) return;
+    this.movePlayer = function(directionProperty) {
+        if (! that.currentState) return;
 
-        var currentCoordinate = OTMA.PlayerService.Player.coordinate;
+        var currentCoordinate = that.Player.coordinate;
         var currentMapItem = OTMA.Board.boardElements[currentCoordinate];
 
-        OTMA.PlayerService.currentState.movePlayer(directionProperty, currentMapItem);
+        that.currentState.movePlayer(directionProperty, currentMapItem);
         $(document).trigger('playerMove');
     }
 };
+OTMA.PlayerService.INSTANCE = new OTMA.PlayerService();
 
 function initialisePlayerService() {
+    var playerService = OTMA.PlayerService.INSTANCE;
     $(document).bind('stateChange', function(event, newState) {
-        OTMA.PlayerService.currentState = OTMA.PlayerService.states[newState];
+        playerService.currentState = playerService.states[newState];
     });
-    OTMA.PlayerService.currentState = OTMA.PlayerService.states[OTMA.Constants.DEFAULT_STATE];
+    playerService.currentState = playerService.states[OTMA.Constants.DEFAULT_STATE];
 
 
     $(document).bind('npcFound', function(event, npc) {
-        OTMA.PlayerService.Player.addFoundNPC(npc);
+        playerService.Player.addFoundNPC(npc);
     });
 
     $(document).bind('hintFound', function(event, hint) {
-        OTMA.PlayerService.Player.addFoundHint(hint);
+        playerService.Player.addFoundHint(hint);
     });
 }

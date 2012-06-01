@@ -12,7 +12,7 @@ log
 out/
 local.properties
 *.lock
-
+doc
 /wp7/OTMA/OTMA/obj/Debug/App.g.cs
 /wp7/OTMA/OTMA/obj/Debug/App.g.i.cs
 /wp7/OTMA/OTMA/obj/Debug/DesignTimeResolveAssemblyReferences.cache
