@@ -20,7 +20,7 @@ describe('OTMA.GameEngine', function() {
         var element = {a: 'b'};
         OTMA.Board.INSTANCE.boardElements['1x5'] = element;
 
-        expect(gameEngine.getCurrentBoardElement()).toBe(element);
+        expect(gameEngine.getCurrentPlayerBoardElement()).toBe(element);
     });
 
     it("should return true if all win conditions are met", function() {
@@ -34,5 +34,21 @@ describe('OTMA.GameEngine', function() {
         playerService.Player.foundNPC = [ 1 ];
 
         expect(gameEngine.checkWinConditions()).toBe(true);
+    });
+
+    it("should be possible to get the door associated to the current player", function() {
+        gameEngine.setState('some');
+        expect(gameEngine.getCurrentPlayerDoor()).toBeUndefined();
+
+        gameEngine.setState('DOOR');
+        OTMA.PlayerService.INSTANCE.Player.viewingDoor = 'west';
+
+        var element = new OTMA.domain.BoardElement();
+        var door = new OTMA.domain.Door(element, 'west');
+        element.west = door;
+        gameEngine.getCurrentPlayerBoardElement = function() {
+            return element;
+        };
+        expect(gameEngine.getCurrentPlayerDoor()).toBe(door);
     });
 });

@@ -18,7 +18,7 @@
     <script src='script/PlayerService.js' type='text/javascript'></script>
     <script src='script/GameEngine.js' type='text/javascript'></script>
     <script src='script/View.js' type='text/javascript'></script>
-    <script src='script/LoadXml.js' type='text/javascript'></script>
+    <script src='script/XML.js' type='text/javascript'></script>
     <script src='script/NPCService.js' type='text/javascript'></script>
 
     <script src='script/InitScript.js' type='text/javascript'></script>
@@ -55,7 +55,7 @@
                 <div class='conversationTitle'></div>
                 <div class='conversationSubTitle'></div>
                 <div class='conversationText'></div>
-                <div><input type='submit' value='Close' onclick="OTMA.View.hideNPCConversation()"></div>
+                <div><input type='submit' value='Close' onclick="OTMA.View.INSTANCE.hideNPCConversation()"></div>
             </div>
         </div>
         <div id='doorDescriptionHolder' class='holder'>
@@ -97,16 +97,16 @@
 
     <div id='navigation'>
         <div id='npcButton' class='npcButton'>
-            <input type='submit' value='ASK' onclick="OTMA.View.toggleNPCConversation()"/>
+            <input type='submit' value='ASK' onclick="OTMA.View.INSTANCE.toggleNPCConversation()"/>
         </div>
         <table class="navigationButtons">
             <tr>
-                <td rowspan="2"><input id='west' type='image' value='west' onclick='OTMA.GameEngine.INSTANCE.movePlayer("west")'/></td>
-                <td><input id='north' type='image' value='north' onclick='OTMA.GameEngine.INSTANCE.movePlayer("north")' /></td>
-                <td rowspan="2"><input id='east' type='image' value='east' onclick='OTMA.GameEngine.INSTANCE.movePlayer("east")'/></td>
+                <td rowspan="2"><input id='west' type='image' value='west' onclick='OTMA.GameEngine.INSTANCE.moveCurrentPlayer("west")'/></td>
+                <td><input id='north' type='image' value='north' onclick='OTMA.GameEngine.INSTANCE.moveCurrentPlayer("north")' /></td>
+                <td rowspan="2"><input id='east' type='image' value='east' onclick='OTMA.GameEngine.INSTANCE.moveCurrentPlayer("east")'/></td>
             </tr>
             <tr>
-                <td><input id='south' type='image' value='south' onclick='OTMA.GameEngine.INSTANCE.movePlayer("south")' /></td>
+                <td><input id='south' type='image' value='south' onclick='OTMA.GameEngine.INSTANCE.moveCurrentPlayer("south")' /></td>
             </tr>
         </table>
     </div>

@@ -158,6 +158,14 @@ OTMA.domain.Room = function(title, abbreviation, description, hints, storyItems)
     var that = this;
 
     /**
+     * Checks whether the current room is the final winning room.
+     * @return {Boolean}
+     */
+    this.isWinRoom = function() {
+        return that.type == 'WIN_ROOM';
+    };
+
+    /**
      * Get some random room content. This is either a room hint or story.
      * @return {OTMA.domain.RoomStory} random hint or story
      */

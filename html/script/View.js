@@ -29,10 +29,10 @@ OTMA.View = function() {
             /**
              * Hides or shows NPCs on a given map slice. Hides or shows NPC button used for getting the
              * conversation view for NPCs.
+             * @param {OTMA.domain.BoardElement} currentMapItem current map item.
              */
-            updateNPCView: function() {
-                var currentBoardElement = OTMA.GameEngine.INSTANCE.getCurrentBoardElement();
-                var npc = OTMA.NPCService.INSTANCE.getNPCForBoardElement(currentBoardElement);
+            updateNPCView: function(currentMapItem) {
+                var npc = OTMA.NPCService.INSTANCE.getNPCForBoardElement(currentMapItem);
                 if (npc && OTMA.GameEngine.INSTANCE.state == 'MAP') {
                     $('#npcImage').attr('src', 'images/avatars/' + npc.picture);
                     OTMA.util.setCSSVisibilityOnElement('#npcButton', true);
@@ -54,7 +54,7 @@ OTMA.View = function() {
              * Shows an NPC conversation dialogue. This is usually triggered whenever the NPCButton has been clicked.
              */
             showNPCConversation: function() {
-                var currentBoardElement = OTMA.GameEngine.getCurrentBoardElement();
+                var currentBoardElement = OTMA.GameEngine.INSTANCE.getCurrentPlayerBoardElement();
                 var npc = OTMA.NPCService.INSTANCE.getNPCForBoardElement(currentBoardElement);
 
                 if (! npc) return;
@@ -72,13 +72,12 @@ OTMA.View = function() {
         DOOR: {
             /**
              * Update all buttons based on the current map item.
-             * @param {OTMA.domain.BoardElement} currentMapItem current map item.
              */
-            updateButtons: function(currentMapItem) {
-                var door = currentMapItem[OTMA.PlayerService.INSTANCE.Player.viewingDoor];
+            updateButtons:function () {
+                var door = OTMA.GameEngine.INSTANCE.getCurrentPlayerDoor();
                 var availableDirections = { south: 'south', north: 'north' };
 
-                if (! door.room || (! OTMA.GameEngine.INSTANCE.checkWinConditions() && door.room.type == 'WIN_ROOM')) {
+                if (! door.room || (! OTMA.GameEngine.INSTANCE.checkWinConditions() && door.room.isWinRoom())) {
                     availableDirections.north = undefined;
                 }
                 that.disableButtonsBasedOnDirections(availableDirections);
@@ -88,11 +87,10 @@ OTMA.View = function() {
             /**
              * Updates the main view background by showing the door image as well as the door description if a
              * room is found behind the door.
-             * @param {OTMA.domain.BoardElement} currentMapItem current map item
              */
-            updateBackground: function(currentMapItem) {
+            updateBackground: function() {
                 that.setBackground('images/door.png');
-                var door = currentMapItem[OTMA.PlayerService.INSTANCE.Player.viewingDoor];
+                var door = OTMA.GameEngine.INSTANCE.getCurrentPlayerDoor();
 
                 if (! door.room) return;
 
@@ -113,10 +111,9 @@ OTMA.View = function() {
             /**
              * Update all buttons based on the current map item. Within a room, a player can only walk forward and
              * backward.
-             * @param {OTMA.domain.BoardElement} currentMapItem current map item.
              */
-            updateButtons: function(currentMapItem) {
-                var door = currentMapItem[OTMA.PlayerService.INSTANCE.Player.viewingDoor];
+            updateButtons: function() {
+                var door = OTMA.GameEngine.INSTANCE.getCurrentPlayerDoor();
                 var room = door.room;
 
                 var mapItem = { south: 'south' };
@@ -130,10 +127,9 @@ OTMA.View = function() {
             /**
              * Updates the main view background by showing the room image as well as showing room content (hints,
              * stories and room specific description). The method also triggers the automatic changing of room content.
-             * @param {OTMA.domain.BoardElement} currentMapItem current map item
              */
-            updateBackground: function(currentMapItem) {
-                var door = currentMapItem[OTMA.PlayerService.INSTANCE.Player.viewingDoor];
+            updateBackground: function() {
+                var door = OTMA.GameEngine.INSTANCE.getCurrentPlayerDoor();
 
                 if (door.room.type == 'WIN_ROOM') {
                     that.setBackground('images/finish.png');
@@ -214,14 +210,13 @@ OTMA.View = function() {
      * Method decides which state (room, map, door) to show based on OTMA.View.currentState attribute.
      */
     this.update = function() {
-        var player = OTMA.PlayerService.INSTANCE.Player;
-        var mapItem = OTMA.Board.INSTANCE.boardElements[player.coordinate];
+        var mapItem = OTMA.GameEngine.INSTANCE.getCurrentPlayerBoardElement();
 
         $.each($('div.holder'), function(index, element) {
             OTMA.util.setCSSVisibilityOnElement('#' + element.id, false);
         });
 
-        that.currentState.updateNPCView();
+        that.currentState.updateNPCView(mapItem);
         that.currentState.updateButtons(mapItem);
         that.currentState.updateBackground(mapItem);
 
@@ -326,7 +321,7 @@ function initialiseView() {
             40: 'south'
         };
         if (keyMap[keyCode]) {
-            OTMA.GameEngine.INSTANCE.movePlayer(keyMap[keyCode]);
+            OTMA.GameEngine.INSTANCE.moveCurrentPlayer(keyMap[keyCode]);
         }
     });
 

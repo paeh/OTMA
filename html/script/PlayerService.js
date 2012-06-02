@@ -36,7 +36,7 @@ OTMA.PlayerService = function() {
              * @param {String} directionProperty direction to move the player
              * @param {OTMA.domain.BoardElement} currentMapItem current position of the player on the map.
              */
-            movePlayer: function(directionProperty, currentMapItem) {
+            moveCurrentPlayer: function(directionProperty, currentMapItem) {
                 var directionMapItem = currentMapItem[directionProperty];
                 if (! directionMapItem) return false;
 
@@ -56,7 +56,7 @@ OTMA.PlayerService = function() {
              * @param  {String} directionProperty direction to move the player
              * @param {OTMA.domain.BoardElement} currentMapItem current position of the player on the map.
              */
-            movePlayer: function(directionProperty, currentMapItem) {
+            moveCurrentPlayer: function(directionProperty, currentMapItem) {
                 var door = currentMapItem[that.Player.viewingDoor];
 
                 // block player from walking into a door that does not have a room assigned to it
@@ -82,7 +82,7 @@ OTMA.PlayerService = function() {
              * @param {String} directionProperty direction to move the player
              * @param {OTMA.domain.BoardElement} currentMapItem current position of the player on the map.
              */
-            movePlayer: function(directionProperty, currentMapItem) {
+            moveCurrentPlayer: function(directionProperty, currentMapItem) {
                 var door = currentMapItem[that.Player.viewingDoor];
                 var room = door.room;
 
@@ -100,13 +100,13 @@ OTMA.PlayerService = function() {
      * the current PlayerService state.
      * @param {String} directionProperty direction to move the player.
      */
-    this.movePlayer = function(directionProperty) {
+    this.moveCurrentPlayer = function(directionProperty) {
         if (! that.currentState) return;
 
         var currentCoordinate = that.Player.coordinate;
         var currentMapItem = OTMA.Board.INSTANCE.boardElements[currentCoordinate];
 
-        that.currentState.movePlayer(directionProperty, currentMapItem);
+        that.currentState.moveCurrentPlayer(directionProperty, currentMapItem);
         $(document).trigger('playerMove');
     }
 };

@@ -127,7 +127,7 @@ OTMA.NPCService.INSTANCE = new OTMA.NPCService();
 
 function initialiseNPC() {
     var npcService = OTMA.NPCService.INSTANCE;
-    var people = OTMA.XML.people;
+    var people = OTMA.XML.INSTANCE.lastLoad.people;
     $.each(people, function(index, npc) {
         var boardElement = npcService.findRandomNonOccupiedBoardElement();
         npc.coordinate = boardElement.coordinate;

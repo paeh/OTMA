@@ -25,7 +25,7 @@ OTMA.GameEngine = function() {
      * Get the current board element for the human player.
      * @return {OTMA.domain.BoardElement} current board element.
      */
-    this.getCurrentBoardElement = function() {
+    this.getCurrentPlayerBoardElement = function() {
         var currentCoordinate = OTMA.PlayerService.INSTANCE.Player.coordinate;
         return OTMA.Board.INSTANCE.boardElements[currentCoordinate];
     };
@@ -43,8 +43,15 @@ OTMA.GameEngine = function() {
      * Move the player. The method delegates to the PlayerService.
      * @param {String} direction direction to move the player
      */
-    this.movePlayer = function(direction) {
-        OTMA.PlayerService.INSTANCE.movePlayer(direction);
+    this.moveCurrentPlayer = function(direction) {
+        OTMA.PlayerService.INSTANCE.moveCurrentPlayer(direction);
+    };
+
+    this.getCurrentPlayerDoor = function() {
+        if (that.state != 'DOOR' && that.state != 'ROOM') return undefined;
+
+        var currentBoardElement = that.getCurrentPlayerBoardElement();
+        return currentBoardElement[OTMA.PlayerService.INSTANCE.Player.viewingDoor];
     };
 
     /**
