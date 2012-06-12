@@ -22,6 +22,10 @@ public class Door extends BoardElement
         this.origin = origin;
     }
 
+    public boolean hasRoomBehind() {
+        return room != null;
+    }
+
     public Room getRoom()
     {
         return room;
@@ -33,7 +37,7 @@ public class Door extends BoardElement
         super.setElementForDirection(NORTH, room);
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         this.title = title;
     }
 
