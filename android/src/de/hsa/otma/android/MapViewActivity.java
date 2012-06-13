@@ -126,7 +126,7 @@ public class MapViewActivity extends Activity {
 
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.layout);
         layout.removeAllViews();
-        layout.getLayoutParams().height = height - 150;
+        layout.getLayoutParams().height = height - 200;
 
         ImageView background = new ImageView(this);
 
@@ -173,12 +173,12 @@ public class MapViewActivity extends Activity {
 
 
     private void setButtonNavigationAction(Direction direction, int buttonId, Set<Direction> availableDirections) {
-        Button button = (Button) findViewById(buttonId);
+        ImageView imageButton = (ImageView) findViewById(buttonId);
 
         if (! availableDirections.contains(direction)) {
-            button.setEnabled(false);
+            imageButton.setVisibility(View.INVISIBLE);
         } else {
-            button.setOnClickListener(new NavigationOnClickListener(direction));
+            imageButton.setOnClickListener(new NavigationOnClickListener(direction));
         }
     }
 

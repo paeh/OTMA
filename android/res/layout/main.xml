@@ -2,53 +2,80 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-        >
+              android:layout_height="fill_parent">
     <RelativeLayout android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/layout"
                     android:padding="5dp"
             android:background="@color/gameImageBackground"/>
 
-    <TableLayout android:layout_width="fill_parent"
-                 android:layout_height="wrap_content">
-        <TableRow>
-            <Button android:layout_width="wrap_content"
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                  android:baselineAligned="true">
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1">
+            <Button android:text="ASK"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="west"
-                    android:id="@+id/westButton"/>
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="north"
-                    android:id="@+id/northButton"/>
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="east"
-                    android:id="@+id/eastButton"/>
-        </TableRow>
+                    android:layout_centerInParent="true"
+                    android:padding="20dp"
+                    android:id="@+id/npcButton"/>
+        </RelativeLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:baselineAligned="true">
+            <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:gravity="right">
+                <ImageView android:src="@drawable/white_left"
+                           android:layout_height="wrap_content"
+                           android:layout_width="wrap_content"
+                           android:layout_centerVertical="true"
+                           android:contentDescription="left"
+                           android:id="@+id/westButton"/>
+            </RelativeLayout>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent">
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/white_up"
+                        android:contentDescription="up"
+                        android:id="@+id/northButton"/>
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="6dp"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/white_down"
+                        android:contentDescription="down"
+                        android:id="@+id/southButton"/>
+            </LinearLayout>
+            <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:gravity="right">
+                <ImageView android:src="@drawable/white_right"
+                           android:layout_height="wrap_content"
+                           android:layout_width="wrap_content"
+                           android:layout_centerVertical="true"
+                           android:contentDescription="right"
+                           android:id="@+id/eastButton"/>
+            </RelativeLayout>
 
-        <TableRow>
-            <Button android:layout_height="wrap_content"
-                      android:layout_width="wrap_content"
-                      android:text="talk"
-                      android:layout_weight="1"
-                      android:id="@+id/npcButton"/>
+        </LinearLayout>
+    </LinearLayout>
 
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="south"
-                    android:layout_weight="1"
-                    android:layout_column="1"
-                    android:id="@+id/southButton"/>
-
-            <TextView android:layout_height="wrap_content"
-                      android:layout_width="wrap_content"
-                      android:layout_weight="1"
-                      android:visibility="invisible"/>
-        </TableRow>
-    </TableLayout>
 </LinearLayout>
 
