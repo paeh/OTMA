@@ -9,15 +9,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using OTMA.game;
 using OTMA.util;
@@ -37,6 +30,9 @@ namespace OTMA
         public GamePage()
         {
             InitializeComponent();
+            hyperlinkButton1.Content = ConfigStub.END_TEXT;
+            hyperlinkButton1.NavigateUri = new Uri(ConfigStub.END_URL, UriKind.Absolute);
+
             moveButtons.Add(Direction.North, upButton);
             moveButtons.Add(Direction.East, rightButton);
             moveButtons.Add(Direction.West, leftButton);
@@ -121,7 +117,7 @@ namespace OTMA
             else
             {
                 var currentDoor = gameEngine.getCurrentDoorItem();
-                if (currentDoor != null && currentDoor is ExitDoor && !gameEngine.allRequirementsSatisfied())
+                if (currentDoor != null && currentDoor is ExitDoor && !gameEngine.checkIfAllRequirementsAreSatisfied())
                 {
                     MessageBox.Show(String.Format("You must find {0} hint(s) and talk to {1} NPC(s) to exit!", ConfigStub.NEEDED_HINT_AMOUNT, ConfigStub.NEEDED_NPC_AMOUNT), "Can't exit", MessageBoxButton.OK);
                 }

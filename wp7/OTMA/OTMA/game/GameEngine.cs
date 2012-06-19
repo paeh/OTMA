@@ -15,7 +15,7 @@ using System.Collections.Generic;
 namespace OTMA.game
 {
     /// <summary>
-    /// The class which holds all game logic, game states, the GameBoard, the Users, Hints, and Stories. It also possess the game manipulation methods (moving, ...).
+    /// The class which holds all game logic, game states, the GameBoard, the Users, Hints, and Stories. It also possess the game manipulation methods (e.g. moving).
     /// </summary>
     public class GameEngine
     {
@@ -50,7 +50,7 @@ namespace OTMA.game
             {
                 switch (npc.role)
                 {
-                    //TODO avatars
+                    //TODO multiple avatars
                     default:
                         npc.setImage("/OTMA;component/Images/player_avatar.png");
                         break;
@@ -63,7 +63,10 @@ namespace OTMA.game
             return state;
         }
 
-        public void shuffleDoorEvents()
+        /// <summary>
+        /// Random mapping the events to doors.
+        /// </summary>
+        private void shuffleDoorEvents()
         {
             var doors = board.getAllAvailableDoors();
 
@@ -80,6 +83,10 @@ namespace OTMA.game
             }
         }
 
+        /// <summary>
+        /// Return and log an NPCs. this NPC must not be found again to finish the game.
+        /// </summary>
+        /// <returns>The NPC player at the current position, if available</returns>
         public NpcPlayer getAndLogNpcForCurrentPostition()
         {
             var currentNpc = getNpcForCurrentPosition();
@@ -91,6 +98,10 @@ namespace OTMA.game
             return currentNpc;
         }
 
+        /// <summary>
+        /// Logs a given hint, so that hint must not be found again.
+        /// </summary>
+        /// <param name="hint">The hint to log</param>
         public void logHint(Hint hint)
         {
             if (hint != null && !human.foundHints.Contains(hint))
@@ -110,6 +121,11 @@ namespace OTMA.game
             return null;
         }
 
+        /// <summary>
+        /// Move player to Direction.
+        /// </summary>
+        /// <param name="direction">the direction which should be moved to</param>
+        /// <returns>The new position as BoardElement</returns>
         public BoardElement movePlayer(Direction direction)
         {
             BoardElement currentPosition = null;
@@ -143,7 +159,7 @@ namespace OTMA.game
                 }
                 else
                 {
-                    if (this.allRequirementsSatisfied())
+                    if (this.checkIfAllRequirementsAreSatisfied())
                     {
                         newPosition = (currentPosition as ExitDoor).directions[Direction.North];
                         state = GameState.Done;
@@ -217,7 +233,7 @@ namespace OTMA.game
             return board.getRoomForCoordinates(human.coordinate);
         }
 
-        public Boolean allRequirementsSatisfied()
+        public Boolean checkIfAllRequirementsAreSatisfied()
         {
             return human.foundHints.Count >= ConfigStub.NEEDED_HINT_AMOUNT && human.foundNpcs.Count >= ConfigStub.NEEDED_NPC_AMOUNT;
         }

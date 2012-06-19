@@ -67,6 +67,10 @@ namespace OTMA.util
             client.OpenReadAsync(new Uri(url, UriKind.Absolute));
         }
 
+        /// <summary>
+        /// Parse the NPCs from XML and return them.
+        /// </summary>
+        /// <returns>List of NPCs</returns>
         public List<NpcPlayer> parseAndGetNpcs()
         {
             List<NpcPlayer> result = new List<NpcPlayer>();
@@ -95,6 +99,10 @@ namespace OTMA.util
             return result;
         }
 
+        /// <summary>
+        /// Parse the Events from XML and return them.
+        /// </summary>
+        /// <returns>List of Events</returns>
         public List<Event> parseAndGetEvents()
         {
             var result = new List<Event>();
@@ -134,6 +142,10 @@ namespace OTMA.util
             return result;
         }
 
+        /// <summary>
+        /// Parse the Hits from XML and return them.
+        /// </summary>
+        /// <returns>List of Hints</returns>
         public List<Hint> parseAndGetHints()
         {
             List<Hint> result = new List<Hint>();
