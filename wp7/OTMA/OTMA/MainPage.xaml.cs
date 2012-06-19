@@ -35,7 +35,7 @@ namespace OTMA
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            var url = "http://hs-augsburg.de/~lieback/pub/otma-config-game.xml?junk=" + DateTime.Now.ToString();
+            var url = ConfigStub.XML_URL + "?junk=" + DateTime.Now.ToString();
             XmlParser.asyncInit(url, xmlLoadingDone);
         }
 

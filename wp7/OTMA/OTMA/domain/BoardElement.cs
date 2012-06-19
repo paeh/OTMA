@@ -8,15 +8,6 @@
  */
 
 using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using System.Collections.Generic;
 
 namespace OTMA.domain
@@ -36,6 +27,13 @@ namespace OTMA.domain
             this.picture = picture;
         }
 
+        /// <summary>
+        /// Set the surrounding BoardElements.
+        /// </summary>
+        /// <param name="north">North neighbour</param>
+        /// <param name="east">East neighbour</param>
+        /// <param name="south">South neighbour</param>
+        /// <param name="west">West neighbour</param>
         public void setBoundaryItems(BoardElement north, BoardElement east, BoardElement south, BoardElement west)
         {
             this.directions.Add(Direction.North, north);
@@ -44,6 +42,11 @@ namespace OTMA.domain
             this.directions.Add(Direction.West, west);
         }
 
+        /// <summary>
+        /// Get Neighbour for a Direction
+        /// </summary>
+        /// <param name="direction">The Direction to move to</param>
+        /// <returns>The neighbour BoardElement</returns>
         public BoardElement getBoardItemForDirection(Direction direction)
         {
             if (directions.ContainsKey(direction))

@@ -54,6 +54,9 @@ namespace OTMA.game
             return result;
         }
 
+        /// <summary>
+        /// Hardcoded intitialization of the game board.
+        /// </summary>
         private void createBoard()
         {
             var map1x1 = createAndAddBoardElement(1, 1, "/OTMA;component/Images/1x1.png");
@@ -179,6 +182,11 @@ namespace OTMA.game
 
         }
 
+        /// <summary>
+        /// Prepares the exit door to end the game.
+        /// </summary>
+        /// <param name="map3x5">The position of the end door</param>
+        /// <returns></returns>
         private ExitDoor createExitDoor(BoardElement map3x5)
         {
             var coordinate = new Coordinate(3, 5);

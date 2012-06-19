@@ -53,7 +53,7 @@
             <ScrollViewer Margin="0,380,0,239">
                 <TextBlock Height="111" HorizontalAlignment="Left" Margin="60,0,0,0" Name="eventDesciption" Text="" VerticalAlignment="Top" TextWrapping="Wrap" Width="362" MinHeight="0" />
             </ScrollViewer>
-            <HyperlinkButton Content="You won! Click here for more Information." Height="54" HorizontalAlignment="Left" Margin="12,447,0,0" Name="hyperlinkButton1" VerticalAlignment="Top" Width="458" IsEnabled="True" Visibility="Collapsed" NavigateUri="http://www.onthemove-academy.org/" TargetName="_blank" />
+            <HyperlinkButton Content="" Height="54" HorizontalAlignment="Left" Margin="12,447,0,0" Name="hyperlinkButton1" VerticalAlignment="Top" Width="458" IsEnabled="True" Visibility="Collapsed" NavigateUri="" TargetName="_blank" />
         </Grid>
     </Grid>
  
