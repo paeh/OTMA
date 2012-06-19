@@ -6,9 +6,9 @@
  */
 
 /*
-Be very, very careful when changing something here.
-This functionality implements screen rotation and zooming on
-different display sizes (i.e. computer / smartphone browsers).
+ Be very, very careful when changing something here.
+ This functionality implements screen rotation and zooming on
+ different display sizes (i.e. computer / smartphone browsers).
  */
 $(document).ready(function() {
     // this attribute is not provided on every screen orientation change ...
@@ -16,6 +16,10 @@ $(document).ready(function() {
         OTMA.mobile = true;
     }
 
+    /**
+     * Update all the layout, meaning that all content divs are resized according to the current screen orientation
+     * and size.
+     */
     var updateLayout = function() {
         removeAllLayoutClasses();
 
@@ -47,6 +51,11 @@ $(document).ready(function() {
         }
     };
 
+    /**
+     * Scale the content pane according to the main dimension and a given zoom factor
+     * @param {Integer} mainDimension main dimension, meaning the bigger one of x or y.
+     * @param {Integer} zoom zoom factor
+     */
     var setDimensionAndZoom = function(mainDimension,  zoom) {
         mainDimension = mainDimension / zoom;
 
@@ -62,6 +71,9 @@ $(document).ready(function() {
         });
     };
 
+    /**
+     * Remove all navigation layout classes, so that no side layout or bottom layout is set any more.
+     */
     var removeAllLayoutClasses = function() {
         $('#navigation').removeClass('navigationSide');
         $('#navigation').removeClass('navigationBottom');
@@ -70,6 +82,11 @@ $(document).ready(function() {
         $('#main').removeClass('mainBottom');
     };
 
+    /**
+     * Sets the navigation components to the left.
+     * @param {Integer} windowHeight window height
+     * @param {Integer} windowWidth window width
+     */
     var setSideLayout = function (windowHeight, windowWidth) {
         $('#navigation').addClass('navigationSide');
         $('#main').addClass('mainSide');
@@ -87,6 +104,11 @@ $(document).ready(function() {
         setDimensionAndZoom(mainDimension, zoomFactor);
     };
 
+    /**
+     * Sets the navigation components to the bottom.
+     * @param {Integer} windowHeight window height
+     * @param {Integer} windowWidth window width
+     */
     var setBottomLayout = function (windowHeight, windowWidth) {
         $('#navigation').addClass('navigationBottom');
         $('#main').addClass('mainBottom');
@@ -112,7 +134,9 @@ $(document).ready(function() {
         updateLayout();
     }, false);
 
+    // init xml loading
     loadXML("otma-config.xml", function() {
+        // ... and initialise everything else when the callback is called
         initialiseBoard();
         initialiseNPC();
         initialiseGameEngine();
