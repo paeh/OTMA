@@ -2,10 +2,11 @@ package de.hsa.otma.android.player;
 
 import de.hsa.otma.android.config.Config;
 import de.hsa.otma.android.config.XMLConfig;
-import de.hsa.otma.android.map.Coordinate;
 import de.hsa.otma.android.map.Board;
 import de.hsa.otma.android.map.BoardElement;
+import de.hsa.otma.android.map.Coordinate;
 import de.hsa.otma.android.map.Direction;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -52,7 +53,7 @@ public class NPCService {
             Direction targetDirection = availableDirections.get(directionIndex);
             targetElement = currentElement.getElementFor(targetDirection);
         }
-        while(targetElement.getCoordinate().getX() < 0 && targetElement.getCoordinate().getY() < 0);
+        while (Board.INSTANCE.isAccessibleByNPCPlayer(targetElement.getCoordinate()));
 
         if (targetElement.getNpcPlayer() == null) {
             targetElement.setNpcPlayer(npc);

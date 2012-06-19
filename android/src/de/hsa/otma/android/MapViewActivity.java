@@ -13,15 +13,16 @@ import android.os.ResultReceiver;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.*;
 import de.hsa.otma.android.constants.Actions;
 import de.hsa.otma.android.constants.BundleKeys;
 import de.hsa.otma.android.map.BoardElement;
 import de.hsa.otma.android.map.Direction;
+import de.hsa.otma.android.map.Door;
 import de.hsa.otma.android.player.NPCPlayer;
+import de.hsa.otma.android.player.PlayerService;
+import de.hsa.otma.android.view.DoorLabel;
+
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -70,6 +71,8 @@ public class MapViewActivity extends Activity {
                     });
             AlertDialog alert = builder.create();
             alert.show();
+
+            PlayerService.INSTANCE.foundNPC(npc);
         }
     }
     
@@ -123,7 +126,7 @@ public class MapViewActivity extends Activity {
 
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.layout);
         layout.removeAllViews();
-        layout.getLayoutParams().height = height - 150;
+        layout.getLayoutParams().height = height - 200;
 
         ImageView background = new ImageView(this);
 
@@ -139,9 +142,24 @@ public class MapViewActivity extends Activity {
         setButtonNavigationAction(Direction.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
         setButtonNavigationAction(Direction.NORTH, R.id.northButton, mapItem.getAvailableDirections());
 
+        if (mapItem instanceof Door) {
+            Door door = (Door) mapItem;
+            if (door.hasRoomBehind()) {
+                showDoorLabel(door, layout);
+            }
+        }
+
         addNPCButton(otmaEmployees);
 
         addOtmaEmployees(width, layout, otmaEmployees);
+    }
+
+    /**
+     * We have to do this whole view creation because we reuse the view for every map item.
+     */
+    private void showDoorLabel(Door door, RelativeLayout layout) {
+        DoorLabel label = new DoorLabel(door, layout);
+        layout.addView(label);
     }
 
     private void addNPCButton(ArrayList<NPCPlayer> otmaEmployees){
@@ -155,12 +173,12 @@ public class MapViewActivity extends Activity {
 
 
     private void setButtonNavigationAction(Direction direction, int buttonId, Set<Direction> availableDirections) {
-        Button button = (Button) findViewById(buttonId);
+        ImageView imageButton = (ImageView) findViewById(buttonId);
 
         if (! availableDirections.contains(direction)) {
-            button.setEnabled(false);
+            imageButton.setVisibility(View.INVISIBLE);
         } else {
-            button.setOnClickListener(new NavigationOnClickListener(direction));
+            imageButton.setOnClickListener(new NavigationOnClickListener(direction));
         }
     }
 

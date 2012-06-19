@@ -14,4 +14,20 @@ public class HumanPlayer extends Player {
     public HumanPlayer(Coordinate coordinate, String name) {
         super(coordinate, name);
     }
+
+    public void found(Hint hint) {
+        foundHints.add(hint);
+    }
+
+    public void found(NPCPlayer player) {
+        foundNPCs.add(player);
+    }
+
+    public int foundNPCs() {
+        return foundNPCs.size();
+    }
+
+    public int foundHints() {
+        return foundHints.size();
+    }
 }

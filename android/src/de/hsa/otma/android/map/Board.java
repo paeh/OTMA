@@ -1,27 +1,25 @@
 package de.hsa.otma.android.map;
 
 import android.util.Log;
+import de.hsa.otma.android.OTMAApplication;
 import de.hsa.otma.android.R;
-import de.hsa.otma.android.config.Config;
-import de.hsa.otma.android.config.XMLConfig;
 
 import java.util.*;
+
 import static de.hsa.otma.android.map.Direction.*;
 
-public class Board
-{
+public class Board {
+    private static final String TAG = Board.class.getSimpleName();
     public static final Board INSTANCE = new Board();
     private Map<Coordinate, BoardElement> elements = new HashMap<Coordinate, BoardElement>();
 
     private List<Door> doors = new ArrayList<Door>();
 
-    private Board()
-    {
+    private Board() {
         buildBoard();
     }
 
-    public Coordinate getRandomCoordinateOnBoard()
-    {
+    public Coordinate getRandomCoordinateOnBoard() {
         int x = random.nextInt(5) + 1;
         int y = random.nextInt(5) + 1;
 
@@ -30,35 +28,45 @@ public class Board
 
     private Random random = new Random(System.nanoTime());
 
-    private void assignRoomsToRandomDoors(){
-        Log.i(Board.class.getName(), "Assigning rooms to doors!");
+    private void assignRoomsToRandomDoors() {
+        Log.d(TAG, "Assigning rooms to doors!");
 
-        Config config = new XMLConfig("http://hs-augsburg.de/~lieback/pub/otma-config-game.xml");
-        List<Room> rooms = config.getRooms();
-        if(rooms == null){
-            throw new NullPointerException("No rooms specified in config - list of rooms null!");
+        List<Room> rooms = OTMAApplication.CONFIG.getRooms();
+
+        if (doors.size() < rooms.size()) {
+            rooms = rooms.subList(0, doors.size() - 1);
         }
 
-        if(doors.size() < rooms.size()){
-            rooms = rooms.subList(0, doors.size()-1);
-        }
-
-        for(Room room : rooms){
-            Door door;
-            do{
-               door = doors.get(random.nextInt(doors.size()));
-            }
-            while(door.getRoom() != null);
+        for (Room room : rooms) {
+            Door door = getRandomDoorWithoutRoom();
 
             door.setRoom(room);
             door.setAbbreviation(room.getAbbreviation());
             door.setTitle(room.getTitle());
         }
-        Log.i(Board.class.getName(), "All rooms have been assigned to doors!");
+        Log.i(TAG, rooms.size() + " rooms have been assigned to doors!");
     }
 
-    private void createDoorForBoardElementInDirection(BoardElement element, Direction direction)
-    {
+    private Door getRandomDoorWithoutRoom() {
+        List<Door> uncheckedDoors = new ArrayList<Door>(doors);
+
+        while (uncheckedDoors.size() > 0) {
+//            int index = random.nextInt(uncheckedDoors.size());
+            int index = 0;
+
+            Door door = uncheckedDoors.get(index);
+
+            if (door.getRoom() == null) {
+                return door;
+            } else {
+                uncheckedDoors.remove(index);
+            }
+        }
+
+        throw new IllegalStateException("more rooms as doors specified, this exception should never occur!");
+    }
+
+    private void createDoorForBoardElementInDirection(BoardElement element, Direction direction) {
         int x = -element.getCoordinate().getX();
         int y = -element.getCoordinate().getY();
         Coordinate coordinate = new Coordinate(x, y);
@@ -68,8 +76,11 @@ public class Board
         doors.add(door);
     }
 
-    private BoardElement createBoardElementAndPutToBoard(int x, int y, int drawable)
-    {
+    public boolean isAccessibleByNPCPlayer(Coordinate coordinate) {
+        return coordinate.getX() < 0 && coordinate.getY() < 0;
+    }
+
+    private BoardElement createBoardElementAndPutToBoard(int x, int y, int drawable) {
         Coordinate coordinate = new Coordinate(x, y);
         BoardElement boardElement = new BoardElement(coordinate, drawable);
         elements.put(coordinate, boardElement);
@@ -77,13 +88,11 @@ public class Board
         return boardElement;
     }
 
-    public BoardElement getElementFor(Coordinate coordinate)
-    {
+    public BoardElement getElementFor(Coordinate coordinate) {
         return elements.get(coordinate);
     }
 
-    private void buildBoard()
-    {
+    private void buildBoard() {
         BoardElement map1x1 = createBoardElementAndPutToBoard(1, 1, R.drawable.map_1x1);
         BoardElement map1x2 = createBoardElementAndPutToBoard(2, 1, R.drawable.map_1x2);
         BoardElement map1x3 = createBoardElementAndPutToBoard(3, 1, R.drawable.map_1x3);
