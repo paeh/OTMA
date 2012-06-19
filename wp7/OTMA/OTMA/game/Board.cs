@@ -14,6 +14,9 @@ using OTMA.util;
 
 namespace OTMA.game
 {
+    /// <summary>
+    /// The class which represents the game board.
+    /// </summary>
     public class Board
     {
         public static readonly Board instance = new Board();

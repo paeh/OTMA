@@ -11,9 +11,13 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using OTMA.domain;
 using System.Net;
+using System.Windows;
 
 namespace OTMA.util
 {
+    /// <summary>
+    /// The class which loads and parses the configuration xml file. It also provides the data for the hints, npcplayers and events.
+    /// </summary>
     public class XmlParser
     {
         public static String XML_NAMESPACE = "http://www.onthemove-academy.org/schema/config";
@@ -36,10 +40,17 @@ namespace OTMA.util
 
             client.OpenReadCompleted += (sender, e) =>
             {
-                this.document = XDocument.Load(e.Result);
-                e.Result.Close();
-                if(callback != null)
-                    callback(null);
+                try
+                {
+                    this.document = XDocument.Load(e.Result);
+                    e.Result.Close();
+                    if (callback != null)
+                        callback(null);
+                }
+                catch
+                {
+                    MessageBox.Show("Download of configuration failed! Please restart.");
+                }
             };
 
             client.DownloadProgressChanged += (sender, e) =>

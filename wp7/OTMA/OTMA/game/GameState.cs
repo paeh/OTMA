@@ -20,6 +20,9 @@ using System.Windows.Shapes;
 
 namespace OTMA.game
 {
+    /// <summary>
+    /// The game states which are used by the game engine.
+    /// </summary>
     public enum GameState
     {
         InRoom, AtDoor, OnBoard, AtExitDoor, Done

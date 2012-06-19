@@ -14,6 +14,9 @@ using System.Collections.Generic;
 
 namespace OTMA.game
 {
+    /// <summary>
+    /// The class which holds all game logic, game states, the GameBoard, the Users, Hints, and Stories. It also possess the game manipulation methods (moving, ...).
+    /// </summary>
     public class GameEngine
     {
         private static Random rand = new Random(DateTime.Now.Millisecond);
@@ -178,7 +181,7 @@ namespace OTMA.game
                         state = GameState.AtDoor;
 
                     stepCounter++;
-                    if (stepCounter % 5 == 0)
+                    if (stepCounter % ConfigStub.STEP_COUNT == 0)
                     {
                         shuffleNpcs();
                     }
