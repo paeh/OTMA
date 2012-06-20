@@ -49,9 +49,9 @@ OTMA.Constants = {
      * @constant
      */
     STORY_ITEMS: [
-        new OTMA.domain.Story('Bla1', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum '),
-        new OTMA.domain.Story('Bla2', 'Bla2'),
-        new OTMA.domain.Story('Bla3', 'Bla3')
+        new OTMA.domain.Story('Coffee Break', 'Have A Break - Have A KitKat! ... or only some coffee?'),
+        new OTMA.domain.Story('Conference Delayed', 'The speaker is ill. Come back later to check whether he still has decided to join us!'),
+        new OTMA.domain.Story('Speaker Gone', 'The speaker is untraceable. Come back later!')
     ],
 
     RECEPTION_TEXT: 'Note: All hints available in the game will be given to you on win.',
