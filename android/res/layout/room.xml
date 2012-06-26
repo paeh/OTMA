@@ -4,9 +4,9 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
     <RelativeLayout android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:background="@drawable/room">
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/room">
 
         <TextView android:id="@+id/roomText"
             android:layout_width="fill_parent"
@@ -16,7 +16,6 @@
 
         <Button android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="Exit"
                 android:id="@+id/exitButton"/>
     </RelativeLayout>
