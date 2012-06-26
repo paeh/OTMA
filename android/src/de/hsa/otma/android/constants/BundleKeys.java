@@ -1,5 +1,8 @@
 package de.hsa.otma.android.constants;
 
+/**
+ * Constant Strings used throughout the application.
+ */
 public class BundleKeys {
     public static final String COORDINATE = "COORDINATE";
     public static final String DIRECTION = "DIRECTION";
