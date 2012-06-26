@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import de.hsa.otma.android.map.Direction;
 
+/**
+ * Activity displaying Rooms.
+ */
 public class RoomActivity extends Activity {
 
     @Override
