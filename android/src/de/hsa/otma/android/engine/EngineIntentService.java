@@ -13,6 +13,10 @@ import de.hsa.otma.android.map.Direction;
 import de.hsa.otma.android.player.NPCService;
 import de.hsa.otma.android.player.PlayerService;
 
+/**
+ * IntentService handling MOVE_TO_DIRECTION and CURRENT_MAP_ITEM intents.
+ * In the first case new MapItem will be sent, otherwise current MapItem will be returned.
+ */
 public class EngineIntentService extends IntentService {
     public EngineIntentService() {
         super(EngineIntentService.class.getName());
