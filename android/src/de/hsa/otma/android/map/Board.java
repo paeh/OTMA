@@ -154,7 +154,7 @@ public class Board {
         createDoorForBoardElementInDirection(map1x5, SOUTH);
 
         createDoorForBoardElementInDirection(map2x1, WEST);
-        //createDoorForBoardElementInDirection(map2x2, EAST);
+        createDoorForBoardElementInDirection(map2x2, EAST);
         createDoorForBoardElementInDirection(map2x4, WEST);
         createDoorForBoardElementInDirection(map2x5, NORTH);
 
