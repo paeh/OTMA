@@ -3,6 +3,9 @@ package de.hsa.otma.android.player;
 import android.util.Log;
 import de.hsa.otma.android.map.*;
 
+/**
+ * Class handling player movement as well as win conditions.
+ */
 public class PlayerService {
     private static final String TAG = PlayerService.class.getSimpleName();
     public static final PlayerService INSTANCE = new PlayerService();

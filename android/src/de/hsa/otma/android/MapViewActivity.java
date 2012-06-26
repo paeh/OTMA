@@ -26,6 +26,10 @@ import de.hsa.otma.android.view.DoorLabel;
 import java.util.ArrayList;
 import java.util.Set;
 
+/**
+ * Activity displaying game board and providing functionality for directional buttons, npcButton...
+ * Furthermore it provides closeup view of doors.
+ */
 public class MapViewActivity extends Activity {
 
     private MapItemResultReceiver mapItemResultReceiver = new MapItemResultReceiver();

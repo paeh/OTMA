@@ -6,6 +6,9 @@ import de.hsa.otma.android.player.Hint;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Room including hints, stories, title, description and abbreviation.
+ */
 public class Room extends BoardElement {
 
     private Door door;

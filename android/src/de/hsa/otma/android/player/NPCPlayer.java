@@ -2,6 +2,9 @@ package de.hsa.otma.android.player;
 
 import de.hsa.otma.android.map.Coordinate;
 
+/**
+ * NPC with picture, title and introduction.
+ */
 public class NPCPlayer extends Player {
     private int picture;
 
