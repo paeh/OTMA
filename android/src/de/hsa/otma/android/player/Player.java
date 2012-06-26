@@ -4,6 +4,9 @@ import de.hsa.otma.android.map.Coordinate;
 
 import java.io.Serializable;
 
+/**
+ * General player class including name and coordinate.
+ */
 public class Player implements Serializable {
     private Coordinate coordinate;
 

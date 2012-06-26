@@ -5,6 +5,9 @@ import de.hsa.otma.android.map.Coordinate;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * HumanPlayer with information about found hints and npcs.
+ */
 public class HumanPlayer extends Player {
 
     private Set<Hint> foundHints = new HashSet<Hint>();
@@ -23,11 +26,11 @@ public class HumanPlayer extends Player {
         foundNPCs.add(player);
     }
 
-    public int foundNPCs() {
+    public int numberOfFoundNPCs() {
         return foundNPCs.size();
     }
 
-    public int foundHints() {
+    public int numberOfFoundHints() {
         return foundHints.size();
     }
 }
