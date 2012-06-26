@@ -66,9 +66,9 @@ public class RoomActivity extends Activity {
         int width = size.x;
         int height = size.y;
 
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.roomLayout);
-        layout.removeAllViews();
-        layout.getLayoutParams().height = height - 150;
+        //RelativeLayout layout = (RelativeLayout) findViewById(R.id.roomLayout);
+        //layout.removeAllViews();
+        //layout.getLayoutParams().height = height - 150;
 
         ImageView background = new ImageView(this);
 
@@ -77,7 +77,7 @@ public class RoomActivity extends Activity {
         background.setImageDrawable(drawable);
         background.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        layout.addView(background);
+        //layout.addView(background);
 
         /**
         setButtonNavigationAction(Direction.WEST, R.id.westButton, mapItem.getAvailableDirections());

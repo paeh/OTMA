@@ -51,8 +51,9 @@ public class ReceptionActivity extends Activity{
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent mapViewIntent = new Intent(ReceptionActivity.this, MapViewActivity.class);
-                ReceptionActivity.this.startActivity(mapViewIntent);
+                startActivity(mapViewIntent);
             }
         });
     }
