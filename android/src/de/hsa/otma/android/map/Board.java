@@ -8,6 +8,10 @@ import java.util.*;
 
 import static de.hsa.otma.android.map.Direction.*;
 
+/**
+ * The game board (labyrinth). Construction of game board as well as assignment of rooms to doors
+ * is handled here.
+ */
 public class Board {
     private static final String TAG = Board.class.getSimpleName();
     public static final Board INSTANCE = new Board();

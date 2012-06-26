@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * BoardElement with coordinate, (possibly) npcPlayer and accessible directions (adjacent BoardElements/Doors).
+ */
 public class BoardElement implements Serializable {
     
     private Coordinate coordinate;
