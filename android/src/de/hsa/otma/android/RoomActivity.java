@@ -60,24 +60,24 @@ public class RoomActivity extends Activity {
     private void createLayout(){
         setContentView(R.layout.room);
 
-//        Display display = getWindowManager().getDefaultDisplay();
-//        Point size = new Point();
-//        display.getSize(size);
-//        int width = size.x;
-//        int height = size.y;
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
 
-//        RelativeLayout layout = (RelativeLayout) findViewById(R.id.roomLayout);
-//        layout.removeAllViews();
-//        layout.getLayoutParams().height = height - 150;
-//
-//        ImageView background = new ImageView(this);
-//
-//
-//        Drawable drawable = getResources().getDrawable(R.drawable.room);
-//        background.setImageDrawable(drawable);
-//        background.setScaleType(ImageView.ScaleType.FIT_XY);
-//
-//        layout.addView(background);
+        //RelativeLayout layout = (RelativeLayout) findViewById(R.id.roomLayout);
+        //layout.removeAllViews();
+        //layout.getLayoutParams().height = height - 150;
+
+        ImageView background = new ImageView(this);
+
+
+        Drawable drawable = getResources().getDrawable(R.drawable.room);
+        background.setImageDrawable(drawable);
+        background.setScaleType(ImageView.ScaleType.FIT_XY);
+
+        //layout.addView(background);
 
         /**
         setButtonNavigationAction(Direction.WEST, R.id.westButton, mapItem.getAvailableDirections());
