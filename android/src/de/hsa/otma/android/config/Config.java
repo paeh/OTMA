@@ -6,6 +6,9 @@ import de.hsa.otma.android.player.NPCPlayer;
 
 import java.util.List;
 
+/**
+ * Specialized interface to read certain contents from config
+ */
 public interface Config {
 
     List<Room> getRooms();

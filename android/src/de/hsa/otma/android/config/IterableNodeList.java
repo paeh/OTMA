@@ -5,6 +5,9 @@ import org.w3c.dom.NodeList;
 
 import java.util.Iterator;
 
+/**
+ * Implements iterator functionality for NodeList.
+ */
 public class IterableNodeList implements Iterable<Element> {
 
     private NodeList nodes;
