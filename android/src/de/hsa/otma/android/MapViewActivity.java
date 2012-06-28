@@ -144,13 +144,15 @@ public class MapViewActivity extends Activity {
         setButtonNavigationAction(Direction.WEST, R.id.westButton, mapItem.getAvailableDirections());
         setButtonNavigationAction(Direction.EAST, R.id.eastButton, mapItem.getAvailableDirections());
         setButtonNavigationAction(Direction.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(Direction.NORTH, R.id.northButton, mapItem.getAvailableDirections());
 
-        if (mapItem instanceof Door) {
+
+        if (mapItem instanceof Door && ((Door)mapItem).hasRoomBehind()) {
             Door door = (Door) mapItem;
-            if (door.hasRoomBehind()) {
-                showDoorLabel(door, layout);
-            }
+            showDoorLabel(door, layout);
+            setButtonToEnterRoom(R.id.northButton);
+        }
+        else{
+            setButtonNavigationAction(Direction.NORTH, R.id.northButton, mapItem.getAvailableDirections());
         }
 
         addNPCButton(otmaEmployees);
@@ -175,6 +177,16 @@ public class MapViewActivity extends Activity {
         button.setOnClickListener(new NPCOnClickListener(this, otmaEmployees.get(0)));
     }
 
+    private void setButtonToEnterRoom(int buttonId){
+        ImageView imageButton = (ImageView) findViewById(buttonId);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mapViewIntent = new Intent(MapViewActivity.this, RoomActivity.class);
+                startActivity(mapViewIntent);
+            }
+        });
+    }
 
     private void setButtonNavigationAction(Direction direction, int buttonId, Set<Direction> availableDirections) {
         ImageView imageButton = (ImageView) findViewById(buttonId);
