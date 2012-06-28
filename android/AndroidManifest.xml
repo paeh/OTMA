@@ -13,6 +13,7 @@
             </intent-filter>
         </activity>
         <activity android:name="MapViewActivity" />
+        <activity android:name="RoomActivity" />
         <service android:name=".engine.EngineIntentService">
             <intent-filter>
                 <action android:name="MOVE_TO_DIRECTION" />
