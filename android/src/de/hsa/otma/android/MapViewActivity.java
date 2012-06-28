@@ -180,7 +180,18 @@ public class MapViewActivity extends Activity {
         ImageView imageButton = (ImageView) findViewById(buttonId);
 
         if (! availableDirections.contains(direction)) {
-            imageButton.setVisibility(View.INVISIBLE);
+            if(buttonId == R.id.northButton){
+                imageButton.setImageResource(R.drawable.grey_up);
+            }
+            else if(buttonId == R.id.eastButton){
+                imageButton.setImageResource(R.drawable.grey_right);
+            }
+            else if(buttonId == R.id.southButton){
+                imageButton.setImageResource(R.drawable.grey_down);
+            }
+            else{
+                imageButton.setImageResource(R.drawable.grey_left);
+            }
         } else {
             imageButton.setOnClickListener(new NavigationOnClickListener(direction));
         }
