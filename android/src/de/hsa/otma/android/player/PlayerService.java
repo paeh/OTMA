@@ -7,14 +7,16 @@ import de.hsa.otma.android.map.*;
  * Class handling player movement as well as win conditions.
  */
 public class PlayerService {
-    private static final String TAG = PlayerService.class.getSimpleName();
+    private static final String TAG = PlayerService.class.getName();
     public static final PlayerService INSTANCE = new PlayerService();
 
     private HumanPlayer humanPlayer;
     private static final Board BOARD = Board.INSTANCE;
 
     private PlayerService() {
+        // TODO change on final version
         humanPlayer = new HumanPlayer(new Coordinate(1, 1), "human");
+//        humanPlayer = new HumanPlayer(BOARD.getRandomCoordinateOnBoard(), "human");
     }
 
     public BoardElement move(Direction direction) {
@@ -28,11 +30,11 @@ public class PlayerService {
             newMapItem = currentMapItem.getElementFor(direction);
         }
 
-        Log.e(TAG, "current position = " + currentMapItem);
+        Log.d(TAG, "current position = " + currentMapItem);
 
         if (newMapItem == null) return null;
 
-        Log.e(TAG, "moving to " + newMapItem);
+        Log.i(TAG, "moving to " + newMapItem);
         humanPlayer.moveTo(newMapItem.getCoordinate());
 
         return newMapItem;
