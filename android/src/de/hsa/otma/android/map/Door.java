@@ -37,7 +37,6 @@ public class Door extends BoardElement
     public void setRoom(Room room)
     {
         this.room = room;
-        super.setElementForDirection(NORTH, room);
     }
 
     public void setTitle(String title) {

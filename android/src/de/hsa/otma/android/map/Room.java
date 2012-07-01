@@ -1,6 +1,5 @@
 package de.hsa.otma.android.map;
 
-import de.hsa.otma.android.R;
 import de.hsa.otma.android.player.Hint;
 
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.List;
 /**
  * Room including hints, stories, title, description and abbreviation.
  */
-public class Room extends BoardElement {
+public class Room {
 
     private Door door;
 
@@ -24,7 +23,6 @@ public class Room extends BoardElement {
     private String abbreviation;
 
     public Room(String title, String description, String abbreviation) {
-        super(R.drawable.room);
         this.title = title;
         this.description = description;
         this.abbreviation = abbreviation;
