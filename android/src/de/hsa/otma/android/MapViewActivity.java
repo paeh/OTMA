@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.ResultReceiver;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -17,39 +15,37 @@ import android.widget.*;
 import de.hsa.otma.android.constants.Actions;
 import de.hsa.otma.android.constants.BundleKeys;
 import de.hsa.otma.android.map.BoardElement;
-import de.hsa.otma.android.map.Direction;
 import de.hsa.otma.android.map.Door;
+import de.hsa.otma.android.navigation.NavigationListener;
+import de.hsa.otma.android.navigation.NavigationPanel;
 import de.hsa.otma.android.player.NPCPlayer;
 import de.hsa.otma.android.player.PlayerService;
 import de.hsa.otma.android.view.DoorLabel;
 
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Activity displaying game board and providing functionality for directional buttons, npcButton...
- * Furthermore it provides closeup view of doors.
+ * Furthermore it provides closeup view of doors which are only more specific board-elements.
  */
 public class MapViewActivity extends Activity {
 
-    private MapItemResultReceiver mapItemResultReceiver = new MapItemResultReceiver();
-    
-    private class NavigationOnClickListener implements View.OnClickListener {
+    private static final String TAG = MapViewActivity.class.getName();
+    private NavigationPanel navigationPanel = new NavigationPanel(this, new MapNavigationListener());
 
-        private Direction direction;
-
-        private NavigationOnClickListener(Direction direction) {
-            this.direction = direction;
-        }
-
+    private class MapNavigationListener implements NavigationListener {
         @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(Actions.MOVE_TO_DIRECTION);
-            intent.putExtra(BundleKeys.DIRECTION, direction.toString());
-            intent.putExtra(BundleKeys.RECEIVER, mapItemResultReceiver);
-            startService(intent);
+        public void navigatedTo(BoardElement position, List<NPCPlayer> availableNPCs) {
+            Log.i(TAG, "navigate to " + position);
+            if (position == null) {
+                Toast.makeText(MapViewActivity.this, R.string.goto_mapitem_error, Toast.LENGTH_SHORT).show();
+            } else {
+                createLayout(position, availableNPCs);
+            }
         }
     }
+
 
     private class NPCOnClickListener implements View.OnClickListener{
         private final Context context;
@@ -62,14 +58,14 @@ public class MapViewActivity extends Activity {
 
         @Override
         public void onClick(View view){
-            Log.i(MapViewActivity.class.getName(), "NPCButton has been clicked");
+            Log.d(TAG, "NPCButton has been clicked");
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage(npc.getIntroduction());
             builder.setTitle("Hello!!");
             builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Log.i(MapViewActivity.class.getName(), "NPCDialog closing.");
+                            Log.d(TAG, "NPCDialog closing.");
                             dialogInterface.cancel();
                         }
                     });
@@ -79,26 +75,7 @@ public class MapViewActivity extends Activity {
             PlayerService.INSTANCE.foundNPC(npc);
         }
     }
-    
-    private class MapItemResultReceiver extends ResultReceiver {
 
-        public MapItemResultReceiver() {
-            super(new Handler());
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")
-        protected void onReceiveResult(int resultCode, Bundle resultData) {
-            if (resultData.get(BundleKeys.MAP_ITEM) == null) {
-                Toast.makeText(MapViewActivity.this, R.string.goto_mapitem_error, Toast.LENGTH_SHORT).show();
-            } else {
-                BoardElement mapItem = (BoardElement) resultData.getSerializable(BundleKeys.MAP_ITEM);
-                ArrayList<NPCPlayer> otmaEmployees = (ArrayList<NPCPlayer>) resultData.getSerializable(BundleKeys.OTMA_EMPLOYEES);
-
-                createLayout(mapItem, otmaEmployees);
-            }
-        }
-    }
 
     @Override
     @SuppressWarnings("unchecked")
@@ -107,19 +84,19 @@ public class MapViewActivity extends Activity {
         Intent callingIntent = getIntent();
 
         BoardElement mapItem = (BoardElement) callingIntent.getSerializableExtra(BundleKeys.MAP_ITEM);
-        ArrayList<NPCPlayer> otmaEmployees = (ArrayList<NPCPlayer>) callingIntent.getSerializableExtra(BundleKeys.OTMA_EMPLOYEES);
+        List<NPCPlayer> otmaEmployees = (List<NPCPlayer>) callingIntent.getSerializableExtra(BundleKeys.OTMA_EMPLOYEES);
 
         if (mapItem == null) {
-            Intent initialIntent = new Intent(Actions.CURRENT_MAP_ITEM);
-            initialIntent.putExtra(BundleKeys.RECEIVER, mapItemResultReceiver);
-            startService(initialIntent);
-            return;
+            mapItem = PlayerService.INSTANCE.getCurrentMapItem();
+        }
+        if (otmaEmployees == null) {
+            otmaEmployees = new ArrayList<NPCPlayer>();
         }
 
         createLayout(mapItem, otmaEmployees);
     }
 
-    private void createLayout(BoardElement mapItem, ArrayList<NPCPlayer> otmaEmployees) {
+    private void createLayout(BoardElement mapItem, List<NPCPlayer> otmaEmployees) {
         setContentView(R.layout.main);
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -134,25 +111,20 @@ public class MapViewActivity extends Activity {
 
         ImageView background = new ImageView(this);
 
-        Log.e(MapViewActivity.class.getName(), mapItem.toString());
+        Log.d(TAG, "creating layout for " + mapItem.toString());
         Drawable drawable = getResources().getDrawable(mapItem.getPicture());
         background.setImageDrawable(drawable);
         background.setScaleType(ImageView.ScaleType.FIT_XY);
 
         layout.addView(background);
 
-        setButtonNavigationAction(Direction.WEST, R.id.westButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(Direction.EAST, R.id.eastButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(Direction.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
+        navigationPanel.updateButtonActions(mapItem);
 
-
-        if (mapItem instanceof Door && ((Door)mapItem).hasRoomBehind()) {
+        if (mapItem instanceof Door) {
             Door door = (Door) mapItem;
-            showDoorLabel(door, layout);
-            setButtonToEnterRoom(R.id.northButton);
-        }
-        else{
-            setButtonNavigationAction(Direction.NORTH, R.id.northButton, mapItem.getAvailableDirections());
+            if (door.hasRoomBehind()) {
+                showDoorLabel(door, layout);
+            }
         }
 
         addNPCButton(otmaEmployees);
@@ -168,7 +140,7 @@ public class MapViewActivity extends Activity {
         layout.addView(label);
     }
 
-    private void addNPCButton(ArrayList<NPCPlayer> otmaEmployees){
+    private void addNPCButton(List<NPCPlayer> otmaEmployees){
         Button button = (Button) findViewById(R.id.npcButton);
         if(otmaEmployees == null || otmaEmployees.size() == 0){
             button.setVisibility(Button.INVISIBLE);
@@ -177,40 +149,7 @@ public class MapViewActivity extends Activity {
         button.setOnClickListener(new NPCOnClickListener(this, otmaEmployees.get(0)));
     }
 
-    private void setButtonToEnterRoom(int buttonId){
-        ImageView imageButton = (ImageView) findViewById(buttonId);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent mapViewIntent = new Intent(MapViewActivity.this, RoomActivity.class);
-                startActivity(mapViewIntent);
-            }
-        });
-    }
-
-    private void setButtonNavigationAction(Direction direction, int buttonId, Set<Direction> availableDirections) {
-        ImageView imageButton = (ImageView) findViewById(buttonId);
-
-        if (! availableDirections.contains(direction)) {
-            if(buttonId == R.id.northButton){
-                imageButton.setImageResource(R.drawable.grey_up);
-            }
-            else if(buttonId == R.id.eastButton){
-                imageButton.setImageResource(R.drawable.grey_right);
-            }
-            else if(buttonId == R.id.southButton){
-                imageButton.setImageResource(R.drawable.grey_down);
-            }
-            else{
-                imageButton.setImageResource(R.drawable.grey_left);
-            }
-        } else {
-            imageButton.setOnClickListener(new NavigationOnClickListener(direction));
-        }
-    }
-
-
-    private void addOtmaEmployees(int width, RelativeLayout layout, ArrayList<NPCPlayer> otmaEmployees) {
+    private void addOtmaEmployees(int width, RelativeLayout layout, List<NPCPlayer> otmaEmployees) {
         int offsetX = 0;
         int offsetY = 0;
         for (NPCPlayer otmaEmployee : otmaEmployees) {
