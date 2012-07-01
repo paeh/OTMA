@@ -4,10 +4,11 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
     <RelativeLayout android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layout"
-        android:padding="5dp"
-        android:background="@color/gameImageBackground"/>
+                    android:layout_height="0dp"
+                    android:padding="5dp"
+                    android:layout_weight="1"
+                    android:id="@+id/layout"
+                    android:background="@color/black"/>
 
     <include layout="@layout/navigation"/>
 
