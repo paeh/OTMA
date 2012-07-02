@@ -81,6 +81,7 @@ public class RoomActivity extends Activity {
 
         disableDirectionalButtons();
         disableNPCButton();
+        prepareExitButton();
 
         //layout.addView(background);
 
@@ -113,5 +114,15 @@ public class RoomActivity extends Activity {
     private void disableNPCButton(){
         Button button = (Button) findViewById(R.id.npcButton);
         button.setVisibility(View.INVISIBLE);
+    }
+
+    private void prepareExitButton(){
+        Button button = (Button) findViewById(R.id.exitButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }
