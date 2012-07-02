@@ -25,8 +25,7 @@ public class PlayerService {
 
         if(currentMapItem instanceof Door){
             newMapItem = ((Door)currentMapItem).getOrigin();
-        }
-        else{
+        } else {
             newMapItem = currentMapItem.getElementFor(direction);
         }
 

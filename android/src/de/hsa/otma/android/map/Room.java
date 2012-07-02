@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Room including hints, stories, title, description and abbreviation.
  */
-public class Room implements Serializable{
+public class Room implements Serializable {
 
     private Door door;
 
