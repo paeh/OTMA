@@ -21,6 +21,9 @@ import java.util.List;
  */
 public class RoomActivity extends Activity {
 
+    /**TODO
+     * hints und stories anzeigen und dynamisch wechseln
+     */
     private List<Hint> hints;
     private List<String> stories;
     private String roomText;
@@ -42,37 +45,6 @@ public class RoomActivity extends Activity {
         }
 
         createLayout();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();    //To change body of overridden methods use File | Settings | File Templates.
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();    //To change body of overridden methods use File | Settings | File Templates.
     }
 
     private void createLayout(){
