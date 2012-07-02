@@ -30,21 +30,38 @@ public class NavigationPanel {
     private final Activity activity;
     private final NavigationListener listener;
 
+    private final NavigationOnClickListener clickListener;
+
     public NavigationPanel(Activity activity, NavigationListener listener) {
-        this.activity = activity;
-        this.listener = listener;
+        this(activity, listener, null);
     }
 
-    private void setButtonToEnterRoom(int buttonId, BoardElement mapItem){
-        Door door = (Door) mapItem;
-        final Room room =  door.getRoom();
+    public NavigationPanel(Activity activity, NavigationOnClickListener clickListener) {
+        this(activity, null, clickListener);
+    }
 
+    public NavigationPanel(Activity activity, NavigationListener listener, NavigationOnClickListener clickListener) {
+        this.activity = activity;
+        this.listener = listener;
+        this.clickListener = clickListener;
+    }
+
+    public void disableNPCButton() {
+        View button = activity.findViewById(R.id.npcButton);
+        button.setVisibility(View.INVISIBLE);
+    }
+
+    private void setButtonToEnterRoom(int buttonId, final Room room) {
         ImageView imageButton = (ImageView) activity.findViewById(buttonId);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent mapViewIntent = new Intent(activity, RoomActivity.class);
-                mapViewIntent.putExtra(BundleKeys.ROOM, room);
+
+                // Workaround : see RoomActivity.onCreate()
+//                mapViewIntent.putExtra(BundleKeys.ROOM, room);
+                RoomActivity.RoomHolder.room = room;
+
                 activity.startActivity(mapViewIntent);
             }
         });
@@ -57,7 +74,8 @@ public class NavigationPanel {
         setButtonNavigationAction(Direction.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
 
         if (isDoorWithRoomBehind(mapItem)) {
-            setButtonToEnterRoom(R.id.northButton, mapItem);
+            Room room = ((Door) mapItem).getRoom();
+            setButtonToEnterRoom(R.id.northButton, room);
         } else {
             setButtonNavigationAction(Direction.NORTH, R.id.northButton, mapItem.getAvailableDirections());
         }
@@ -81,25 +99,30 @@ public class NavigationPanel {
                 imageButton.setImageResource(R.drawable.grey_left);
             }
         } else {
-            imageButton.setOnClickListener(new NavigationOnClickListener(direction));
+            imageButton.setOnClickListener(new DelegatingNavigationOnClickListener(direction));
         }
     }
 
-    private class NavigationOnClickListener implements View.OnClickListener {
+    private class DelegatingNavigationOnClickListener implements View.OnClickListener {
 
         private Direction direction;
 
-        private NavigationOnClickListener(Direction direction) {
+        private DelegatingNavigationOnClickListener(Direction direction) {
             this.direction = direction;
         }
 
         @Override
         public void onClick(View view) {
             Log.d(TAG, "navigation clicked to " + direction);
-            Intent intent = new Intent(Actions.MOVE_TO_DIRECTION);
-            intent.putExtra(BundleKeys.DIRECTION, direction.toString());
-            intent.putExtra(BundleKeys.RECEIVER, mapItemResultReceiver);
-            activity.startService(intent);
+
+            if (clickListener != null) {
+                clickListener.clickedOn(direction);
+            } else {
+                Intent intent = new Intent(Actions.MOVE_TO_DIRECTION);
+                intent.putExtra(BundleKeys.DIRECTION, direction.toString());
+                intent.putExtra(BundleKeys.RECEIVER, mapItemResultReceiver);
+                activity.startService(intent);
+            }
         }
     }
 

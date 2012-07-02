@@ -44,6 +44,7 @@ public class Board {
         for (Room room : rooms) {
             Door door = getRandomDoorWithoutRoom();
 
+            room.setDoor(door);
             door.setRoom(room);
             door.setAbbreviation(room.getAbbreviation());
             door.setTitle(room.getTitle());
