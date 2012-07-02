@@ -7,6 +7,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import de.hsa.otma.android.map.Direction;
@@ -77,6 +79,9 @@ public class RoomActivity extends Activity {
         background.setImageDrawable(drawable);
         background.setScaleType(ImageView.ScaleType.FIT_XY);
 
+        disableDirectionalButtons();
+        disableNPCButton();
+
         //layout.addView(background);
 
         /**
@@ -89,5 +94,24 @@ public class RoomActivity extends Activity {
 
         addOtmaEmployees(width, layout, otmaEmployees);
          */
+    }
+
+    private void disableDirectionalButtons() {
+        ImageView imageButton = (ImageView) findViewById(R.id.northButton);
+        imageButton.setImageResource(R.drawable.grey_up);
+
+        imageButton = (ImageView) findViewById(R.id.eastButton);
+        imageButton.setImageResource(R.drawable.grey_right);
+
+        imageButton = (ImageView) findViewById(R.id.southButton);
+        imageButton.setImageResource(R.drawable.grey_down);
+
+        imageButton = (ImageView) findViewById(R.id.westButton);
+        imageButton.setImageResource(R.drawable.grey_left);
+    }
+
+    private void disableNPCButton(){
+        Button button = (Button) findViewById(R.id.npcButton);
+        button.setVisibility(View.INVISIBLE);
     }
 }
