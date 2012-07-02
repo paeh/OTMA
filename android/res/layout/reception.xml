@@ -13,7 +13,7 @@
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:layout_alignParentBottom="true"
-                  android:text="abc"/>
+                  android:text="Note: All hints available in the game will be given to you on win."/>
 
         <Button android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
