@@ -5,27 +5,43 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import de.hsa.otma.android.map.Direction;
+import android.widget.TextView;
+import de.hsa.otma.android.constants.BundleKeys;
+import de.hsa.otma.android.map.Room;
+import de.hsa.otma.android.player.Hint;
+
+import java.util.List;
 
 /**
  * Activity displaying Rooms.
  */
 public class RoomActivity extends Activity {
 
+    private List<Hint> hints;
+    private List<String> stories;
+    private String roomText;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);    //To change body of overridden methods use File | Settings | File Templates.
-        //Intent callingIntent = getIntent();
+        super.onCreate(savedInstanceState);
+        Intent callingIntent = getIntent();
+
+        Room room = (Room) callingIntent.getSerializableExtra(BundleKeys.ROOM);
+        if(room == null){
+            this.roomText = "";
+        }
+        else{
+            roomText = room.getDescription();
+            hints = room.getHints();
+            stories = room.getStories();
+        }
 
         createLayout();
-
-
     }
 
     @Override
@@ -82,19 +98,7 @@ public class RoomActivity extends Activity {
         disableDirectionalButtons();
         disableNPCButton();
         prepareExitButton();
-
-        //layout.addView(background);
-
-        /**
-        setButtonNavigationAction(Direction.WEST, R.id.westButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(Direction.EAST, R.id.eastButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(Direction.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(Direction.NORTH, R.id.northButton, mapItem.getAvailableDirections());
-
-        addNPCButton(otmaEmployees);
-
-        addOtmaEmployees(width, layout, otmaEmployees);
-         */
+        setRoomText(roomText);
     }
 
     private void disableDirectionalButtons() {
@@ -124,5 +128,10 @@ public class RoomActivity extends Activity {
                 finish();
             }
         });
+    }
+
+    private void setRoomText(String text){
+        TextView textView = (TextView) findViewById(R.id.roomText);
+        textView.setText(text);
     }
 }
