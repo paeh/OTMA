@@ -15,6 +15,7 @@ import de.hsa.otma.android.constants.BundleKeys;
 import de.hsa.otma.android.map.BoardElement;
 import de.hsa.otma.android.map.Direction;
 import de.hsa.otma.android.map.Door;
+import de.hsa.otma.android.map.Room;
 import de.hsa.otma.android.player.NPCPlayer;
 
 import java.util.List;
@@ -34,12 +35,16 @@ public class NavigationPanel {
         this.listener = listener;
     }
 
-    private void setButtonToEnterRoom(int buttonId){
+    private void setButtonToEnterRoom(int buttonId, BoardElement mapItem){
+        Door door = (Door) mapItem;
+        final Room room =  door.getRoom();
+
         ImageView imageButton = (ImageView) activity.findViewById(buttonId);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent mapViewIntent = new Intent(activity, RoomActivity.class);
+                mapViewIntent.putExtra(BundleKeys.ROOM, room);
                 activity.startActivity(mapViewIntent);
             }
         });
@@ -52,7 +57,7 @@ public class NavigationPanel {
         setButtonNavigationAction(Direction.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
 
         if (isDoorWithRoomBehind(mapItem)) {
-            setButtonToEnterRoom(R.id.northButton);
+            setButtonToEnterRoom(R.id.northButton, mapItem);
         } else {
             setButtonNavigationAction(Direction.NORTH, R.id.northButton, mapItem.getAvailableDirections());
         }

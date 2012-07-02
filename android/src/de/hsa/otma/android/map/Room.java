@@ -2,13 +2,14 @@ package de.hsa.otma.android.map;
 
 import de.hsa.otma.android.player.Hint;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Room including hints, stories, title, description and abbreviation.
  */
-public class Room {
+public class Room implements Serializable{
 
     private Door door;
 
@@ -49,5 +50,13 @@ public class Room {
     public String getAbbreviation()
     {
         return abbreviation;
+    }
+
+    public List<Hint> getHints() {
+        return hints;
+    }
+
+    public List<String> getStories() {
+        return stories;
     }
 }

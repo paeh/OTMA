@@ -5,56 +5,46 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import de.hsa.otma.android.map.Direction;
+import android.widget.TextView;
+import de.hsa.otma.android.constants.BundleKeys;
+import de.hsa.otma.android.map.Room;
+import de.hsa.otma.android.player.Hint;
+
+import java.util.List;
 
 /**
  * Activity displaying Rooms.
  */
 public class RoomActivity extends Activity {
 
+    /**TODO
+     * hints und stories anzeigen und dynamisch wechseln
+     */
+    private List<Hint> hints;
+    private List<String> stories;
+    private String roomText;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);    //To change body of overridden methods use File | Settings | File Templates.
-        //Intent callingIntent = getIntent();
+        super.onCreate(savedInstanceState);
+        Intent callingIntent = getIntent();
+
+        Room room = (Room) callingIntent.getSerializableExtra(BundleKeys.ROOM);
+        if(room == null){
+            this.roomText = "";
+        }
+        else{
+            roomText = room.getDescription();
+            hints = room.getHints();
+            stories = room.getStories();
+        }
 
         createLayout();
-
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();    //To change body of overridden methods use File | Settings | File Templates.
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();    //To change body of overridden methods use File | Settings | File Templates.
     }
 
     private void createLayout(){
@@ -77,17 +67,43 @@ public class RoomActivity extends Activity {
         background.setImageDrawable(drawable);
         background.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        //layout.addView(background);
+        disableDirectionalButtons();
+        disableNPCButton();
+        prepareExitButton();
+        setRoomText(roomText);
+    }
 
-        /**
-        setButtonNavigationAction(Direction.WEST, R.id.westButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(Direction.EAST, R.id.eastButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(Direction.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(Direction.NORTH, R.id.northButton, mapItem.getAvailableDirections());
+    private void disableDirectionalButtons() {
+        ImageView imageButton = (ImageView) findViewById(R.id.northButton);
+        imageButton.setImageResource(R.drawable.grey_up);
 
-        addNPCButton(otmaEmployees);
+        imageButton = (ImageView) findViewById(R.id.eastButton);
+        imageButton.setImageResource(R.drawable.grey_right);
 
-        addOtmaEmployees(width, layout, otmaEmployees);
-         */
+        imageButton = (ImageView) findViewById(R.id.southButton);
+        imageButton.setImageResource(R.drawable.grey_down);
+
+        imageButton = (ImageView) findViewById(R.id.westButton);
+        imageButton.setImageResource(R.drawable.grey_left);
+    }
+
+    private void disableNPCButton(){
+        Button button = (Button) findViewById(R.id.npcButton);
+        button.setVisibility(View.INVISIBLE);
+    }
+
+    private void prepareExitButton(){
+        Button button = (Button) findViewById(R.id.exitButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    private void setRoomText(String text){
+        TextView textView = (TextView) findViewById(R.id.roomText);
+        textView.setText(text);
     }
 }
