@@ -91,7 +91,7 @@ public class RoomActivity extends Activity {
     private final Timer timer = new Timer(true);
 
     private void startPresentation() {
-        timer.scheduleAtFixedRate(new PresentationSwitchingTask(), Config.slideSwitchingTime, Config.slideSwitchingTime);
+        timer.scheduleAtFixedRate(new PresentationSwitchingTask(), Config.ROOM_CONTENT_TIME, Config.ROOM_CONTENT_TIME);
     }
 
     private class PresentationSwitchingTask extends TimerTask {
@@ -100,7 +100,7 @@ public class RoomActivity extends Activity {
         public void run() {
 
             String text = "";
-            if (random.nextInt(Config.chanceToGetHintInRoom) == 0) {
+            if (random.nextInt(Config.CHANCE_TO_GET_HINT_IN_ROOM) == 0) {
                 List<Hint> hints = room.getHints();
                 if (!hints.isEmpty()) {
                     Hint hint = hints.get(random.nextInt(hints.size()));

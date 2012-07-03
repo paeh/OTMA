@@ -11,22 +11,20 @@ import java.util.List;
  */
 public interface Config {
 
-    int slideSwitchingTime = 1000;
+    int ROOM_CONTENT_TIME = 1000;
 
     /**
      * Chance to get hint in room as 1/n
      */
-    int chanceToGetHintInRoom = 1;
+    int CHANCE_TO_GET_HINT_IN_ROOM = 1;
 
     /**
      * The player has to find a certain amount of NPCs as win requirement.
-     * @constant
      */
     int WIN_NPC_COUNT = 2;
 
     /**
      * The player has to find a certain amount of hints within rooms as win requirements.
-     * @constant
      */
     int WIN_HINT_COUNT = 2;
 
