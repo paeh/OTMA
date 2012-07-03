@@ -25,7 +25,7 @@ public interface Config {
     /**
      * Chance to get hint in room as 1/n
      */
-    int CHANCE_TO_GET_HINT_IN_ROOM = 1;
+    int CHANCE_TO_GET_HINT_IN_ROOM = 3;
 
     /**
      * The player has to find a certain amount of NPCs as win requirement.
