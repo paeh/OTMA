@@ -32,6 +32,14 @@ public class Board {
 
     private Random random = new Random(System.nanoTime());
 
+    private void placeWinDoor() {
+        Door door = getRandomDoorWithoutRoom();
+        Room room = new Room(null, null, "OTMA win");
+
+        door.setRoom(room);
+        room.setDoor(door);
+    }
+
     private void assignRoomsToRandomDoors() {
         Log.d(TAG, "Assigning rooms to doors!");
 
@@ -176,5 +184,6 @@ public class Board {
         createDoorForBoardElementInDirection(map5x5, WEST);
 
         assignRoomsToRandomDoors();
+        placeWinDoor();
     }
 }
