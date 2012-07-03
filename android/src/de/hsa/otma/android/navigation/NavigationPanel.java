@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import de.hsa.otma.android.R;
 import de.hsa.otma.android.RoomActivity;
+import de.hsa.otma.android.WinActivity;
 import de.hsa.otma.android.constants.Actions;
 import de.hsa.otma.android.constants.BundleKeys;
 import de.hsa.otma.android.map.BoardElement;
@@ -17,6 +18,7 @@ import de.hsa.otma.android.map.Direction;
 import de.hsa.otma.android.map.Door;
 import de.hsa.otma.android.map.Room;
 import de.hsa.otma.android.player.NPCPlayer;
+import de.hsa.otma.android.player.PlayerService;
 
 import java.util.List;
 import java.util.Set;
@@ -62,13 +64,27 @@ public class NavigationPanel {
         });
     }
 
+    private void setButtonToWin(int buttonId) {
+        ImageView imageButton = (ImageView) activity.findViewById(buttonId);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mapViewIntent = new Intent(activity, WinActivity.class);
+                activity.startActivity(mapViewIntent);
+            }
+        });
+    }
+
     public void updateButtonActions(BoardElement mapItem) {
         Log.d(TAG, "updating button actions for " + mapItem);
         setButtonNavigationAction(Direction.WEST, R.id.westButton, mapItem.getAvailableDirections());
         setButtonNavigationAction(Direction.EAST, R.id.eastButton, mapItem.getAvailableDirections());
         setButtonNavigationAction(Direction.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
 
-        if (isDoorWithRoomBehind(mapItem)) {
+        if(isWinDoor(mapItem) && PlayerService.INSTANCE.hasChallengeCompleted()){
+            setButtonToWin(R.id.northButton);
+        }
+        else if (isDoorWithRoomBehind(mapItem)) {
             Room room = ((Door) mapItem).getRoom();
             setButtonToEnterRoom(R.id.northButton, room);
         } else {
@@ -78,6 +94,10 @@ public class NavigationPanel {
 
     private boolean isDoorWithRoomBehind(BoardElement mapItem) {
         return mapItem instanceof Door && ((Door) mapItem).hasRoomBehind();
+    }
+
+    private boolean isWinDoor(BoardElement mapItem) {
+        return mapItem instanceof Door && ((Door) mapItem).isWinDoor();
     }
 
     private void setButtonNavigationAction(Direction direction, int buttonId, Set<Direction> availableDirections) {

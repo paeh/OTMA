@@ -36,6 +36,7 @@ public class Board {
         Door door = getRandomDoorWithoutRoom();
         Room room = new Room(null, null, "OTMA win");
 
+        door.setWinDoor(true);
         door.setRoom(room);
         room.setDoor(door);
     }

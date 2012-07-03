@@ -10,6 +10,8 @@ import static de.hsa.otma.android.map.Direction.SOUTH;
  */
 public class Door extends BoardElement
 {
+    private boolean isWinDoor = false;
+
     private Room room;
 
     private BoardElement origin;
@@ -59,6 +61,14 @@ public class Door extends BoardElement
 
     public BoardElement getOrigin(){
         return origin;
+    }
+
+    public boolean isWinDoor() {
+        return isWinDoor;
+    }
+
+    public void setWinDoor(boolean winDoor) {
+        isWinDoor = winDoor;
     }
 
     @Override
