@@ -78,9 +78,14 @@ public class RoomActivity extends Activity {
         setTextOfTextView(R.id.roomDescription, text);
     }
 
-    private void setTextOfTextView(int textViewId, String text) {
-        TextView textView = (TextView) findViewById(textViewId);
-        textView.setText(text);
+    private void setTextOfTextView(int textViewId, final String text) {
+        final TextView textView = (TextView) findViewById(textViewId);
+        textView.post(new Runnable() {
+            @Override
+            public void run() {
+                textView.setText(text);
+            }
+        });
     }
 
 
