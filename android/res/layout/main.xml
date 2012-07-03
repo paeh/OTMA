@@ -4,78 +4,13 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
     <RelativeLayout android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/layout"
+                    android:layout_height="0dp"
                     android:padding="5dp"
-            android:background="@color/gameImageBackground"/>
+                    android:layout_weight="1"
+                    android:id="@+id/layout"
+                    android:background="@color/black"/>
 
-    <LinearLayout android:orientation="horizontal"
-                  android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
-                  android:baselineAligned="true">
-        <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="1">
-            <Button android:text="ASK"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:padding="20dp"
-                    android:id="@+id/npcButton"/>
-        </RelativeLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:baselineAligned="true">
-            <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:gravity="right">
-                <ImageView android:src="@drawable/white_left"
-                           android:layout_height="wrap_content"
-                           android:layout_width="wrap_content"
-                           android:layout_centerVertical="true"
-                           android:contentDescription="left"
-                           android:id="@+id/westButton"/>
-            </RelativeLayout>
-            <LinearLayout
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent">
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/white_up"
-                        android:contentDescription="up"
-                        android:id="@+id/northButton"/>
-                <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="6dp"/>
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/white_down"
-                        android:contentDescription="down"
-                        android:id="@+id/southButton"/>
-            </LinearLayout>
-            <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:gravity="right">
-                <ImageView android:src="@drawable/white_right"
-                           android:layout_height="wrap_content"
-                           android:layout_width="wrap_content"
-                           android:layout_centerVertical="true"
-                           android:contentDescription="right"
-                           android:id="@+id/eastButton"/>
-            </RelativeLayout>
-
-        </LinearLayout>
-    </LinearLayout>
+    <include layout="@layout/navigation"/>
 
 </LinearLayout>
 

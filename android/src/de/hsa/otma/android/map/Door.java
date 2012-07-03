@@ -5,6 +5,9 @@ import de.hsa.otma.android.R;
 import static de.hsa.otma.android.map.Direction.NORTH;
 import static de.hsa.otma.android.map.Direction.SOUTH;
 
+/**
+ * Door with origin BoardElement, title, abbreviation and possibly attached Room.
+ */
 public class Door extends BoardElement
 {
     private Room room;
@@ -34,7 +37,6 @@ public class Door extends BoardElement
     public void setRoom(Room room)
     {
         this.room = room;
-        super.setElementForDirection(NORTH, room);
     }
 
     public void setTitle(String title) {

@@ -1,18 +1,22 @@
 package de.hsa.otma.android.map;
 
-import de.hsa.otma.android.R;
+import de.hsa.otma.android.OTMAApplication;
 import de.hsa.otma.android.player.Hint;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Room extends BoardElement {
+/**
+ * Room including hints, stories, title, description and abbreviation.
+ */
+public class Room implements Serializable {
 
     private Door door;
 
-    private List<Hint> hints = new ArrayList<Hint>();
+    private List<Hint> hints = OTMAApplication.CONFIG.getHints();
 
-    private List<String> stories = new ArrayList<String>();
+    private List<String> stories = OTMAApplication.CONFIG.getStories();
 
     private String title;
 
@@ -21,7 +25,6 @@ public class Room extends BoardElement {
     private String abbreviation;
 
     public Room(String title, String description, String abbreviation) {
-        super(R.drawable.room);
         this.title = title;
         this.description = description;
         this.abbreviation = abbreviation;
@@ -48,5 +51,13 @@ public class Room extends BoardElement {
     public String getAbbreviation()
     {
         return abbreviation;
+    }
+
+    public List<Hint> getHints() {
+        return hints;
+    }
+
+    public List<String> getStories() {
+        return stories;
     }
 }

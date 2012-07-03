@@ -5,13 +5,16 @@
       android:versionName="1.0">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application android:label="@string/app_name" android:name=".OTMAApplication" >
-        <activity android:name="MapViewActivity"
+        <activity android:name="ReceptionActivity"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="MapViewActivity" />
+        <activity android:name="RoomActivity" />
+        <activity android:name="WinActivity"/>
         <service android:name=".engine.EngineIntentService">
             <intent-filter>
                 <action android:name="MOVE_TO_DIRECTION" />

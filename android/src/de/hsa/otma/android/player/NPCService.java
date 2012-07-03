@@ -1,7 +1,6 @@
 package de.hsa.otma.android.player;
 
-import de.hsa.otma.android.config.Config;
-import de.hsa.otma.android.config.XMLConfig;
+import de.hsa.otma.android.OTMAApplication;
 import de.hsa.otma.android.map.Board;
 import de.hsa.otma.android.map.BoardElement;
 import de.hsa.otma.android.map.Coordinate;
@@ -17,13 +16,10 @@ public class NPCService {
     
     private Board board = Board.INSTANCE;
     private Random random = new Random(System.nanoTime());
-    
-    private List<NPCPlayer> otmaEmployees;
+
+    private final List<NPCPlayer> otmaEmployees = OTMAApplication.CONFIG.getNPCPlayers();
 
     private NPCService() {
-        Config config = new XMLConfig("http://hs-augsburg.de/~lieback/pub/otma-config-game.xml");
-        otmaEmployees = config.getNPCPlayers();
-        //otmaEmployees.add(new NPCPlayer(new Coordinate(1, 1), R.drawable.npc_1, "1", "", ""));
     }
     
     public ArrayList<NPCPlayer> getAllNPCFor(Coordinate coordinate) {

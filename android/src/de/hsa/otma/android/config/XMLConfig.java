@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Implementation of Config interface. Provides data needed for the game.
+ */
 public class XMLConfig implements Config {
 
     private static final String TAG = XMLConfig.class.getSimpleName();
@@ -64,10 +67,23 @@ public class XMLConfig implements Config {
         return readDomainModelByTag("hint", new HintDomainModelReader());
     }
 
+    @Override
+    public List<String> getStories() {
+        // TODO delegate to Android string array.xml
+        List<String> stories = new ArrayList<String>();
+        stories.add("Lorem Ipsum 1");
+        stories.add("Lorem Ipsum 2");
+        stories.add("Lorem Ipsum 3");
+        return stories;
+    }
+
     private interface DomainModelReader<T> {
         T read(Element element);
     }
 
+    /**
+     * DomainModelReader specialized in reading NPC player attributes.
+     */
     private class NPCPlayerDomainModelReader implements DomainModelReader<NPCPlayer> {
         @Override
         public NPCPlayer read(Element person) {
@@ -81,6 +97,9 @@ public class XMLConfig implements Config {
         }
     }
 
+    /**
+     * DomainModelReader specialized in reading Room attributes.
+     */
     private class RoomDomainModelReader implements DomainModelReader<Room> {
         @Override
         public Room read(Element event) {
@@ -92,6 +111,9 @@ public class XMLConfig implements Config {
         }
     }
 
+    /**
+     * DomainModelReader for use with Hints.
+     */
     private class HintDomainModelReader implements DomainModelReader<Hint> {
         @Override
         public Hint read(Element hint) {

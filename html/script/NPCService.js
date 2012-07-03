@@ -6,7 +6,8 @@
  */
 
 /**
- * Class managing all Non-Playing-Characters (NPC).
+ * Class managing all Non-Playing-Characters (NPC). This includes moving them from one board element to another and
+ * initialising them to some free board element.
  * @class
  */
 OTMA.NPCService = function() {

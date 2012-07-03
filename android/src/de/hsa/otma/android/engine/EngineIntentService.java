@@ -13,10 +13,16 @@ import de.hsa.otma.android.map.Direction;
 import de.hsa.otma.android.player.NPCService;
 import de.hsa.otma.android.player.PlayerService;
 
+/**
+ * IntentService handling MOVE_TO_DIRECTION and CURRENT_MAP_ITEM intents.
+ * In the first case new MapItem will be sent, otherwise current MapItem will be returned.
+ */
 public class EngineIntentService extends IntentService {
     public EngineIntentService() {
         super(EngineIntentService.class.getName());
     }
+
+    private static final String TAG = EngineIntentService.class.getName();
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -29,11 +35,11 @@ public class EngineIntentService extends IntentService {
 
     private void movePlayerInDirection(Intent intent) {
         Direction direction = Direction.valueOf(intent.getStringExtra(BundleKeys.DIRECTION));
-        Log.d(getClass().getName(), "Moving in direction: " + direction.name());
+        Log.d(TAG, "Moving in direction: " + direction.name());
         ResultReceiver receiver = (ResultReceiver) intent.getParcelableExtra(BundleKeys.RECEIVER);
 
         BoardElement newMapItem = PlayerService.INSTANCE.move(direction);
-        Log.d(getClass().getName(),"type of mapItem: "+newMapItem.toString());
+        Log.d(TAG, "type of mapItem: " + newMapItem);
         NPCService.INSTANCE.moveAllNPC();
 
         assembleAndSendResult(receiver, newMapItem);

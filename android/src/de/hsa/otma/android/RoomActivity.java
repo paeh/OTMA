@@ -1,90 +1,120 @@
 package de.hsa.otma.android;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Point;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
+import de.hsa.otma.android.config.Config;
+import de.hsa.otma.android.map.BoardElement;
 import de.hsa.otma.android.map.Direction;
+import de.hsa.otma.android.map.Room;
+import de.hsa.otma.android.navigation.NavigationOnClickListener;
+import de.hsa.otma.android.navigation.NavigationPanel;
+import de.hsa.otma.android.player.Hint;
+import de.hsa.otma.android.player.PlayerService;
 
+import java.util.List;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
+/**
+ * Activity displaying Rooms.
+ */
 public class RoomActivity extends Activity {
+
+    private static final String TAG = RoomActivity.class.getName();
+
+    private NavigationPanel navigationPanel = new NavigationPanel(this, new BackToDoorListener());
+
+    private Room room = null;
+
+    private class BackToDoorListener implements NavigationOnClickListener {
+
+        @Override
+        public void clickedOn(Direction direction) {
+            Log.d(TAG, "leaving room");
+            timer.cancel();
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);    //To change body of overridden methods use File | Settings | File Templates.
-        //Intent callingIntent = getIntent();
+        super.onCreate(savedInstanceState);
+
+        // Workaround for magic java.io.NotSerializableException: java.util.HashMap$KeySet
+        // BoardElement.directions is tried to serialize but is transient ?!
+//        Intent callingIntent = getIntent();
+//        room = (Room) callingIntent.getExtras().get(BundleKeys.ROOM);
+        room = RoomHolder.room;
 
         createLayout();
-
-
+        startPresentation();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();    //To change body of overridden methods use File | Settings | File Templates.
+    public static class RoomHolder {
+        public static Room room;
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();    //To change body of overridden methods use File | Settings | File Templates.
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
-    private void createLayout(){
+    private void createLayout() {
         setContentView(R.layout.room);
 
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
+        BoardElement element = new BoardElement(null, 0);
+        element.setElementForDirection(Direction.SOUTH, room.getDoor());
+        navigationPanel.updateButtonActions(element);
 
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.roomLayout);
-        layout.removeAllViews();
-        layout.getLayoutParams().height = height - 150;
+        setRoomHeadline(room.getTitle());
+        setRoomDescription(room.getDescription());
+    }
 
-        ImageView background = new ImageView(this);
+    private void setRoomHeadline(String text){
+        setTextOfTextView(R.id.roomHeadline, text);
+    }
+
+    private void setRoomDescription(String text) {
+        setTextOfTextView(R.id.roomDescription, text);
+    }
+
+    private void setTextOfTextView(int textViewId, final String text) {
+        final TextView textView = (TextView) findViewById(textViewId);
+        textView.post(new Runnable() {
+            @Override
+            public void run() {
+                textView.setText(text);
+            }
+        });
+    }
 
 
-        Drawable drawable = getResources().getDrawable(R.drawable.room);
-        background.setImageDrawable(drawable);
-        background.setScaleType(ImageView.ScaleType.FIT_XY);
+    private Random random = new Random(System.nanoTime());
+    private final Timer timer = new Timer(true);
 
-        layout.addView(background);
+    private void startPresentation() {
+        timer.scheduleAtFixedRate(new PresentationSwitchingTask(), Config.slideSwitchingTime, Config.slideSwitchingTime);
+    }
 
-        /**
-        setButtonNavigationAction(Direction.WEST, R.id.westButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(Direction.EAST, R.id.eastButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(Direction.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
-        setButtonNavigationAction(Direction.NORTH, R.id.northButton, mapItem.getAvailableDirections());
+    private class PresentationSwitchingTask extends TimerTask {
 
-        addNPCButton(otmaEmployees);
+        @Override
+        public void run() {
 
-        addOtmaEmployees(width, layout, otmaEmployees);
-         */
+            String text = "";
+            if (random.nextInt(Config.chanceToGetHintInRoom) == 0) {
+                List<Hint> hints = room.getHints();
+                if (!hints.isEmpty()) {
+                    Hint hint = hints.get(random.nextInt(hints.size()));
+                    PlayerService.INSTANCE.foundHint(hint);
+                    text = hint.getTitle() + "\n\n" + hint.getText();
+                }
+            } else {
+                List<String> stories = room.getStories();
+                if (!stories.isEmpty()) {
+                    text = stories.get(random.nextInt(stories.size()));
+                }
+            }
+
+            setTextOfTextView(R.id.roomPresentation, text);
+        }
     }
 }

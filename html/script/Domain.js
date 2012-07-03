@@ -5,6 +5,10 @@
  * Matthias Klass, Johannes Leimer, Rico Lieback, Florian Wiedenmann
  */
 
+/**
+ * Domain model according to <img src='../../uml/domain_model.png />
+ * @type {Object}
+ */
 OTMA.domain = {};
 
 /**
