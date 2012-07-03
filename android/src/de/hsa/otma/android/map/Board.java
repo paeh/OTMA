@@ -10,7 +10,7 @@ import static de.hsa.otma.android.map.Direction.*;
 
 /**
  * The game board (labyrinth). Construction of game board as well as assignment of rooms to doors
- * is handled here.
+ * is handled here. Rooms are randomly assigned to doors.
  */
 public class Board {
     private static final String TAG = Board.class.getSimpleName();

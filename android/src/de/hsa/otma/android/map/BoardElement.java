@@ -45,6 +45,9 @@ public class BoardElement implements Serializable {
         updateAvailableDirections();
     }
 
+    /**
+     * Adds item as neighbor of this BoardElement in direction.
+     */
     public void setElementForDirection(Direction direction, BoardElement item) {
         if (item != null)  {
             directions.put(direction, item);

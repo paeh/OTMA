@@ -7,6 +7,7 @@ import static de.hsa.otma.android.map.Direction.SOUTH;
 
 /**
  * Door with origin BoardElement, title, abbreviation and possibly attached Room.
+ * Door can be set as win door (which allows the player to complete the game)
  */
 public class Door extends BoardElement
 {
