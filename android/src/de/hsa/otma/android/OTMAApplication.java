@@ -9,9 +9,7 @@ import de.hsa.otma.android.config.XMLConfig;
  */
 public class OTMAApplication extends Application {
 
-//    private static final String CONFIG_FILE_URL = "http://www.onthemove-academy.org/images/documents/otma-config-game-xml.pdf";
-//    private static final String CONFIG_FILE_URL = "http://hs-augsburg.de/~lieback/pub/otma-config-game.xml";
-    private static final String CONFIG_FILE_URL = "http://www.hs-augsburg.de/~jleimer/otma/config.xml";
+    private static final String CONFIG_FILE_URL = "http://www.onthemove-academy.org/images/documents/otma-config-game-xml.pdf";
 
     public static Config CONFIG;
 
@@ -19,6 +17,6 @@ public class OTMAApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        CONFIG = new XMLConfig(CONFIG_FILE_URL);
+        CONFIG = new XMLConfig(CONFIG_FILE_URL, this);
     }
 }
