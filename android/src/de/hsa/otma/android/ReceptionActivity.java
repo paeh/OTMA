@@ -22,9 +22,7 @@ public class ReceptionActivity extends Activity{
 
     private void createLayout() {
         setContentView(R.layout.reception);
-
         disableDirectionalButtons();
-        disableAskButton();
     }
 
     private void disableDirectionalButtons() {
@@ -39,11 +37,6 @@ public class ReceptionActivity extends Activity{
 
         imageButton = (ImageView) findViewById(R.id.westButton);
         imageButton.setImageResource(R.drawable.grey_left);
-    }
-
-    private void disableAskButton() {
-        Button askButton = (Button) findViewById(R.id.npcButton);
-        askButton.setVisibility(View.INVISIBLE);
     }
 
     private void setUpEnterButton(){

@@ -46,11 +46,6 @@ public class NavigationPanel {
         this.clickListener = clickListener;
     }
 
-    public void disableNPCButton() {
-        View button = activity.findViewById(R.id.npcButton);
-        button.setVisibility(View.INVISIBLE);
-    }
-
     private void setButtonToEnterRoom(int buttonId, final Room room) {
         ImageView imageButton = (ImageView) activity.findViewById(buttonId);
         imageButton.setOnClickListener(new View.OnClickListener() {

@@ -64,8 +64,6 @@ public class RoomActivity extends Activity {
         element.setElementForDirection(Direction.SOUTH, room.getDoor());
         navigationPanel.updateButtonActions(element);
 
-        navigationPanel.disableNPCButton();
-
         setRoomHeadline(room.getTitle());
         setRoomDescription(room.getDescription());
     }

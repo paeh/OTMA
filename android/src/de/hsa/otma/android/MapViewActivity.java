@@ -141,12 +141,11 @@ public class MapViewActivity extends Activity {
     }
 
     private void addNPCButton(List<NPCPlayer> otmaEmployees){
-        Button button = (Button) findViewById(R.id.npcButton);
-        if(otmaEmployees == null || otmaEmployees.size() == 0){
-            button.setVisibility(Button.INVISIBLE);
-            return;
+        if(otmaEmployees != null && otmaEmployees.size() > 0){
+            Button button = (Button) findViewById(R.id.npcButton);
+            button.setVisibility(Button.VISIBLE);
+            button.setOnClickListener(new NPCOnClickListener(this, otmaEmployees.get(0)));
         }
-        button.setOnClickListener(new NPCOnClickListener(this, otmaEmployees.get(0)));
     }
 
     private void addOtmaEmployees(int width, RelativeLayout layout, List<NPCPlayer> otmaEmployees) {
