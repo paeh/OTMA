@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Handles NPC movement. NPCs can move to any adjacent tiles. Doors cannot be accessed by NPCs.
+ */
 public class NPCService {
 
     public static final NPCService INSTANCE = new NPCService();
@@ -38,6 +41,9 @@ public class NPCService {
         }
     }
 
+    /**
+     * Moves the NPC to a random adjacent tile.
+     */
     private void move(NPCPlayer npc) {
         Coordinate currentCoordinate = npc.getCoordinate();
         BoardElement currentElement = board.getElementFor(currentCoordinate);
@@ -52,7 +58,6 @@ public class NPCService {
         while (Board.INSTANCE.isAccessibleByNPCPlayer(targetElement.getCoordinate()));
 
         if (targetElement.getNpcPlayer() == null) {
-            currentElement.setNpcPlayer(null);
             targetElement.setNpcPlayer(npc);
             npc.moveTo(targetElement.getCoordinate());
         }

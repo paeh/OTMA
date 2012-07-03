@@ -21,7 +21,6 @@ public class PlayerService {
     private static final Board BOARD = Board.INSTANCE;
 
     private PlayerService() {
-        // TODO change on final version
         humanPlayer = new HumanPlayer(new Coordinate(1, 1), "human");
 //        humanPlayer = new HumanPlayer(BOARD.getRandomCoordinateOnBoard(), "human");
     }
