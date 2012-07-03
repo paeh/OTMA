@@ -18,6 +18,18 @@ public interface Config {
      */
     int chanceToGetHintInRoom = 1;
 
+    /**
+     * The player has to find a certain amount of NPCs as win requirement.
+     * @constant
+     */
+    int WIN_NPC_COUNT = 2;
+
+    /**
+     * The player has to find a certain amount of hints within rooms as win requirements.
+     * @constant
+     */
+    int WIN_HINT_COUNT = 2;
+
     List<Room> getRooms();
 
     List<NPCPlayer> getNPCPlayers();

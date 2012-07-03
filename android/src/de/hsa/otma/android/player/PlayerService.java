@@ -1,6 +1,8 @@
 package de.hsa.otma.android.player;
 
 import android.util.Log;
+import de.hsa.otma.android.OTMAApplication;
+import de.hsa.otma.android.config.Config;
 import de.hsa.otma.android.map.*;
 
 /**
@@ -50,8 +52,12 @@ public class PlayerService {
     }
 
     public boolean hasChallengeCompleted() {
+        int foundHints = humanPlayer.numberOfFoundHints();
+        int foundNPCs = humanPlayer.numberOfFoundHints();
 
-        // TODO code to predict challenge completion
+        if(foundHints >= Config.WIN_HINT_COUNT && foundNPCs >= Config.WIN_NPC_COUNT){
+            return true;
+        }
         return false;
     }
 
