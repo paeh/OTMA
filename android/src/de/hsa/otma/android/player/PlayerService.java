@@ -54,7 +54,7 @@ public class PlayerService {
 
     public void foundNPC(NPCPlayer player, Activity contextToShowToast) {
         humanPlayer.found(player);
-        Log.i(TAG, "found npc '" + player.getName() +"'");
+        Log.i(TAG, "found npc '" + player.getName() + "'");
         notifyUserIfChallengeIsCompleted(contextToShowToast);
     }
 
@@ -71,7 +71,7 @@ public class PlayerService {
             view.post(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(contextToShowToast, "Go and find the win door!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(contextToShowToast, contextToShowToast.getString(R.string.WIN_MEETS_REQUIREMENTS_TEXT), Toast.LENGTH_LONG).show();
                 }
             });
         }
