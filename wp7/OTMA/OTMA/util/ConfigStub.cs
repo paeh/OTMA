@@ -18,6 +18,6 @@ namespace OTMA.util
         public static readonly String XML_URL = "http://hs-augsburg.de/~lieback/pub/otma-config-game.xml";
         public static List<Hint> FINAL_HINTS = new List<Hint>() { new Hint("", "") };
         public static List<Story> FINAL_STORIES = new List<Story>() { new Story("Finish", "") };
-        public static List<Story> DEFAULT_STORIES = new List<Story>() { new Story("", "e=mc²"), new Story("", "dummy1"), new Story("", "dummy2"), new Story("", "your only limit is your own imagination") };
+        public static List<Story> DEFAULT_STORIES = new List<Story>() { new Story("", "Coffee break!"), new Story("", "Projector malfunction! Please wait!"), new Story("", "The next presentation will start soon. Please be patient."), new Story("", "Your only limit is your own imagination!") };
     }
 }
