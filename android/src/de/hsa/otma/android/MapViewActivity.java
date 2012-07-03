@@ -67,12 +67,12 @@ public class MapViewActivity extends Activity {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Log.d(TAG, "NPCDialog closing.");
                             dialogInterface.cancel();
+                            PlayerService.INSTANCE.foundNPC(npc, MapViewActivity.this);
                         }
                     });
             AlertDialog alert = builder.create();
             alert.show();
 
-            PlayerService.INSTANCE.foundNPC(npc);
         }
     }
 
