@@ -63,7 +63,7 @@ public class MapViewActivity extends Activity {
             Log.d(TAG, "NPCButton has been clicked");
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage(npc.getIntroduction());
-            builder.setTitle("Hello!!");
+            builder.setTitle(npc.getName());
             builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {

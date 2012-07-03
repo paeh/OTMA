@@ -49,10 +49,6 @@ public class Door extends BoardElement {
         return room.getAbbreviation();
     }
 
-    public String getTitle() {
-        return room.getTitle();
-    }
-
     public BoardElement getOrigin() {
         return origin;
     }

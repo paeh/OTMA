@@ -32,10 +32,6 @@ public class BoardElement implements Serializable {
         this.picture = picture;
     }
 
-    protected BoardElement(int picture) {
-        this(null, picture);
-    }
-
     public void setBoundaryElements(BoardElement north, BoardElement east, BoardElement south, BoardElement west) {
         setElementForDirection(Direction.NORTH, north);
         setElementForDirection(Direction.EAST, east);
