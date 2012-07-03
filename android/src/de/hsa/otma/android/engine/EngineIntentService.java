@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
+import de.hsa.otma.android.config.Config;
 import de.hsa.otma.android.constants.Actions;
 import de.hsa.otma.android.constants.BundleKeys;
 import de.hsa.otma.android.constants.ResultCodes;
@@ -23,6 +24,7 @@ public class EngineIntentService extends IntentService {
     }
 
     private static final String TAG = EngineIntentService.class.getName();
+    private static int stepCounter = 0;
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -33,14 +35,23 @@ public class EngineIntentService extends IntentService {
         }
     }
 
+    private boolean shouldNPCsMove() {
+        return stepCounter % Config.NPC_ROUND_SPEED == 0;
+    }
+
     private void movePlayerInDirection(Intent intent) {
         Direction direction = Direction.valueOf(intent.getStringExtra(BundleKeys.DIRECTION));
         Log.d(TAG, "Moving in direction: " + direction.name());
         ResultReceiver receiver = (ResultReceiver) intent.getParcelableExtra(BundleKeys.RECEIVER);
 
         BoardElement newMapItem = PlayerService.INSTANCE.move(direction);
+        stepCounter++;
+
         Log.d(TAG, "type of mapItem: " + newMapItem);
-        NPCService.INSTANCE.moveAllNPC();
+
+        if (shouldNPCsMove()) {
+            NPCService.INSTANCE.moveAllNPC();
+        }
 
         assembleAndSendResult(receiver, newMapItem);
     }

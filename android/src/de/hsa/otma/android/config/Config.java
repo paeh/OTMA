@@ -11,7 +11,16 @@ import java.util.List;
  */
 public interface Config {
 
+    /**
+     * Time interval in which the room content is changed. Provided in milli seconds.
+     */
     int ROOM_CONTENT_TIME = 1000;
+
+    /**
+     * NPCs can move in certain intervals. If set to 2, only every second player interaction
+     * with the game will trigger a move action for all NPCs.
+     */
+    int NPC_ROUND_SPEED = 5;
 
     /**
      * Chance to get hint in room as 1/n

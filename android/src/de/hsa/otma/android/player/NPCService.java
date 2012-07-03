@@ -52,6 +52,7 @@ public class NPCService {
         while (Board.INSTANCE.isAccessibleByNPCPlayer(targetElement.getCoordinate()));
 
         if (targetElement.getNpcPlayer() == null) {
+            currentElement.setNpcPlayer(null);
             targetElement.setNpcPlayer(npc);
             npc.moveTo(targetElement.getCoordinate());
         }
