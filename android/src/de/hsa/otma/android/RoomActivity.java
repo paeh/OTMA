@@ -4,11 +4,19 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import de.hsa.otma.android.config.Config;
 import de.hsa.otma.android.map.BoardElement;
 import de.hsa.otma.android.map.Direction;
 import de.hsa.otma.android.map.Room;
 import de.hsa.otma.android.navigation.NavigationOnClickListener;
 import de.hsa.otma.android.navigation.NavigationPanel;
+import de.hsa.otma.android.player.Hint;
+import de.hsa.otma.android.player.PlayerService;
+
+import java.util.List;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Activity displaying Rooms.
@@ -26,6 +34,7 @@ public class RoomActivity extends Activity {
         @Override
         public void clickedOn(Direction direction) {
             Log.d(TAG, "leaving room");
+            timer.cancel();
             finish();
         }
     }
@@ -41,6 +50,7 @@ public class RoomActivity extends Activity {
         room = RoomHolder.room;
 
         createLayout();
+        startPresentation();
     }
 
     public static class RoomHolder {
@@ -56,11 +66,52 @@ public class RoomActivity extends Activity {
 
         navigationPanel.disableNPCButton();
 
-        setRoomHeadline(room.getDescription());
+        setRoomHeadline(room.getTitle());
+        setRoomDescription(room.getDescription());
     }
 
     private void setRoomHeadline(String text){
-        TextView textView = (TextView) findViewById(R.id.roomHeadline);
+        setTextOfTextView(R.id.roomHeadline, text);
+    }
+
+    private void setRoomDescription(String text) {
+        setTextOfTextView(R.id.roomDescription, text);
+    }
+
+    private void setTextOfTextView(int textViewId, String text) {
+        TextView textView = (TextView) findViewById(textViewId);
         textView.setText(text);
+    }
+
+
+    private Random random = new Random(System.nanoTime());
+    private final Timer timer = new Timer(true);
+
+    private void startPresentation() {
+        timer.scheduleAtFixedRate(new PresentationSwitchingTask(), Config.slideSwitchingTime, Config.slideSwitchingTime);
+    }
+
+    private class PresentationSwitchingTask extends TimerTask {
+
+        @Override
+        public void run() {
+
+            String text = "";
+            if (random.nextInt(Config.chanceToGetHintInRoom) == 0) {
+                List<Hint> hints = room.getHints();
+                if (!hints.isEmpty()) {
+                    Hint hint = hints.get(random.nextInt(hints.size()));
+                    PlayerService.INSTANCE.foundHint(hint);
+                    text = hint.getTitle() + "\n\n" + hint.getText();
+                }
+            } else {
+                List<String> stories = room.getStories();
+                if (!stories.isEmpty()) {
+                    text = stories.get(random.nextInt(stories.size()));
+                }
+            }
+
+            setTextOfTextView(R.id.roomPresentation, text);
+        }
     }
 }

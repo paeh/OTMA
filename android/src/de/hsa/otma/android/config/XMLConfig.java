@@ -67,6 +67,16 @@ public class XMLConfig implements Config {
         return readDomainModelByTag("hint", new HintDomainModelReader());
     }
 
+    @Override
+    public List<String> getStories() {
+        // TODO delegate to Android string array.xml
+        List<String> stories = new ArrayList<String>();
+        stories.add("Lorem Ipsum 1");
+        stories.add("Lorem Ipsum 2");
+        stories.add("Lorem Ipsum 3");
+        return stories;
+    }
+
     private interface DomainModelReader<T> {
         T read(Element element);
     }

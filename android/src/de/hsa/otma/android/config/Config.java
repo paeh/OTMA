@@ -11,9 +11,18 @@ import java.util.List;
  */
 public interface Config {
 
+    int slideSwitchingTime = 1000;
+
+    /**
+     * Chance to get hint in room as 1/n
+     */
+    int chanceToGetHintInRoom = 1;
+
     List<Room> getRooms();
 
     List<NPCPlayer> getNPCPlayers();
 
     List<Hint> getHints();
+
+    List<String> getStories();
 }

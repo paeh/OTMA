@@ -1,5 +1,6 @@
 package de.hsa.otma.android.map;
 
+import de.hsa.otma.android.OTMAApplication;
 import de.hsa.otma.android.player.Hint;
 
 import java.io.Serializable;
@@ -13,9 +14,9 @@ public class Room implements Serializable {
 
     private Door door;
 
-    private List<Hint> hints = new ArrayList<Hint>();
+    private List<Hint> hints = OTMAApplication.CONFIG.getHints();
 
-    private List<String> stories = new ArrayList<String>();
+    private List<String> stories = OTMAApplication.CONFIG.getStories();
 
     private String title;
 
