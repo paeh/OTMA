@@ -4,7 +4,6 @@ import de.hsa.otma.android.OTMAApplication;
 import de.hsa.otma.android.player.Hint;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,18 +37,15 @@ public class Room implements Serializable {
         this.door = door;
     }
 
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return description;
     }
 
-    public String getAbbreviation()
-    {
+    public String getAbbreviation() {
         return abbreviation;
     }
 

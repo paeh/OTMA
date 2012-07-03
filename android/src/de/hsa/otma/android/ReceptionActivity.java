@@ -11,7 +11,7 @@ import android.widget.ImageView;
 /**
  * Activity displaying welcome screen.
  */
-public class ReceptionActivity extends Activity{
+public class ReceptionActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class ReceptionActivity extends Activity{
         imageButton.setImageResource(R.drawable.grey_left);
     }
 
-    private void setUpEnterButton(){
+    private void setUpEnterButton() {
         Button enterButton = (Button) findViewById(R.id.enterButton);
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override

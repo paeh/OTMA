@@ -11,8 +11,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
-import android.widget.*;
-import de.hsa.otma.android.constants.Actions;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 import de.hsa.otma.android.constants.BundleKeys;
 import de.hsa.otma.android.map.BoardElement;
 import de.hsa.otma.android.map.Door;
@@ -47,29 +49,29 @@ public class MapViewActivity extends Activity {
     }
 
 
-    private class NPCOnClickListener implements View.OnClickListener{
+    private class NPCOnClickListener implements View.OnClickListener {
         private final Context context;
         private final NPCPlayer npc;
 
-        NPCOnClickListener(Context context, NPCPlayer npc){
+        NPCOnClickListener(Context context, NPCPlayer npc) {
             this.context = context;
             this.npc = npc;
         }
 
         @Override
-        public void onClick(View view){
+        public void onClick(View view) {
             Log.d(TAG, "NPCButton has been clicked");
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage(npc.getIntroduction());
             builder.setTitle("Hello!!");
             builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Log.d(TAG, "NPCDialog closing.");
-                            dialogInterface.cancel();
-                            PlayerService.INSTANCE.foundNPC(npc, MapViewActivity.this);
-                        }
-                    });
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Log.d(TAG, "NPCDialog closing.");
+                    dialogInterface.cancel();
+                    PlayerService.INSTANCE.foundNPC(npc, MapViewActivity.this);
+                }
+            });
             AlertDialog alert = builder.create();
             alert.show();
 
@@ -79,7 +81,7 @@ public class MapViewActivity extends Activity {
 
     @Override
     @SuppressWarnings("unchecked")
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent callingIntent = getIntent();
 
@@ -140,8 +142,8 @@ public class MapViewActivity extends Activity {
         layout.addView(label);
     }
 
-    private void addNPCButton(List<NPCPlayer> otmaEmployees){
-        if(otmaEmployees != null && otmaEmployees.size() > 0){
+    private void addNPCButton(List<NPCPlayer> otmaEmployees) {
+        if (otmaEmployees != null && otmaEmployees.size() > 0) {
             Button button = (Button) findViewById(R.id.npcButton);
             button.setVisibility(Button.VISIBLE);
             button.setOnClickListener(new NPCOnClickListener(this, otmaEmployees.get(0)));

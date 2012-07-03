@@ -16,7 +16,7 @@ import java.util.Random;
 public class NPCService {
 
     public static final NPCService INSTANCE = new NPCService();
-    
+
     private Board board = Board.INSTANCE;
     private Random random = new Random(System.nanoTime());
 
@@ -24,7 +24,7 @@ public class NPCService {
 
     private NPCService() {
     }
-    
+
     public ArrayList<NPCPlayer> getAllNPCFor(Coordinate coordinate) {
         ArrayList<NPCPlayer> result = new ArrayList<NPCPlayer>();
         for (NPCPlayer npc : otmaEmployees) {
@@ -50,7 +50,7 @@ public class NPCService {
         ArrayList<Direction> availableDirections = new ArrayList<Direction>(currentElement.getAvailableDirections());
 
         BoardElement targetElement;
-        do{
+        do {
             int directionIndex = random.nextInt(availableDirections.size());
             Direction targetDirection = availableDirections.get(directionIndex);
             targetElement = currentElement.getElementFor(targetDirection);

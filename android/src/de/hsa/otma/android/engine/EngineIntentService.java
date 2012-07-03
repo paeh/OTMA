@@ -71,6 +71,6 @@ public class EngineIntentService extends IntentService {
             resultBundle.putSerializable(BundleKeys.OTMA_EMPLOYEES, NPCService.INSTANCE.getAllNPCFor(mapItem.getCoordinate()));
         }
 
-        receiver.send(ResultCodes.RESULT_OK,  resultBundle);
+        receiver.send(ResultCodes.RESULT_OK, resultBundle);
     }
 }

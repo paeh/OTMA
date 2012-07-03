@@ -28,7 +28,7 @@ public class NPCPlayer extends Player {
     }
 
     @Override
-    public String toString(){
-        return super.toString()+" title: "+title+" introduction: "+introduction;
+    public String toString() {
+        return super.toString() + " title: " + title + " introduction: " + introduction;
     }
 }

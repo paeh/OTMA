@@ -1,11 +1,9 @@
 package de.hsa.otma.android.player;
 
 import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-import de.hsa.otma.android.OTMAApplication;
 import de.hsa.otma.android.R;
 import de.hsa.otma.android.config.Config;
 import de.hsa.otma.android.map.*;
@@ -29,8 +27,8 @@ public class PlayerService {
         BoardElement currentMapItem = getCurrentMapItem();
         BoardElement newMapItem;
 
-        if(currentMapItem instanceof Door){
-            newMapItem = ((Door)currentMapItem).getOrigin();
+        if (currentMapItem instanceof Door) {
+            newMapItem = ((Door) currentMapItem).getOrigin();
         } else {
             newMapItem = currentMapItem.getElementFor(direction);
         }
@@ -47,7 +45,7 @@ public class PlayerService {
 
     public void foundHint(Hint hint, Activity contextToShowToast) {
         humanPlayer.found(hint);
-        Log.i(TAG, "found hint '" + hint.getTitle()  +"'");
+        Log.i(TAG, "found hint '" + hint.getTitle() + "'");
         notifyUserIfChallengeIsCompleted(contextToShowToast);
     }
 

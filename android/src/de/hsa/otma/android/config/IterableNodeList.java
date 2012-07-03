@@ -19,9 +19,9 @@ public class IterableNodeList implements Iterable<Element> {
     @Override
     public Iterator<Element> iterator() {
         return new Iterator<Element>() {
-            
+
             private int current = 0;
-            
+
             @Override
             public boolean hasNext() {
                 return nodes.getLength() > current;

@@ -12,7 +12,7 @@ import java.util.Set;
  * BoardElement with coordinate, (possibly) npcPlayer and accessible directions (adjacent BoardElements/Doors).
  */
 public class BoardElement implements Serializable {
-    
+
     private Coordinate coordinate;
 
     private NPCPlayer npcPlayer;
@@ -49,7 +49,7 @@ public class BoardElement implements Serializable {
      * Adds item as neighbor of this BoardElement in direction.
      */
     public void setElementForDirection(Direction direction, BoardElement item) {
-        if (item != null)  {
+        if (item != null) {
             directions.put(direction, item);
             updateAvailableDirections();
         } else {

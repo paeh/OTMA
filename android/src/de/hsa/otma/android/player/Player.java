@@ -29,12 +29,8 @@ public class Player implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
-    public String toString(){
-        return "Player name: "+name+" coordinate: "+coordinate;
+    public String toString() {
+        return "Player name: " + name + " coordinate: " + coordinate;
     }
 }

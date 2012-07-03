@@ -2,15 +2,13 @@ package de.hsa.otma.android.map;
 
 import de.hsa.otma.android.R;
 
-import static de.hsa.otma.android.map.Direction.NORTH;
 import static de.hsa.otma.android.map.Direction.SOUTH;
 
 /**
  * Door with origin BoardElement, title, abbreviation and possibly attached Room.
  * Door can be set as win door (which allows the player to complete the game)
  */
-public class Door extends BoardElement
-{
+public class Door extends BoardElement {
     private boolean isWinDoor = false;
 
     private Room room;
@@ -21,8 +19,7 @@ public class Door extends BoardElement
 
     private String abbreviation;
 
-    public Door(Coordinate coordinate, BoardElement origin)
-    {
+    public Door(Coordinate coordinate, BoardElement origin) {
         super(coordinate, R.drawable.door);
         super.setElementForDirection(SOUTH, origin);
         this.origin = origin;
@@ -32,13 +29,11 @@ public class Door extends BoardElement
         return room != null;
     }
 
-    public Room getRoom()
-    {
+    public Room getRoom() {
         return room;
     }
 
-    public void setRoom(Room room)
-    {
+    public void setRoom(Room room) {
         this.room = room;
     }
 
@@ -46,21 +41,19 @@ public class Door extends BoardElement
         this.title = title;
     }
 
-    public void setAbbreviation(String abbreviation){
+    public void setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
     }
 
-    public String getAbbreviation()
-    {
+    public String getAbbreviation() {
         return room.getAbbreviation();
     }
 
-    public String getTitle()
-    {
+    public String getTitle() {
         return room.getTitle();
     }
 
-    public BoardElement getOrigin(){
+    public BoardElement getOrigin() {
         return origin;
     }
 
@@ -73,13 +66,12 @@ public class Door extends BoardElement
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Door{" +
-            "abbreviation='" + abbreviation + '\'' +
-            ", room=" + room +
-            ", origin=" + origin +
-            ", title='" + title + '\'' +
-            "} " + super.toString();
+                "abbreviation='" + abbreviation + '\'' +
+                ", room=" + room +
+                ", origin=" + origin +
+                ", title='" + title + '\'' +
+                "} " + super.toString();
     }
 }

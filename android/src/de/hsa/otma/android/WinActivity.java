@@ -22,7 +22,7 @@ public class WinActivity extends Activity {
     }
 
 
-    private void setupClickableWinText(){
+    private void setupClickableWinText() {
         TextView text = (TextView) findViewById(R.id.winClickText);
         text.setOnClickListener(new View.OnClickListener() {
             @Override

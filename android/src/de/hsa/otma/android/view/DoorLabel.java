@@ -1,6 +1,5 @@
 package de.hsa.otma.android.view;
 
-import android.content.Context;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import de.hsa.otma.android.R;

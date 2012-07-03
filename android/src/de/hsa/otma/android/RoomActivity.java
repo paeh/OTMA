@@ -68,7 +68,7 @@ public class RoomActivity extends Activity {
         setRoomDescription(room.getDescription());
     }
 
-    private void setRoomHeadline(String text){
+    private void setRoomHeadline(String text) {
         setTextOfTextView(R.id.roomHeadline, text);
     }
 

@@ -88,10 +88,9 @@ public class NavigationPanel {
         setButtonNavigationAction(Direction.EAST, R.id.eastButton, mapItem.getAvailableDirections());
         setButtonNavigationAction(Direction.SOUTH, R.id.southButton, mapItem.getAvailableDirections());
 
-        if(isWinDoor(mapItem) && PlayerService.INSTANCE.hasChallengeCompleted()){
+        if (isWinDoor(mapItem) && PlayerService.INSTANCE.hasChallengeCompleted()) {
             setButtonToWin(R.id.northButton);
-        }
-        else if (isDoorWithRoomBehind(mapItem)) {
+        } else if (isDoorWithRoomBehind(mapItem)) {
             Room room = ((Door) mapItem).getRoom();
             setButtonToEnterRoom(R.id.northButton, room);
         } else {
