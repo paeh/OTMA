@@ -9,11 +9,13 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:background="@drawable/finish">
-    <TextView android:id="@+id/roomText"
+    <TextView android:id="@+id/winClickText"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:layout_alignParentBottom="true"
-              android:text="Congratulations - you have successfully completed the game!"/>
+              android:onClick="onClick"
+              android:clickable="true"
+              android:text="Congratulations! Click here to find out more about OTMA and to see all the game hints."/>
 
     </RelativeLayout>
 
