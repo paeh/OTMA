@@ -48,7 +48,7 @@
                           android:layout_height="wrap_content"
                           android:textStyle="bold"
                           android:textColor="@color/white"
-                          android:text="Headline"/>
+                          android:text="@string/RECEPTION_TEXT"/>
             </ScrollView>
 
         </LinearLayout>

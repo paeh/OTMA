@@ -15,7 +15,7 @@
               android:layout_alignParentBottom="true"
               android:onClick="onClick"
               android:clickable="true"
-              android:text="Congratulations! Click here to find out more about OTMA and to see all the game hints."/>
+              android:text="@string/WIN_TEXT"/>
 
     </RelativeLayout>
 

@@ -23,6 +23,9 @@ import de.hsa.otma.android.player.PlayerService;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Navigation panel handling actions for directional buttons.
+ */
 public class NavigationPanel {
 
     private static final String TAG = NavigationPanel.class.getName();
@@ -75,6 +78,10 @@ public class NavigationPanel {
         });
     }
 
+    /**
+     * Adds appropriate actions to directional buttons. If tile is in certain direction, then button will
+     * navigate to that tile. If there's a room behind door north button will be set to enter room.
+     */
     public void updateButtonActions(BoardElement mapItem) {
         Log.d(TAG, "updating button actions for " + mapItem);
         setButtonNavigationAction(Direction.WEST, R.id.westButton, mapItem.getAvailableDirections());

@@ -21,7 +21,6 @@ public class PlayerService {
     private static final Board BOARD = Board.INSTANCE;
 
     private PlayerService() {
-        // TODO change on final version
         humanPlayer = new HumanPlayer(new Coordinate(1, 1), "human");
 //        humanPlayer = new HumanPlayer(BOARD.getRandomCoordinateOnBoard(), "human");
     }
@@ -54,7 +53,7 @@ public class PlayerService {
 
     public void foundNPC(NPCPlayer player, Activity contextToShowToast) {
         humanPlayer.found(player);
-        Log.i(TAG, "found npc '" + player.getName() +"'");
+        Log.i(TAG, "found npc '" + player.getName() + "'");
         notifyUserIfChallengeIsCompleted(contextToShowToast);
     }
 
@@ -71,7 +70,7 @@ public class PlayerService {
             view.post(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(contextToShowToast, "Go and find the win door!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(contextToShowToast, contextToShowToast.getString(R.string.WIN_MEETS_REQUIREMENTS_TEXT), Toast.LENGTH_LONG).show();
                 }
             });
         }
