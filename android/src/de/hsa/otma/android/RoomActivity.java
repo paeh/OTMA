@@ -104,7 +104,7 @@ public class RoomActivity extends Activity {
                 List<Hint> hints = room.getHints();
                 if (!hints.isEmpty()) {
                     Hint hint = hints.get(random.nextInt(hints.size()));
-                    PlayerService.INSTANCE.foundHint(hint);
+                    PlayerService.INSTANCE.foundHint(hint, RoomActivity.this);
                     text = hint.getTitle() + "\n\n" + hint.getText();
                 }
             } else {

@@ -1,7 +1,12 @@
 package de.hsa.otma.android.player;
 
+import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 import de.hsa.otma.android.OTMAApplication;
+import de.hsa.otma.android.R;
 import de.hsa.otma.android.config.Config;
 import de.hsa.otma.android.map.*;
 
@@ -41,24 +46,35 @@ public class PlayerService {
         return newMapItem;
     }
 
-    public void foundHint(Hint hint) {
+    public void foundHint(Hint hint, Activity contextToShowToast) {
         humanPlayer.found(hint);
         Log.i(TAG, "found hint '" + hint.getTitle()  +"'");
+        notifyUserIfChallengeIsCompleted(contextToShowToast);
     }
 
-    public void foundNPC(NPCPlayer player) {
+    public void foundNPC(NPCPlayer player, Activity contextToShowToast) {
         humanPlayer.found(player);
         Log.i(TAG, "found npc '" + player.getName() +"'");
+        notifyUserIfChallengeIsCompleted(contextToShowToast);
     }
 
     public boolean hasChallengeCompleted() {
         int foundHints = humanPlayer.numberOfFoundHints();
-        int foundNPCs = humanPlayer.numberOfFoundHints();
+        int foundNPCs = humanPlayer.numberOfFoundNPCs();
 
-        if(foundHints >= Config.WIN_HINT_COUNT && foundNPCs >= Config.WIN_NPC_COUNT){
-            return true;
+        return foundHints >= Config.WIN_HINT_COUNT && foundNPCs >= Config.WIN_NPC_COUNT;
+    }
+
+    private void notifyUserIfChallengeIsCompleted(final Activity contextToShowToast) {
+        if (hasChallengeCompleted()) {
+            View view = contextToShowToast.findViewById(R.id.northButton);
+            view.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(contextToShowToast, "Go and find the win door!", Toast.LENGTH_LONG).show();
+                }
+            });
         }
-        return false;
     }
 
     public BoardElement getCurrentMapItem() {
