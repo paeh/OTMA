@@ -41,7 +41,7 @@
                 <TextView android:id="@+id/roomPresentation"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:textColor="@color/gameImageBackground"
+                          android:textColor="@color/black"
                           android:text="Hint text"/>
             </ScrollView>
 
