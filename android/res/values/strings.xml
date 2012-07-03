@@ -5,4 +5,11 @@
     <string name="WIN_MEETS_REQUIREMENTS_TEXT">Go and find the win door!</string>
     <string name="WIN_TEXT">Congratulations! Click here to find out more about OTMA and to see all the game hints."</string>
     <string name="RECEPTION_TEXT">Note: All hints available in the game will be given to you on win.</string>
+    <string-array name="stories">
+        <item>Coffee break!</item>
+        <item>Projector malfunction! Please wait!</item>
+        <item>The next presentation will start soon. Please be patient.</item>
+        <item>Your only limit is your own imagination!</item>
+    </string-array>
 </resources>
+

@@ -1,5 +1,6 @@
 package de.hsa.otma.android.config;
 
+import android.content.Context;
 import android.util.Log;
 import de.hsa.otma.android.R;
 import de.hsa.otma.android.map.Board;
@@ -14,6 +15,7 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -35,12 +37,17 @@ public class XMLConfig implements Config {
 
     private Element root;
 
-    public XMLConfig(String url) {
+    private List<String> stories;
+
+    public XMLConfig(String url, Context context) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(url);
             root = document.getDocumentElement();
+
+            String[] storyArray = context.getResources().getStringArray(R.array.stories);
+            stories = Arrays.asList(storyArray);
         } catch (Exception e) {
             Log.e(TAG, "failed to load xml file", e);
             if (e instanceof RuntimeException)
@@ -69,11 +76,6 @@ public class XMLConfig implements Config {
 
     @Override
     public List<String> getStories() {
-        // TODO delegate to Android string array.xml
-        List<String> stories = new ArrayList<String>();
-        stories.add("Lorem Ipsum 1");
-        stories.add("Lorem Ipsum 2");
-        stories.add("Lorem Ipsum 3");
         return stories;
     }
 
